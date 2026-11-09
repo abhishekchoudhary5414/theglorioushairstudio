@@ -6,13 +6,13 @@ import Image from "next/image";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import EmailIcon from "@mui/icons-material/Email";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import DownloadIcon from "@mui/icons-material/Download";
 import ImageIcon from "@mui/icons-material/Image";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -156,6 +156,28 @@ export const SimpleBookingForm: React.FC<SimpleBookingFormProps> = ({
   const [isDownloadingPdf, setIsDownloadingPdf] = useState<boolean>(false);
   const [isDownloadingImage, setIsDownloadingImage] = useState<boolean>(false);
 
+  // Pre-load logo as Data URI for instant crisp PDF/PNG export without CORS blocks
+  const [logoDataUri, setLogoDataUri] = useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    // Attempt to convert /images/logo.png to data URL for client SVG rendering
+    const img = new window.Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          setLogoDataUri(canvas.toDataURL("image/png"));
+        }
+      } catch (_) {}
+    };
+    img.src = "/images/logo.png";
+  }, []);
+
   // Common slip data payload
   const slipPayload = useMemo(() => {
     return {
@@ -173,9 +195,10 @@ export const SimpleBookingForm: React.FC<SimpleBookingFormProps> = ({
       salonPhone: salonConfig.contact.phoneDisplay,
       salonEmail: salonConfig.contact.email,
       specialInstructions: specialInstructions || undefined,
-      issuedDate: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+      issuedDate: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+      logoDataUri
     };
-  }, [confirmedRef, customerName, customerPhone, customerEmail, selectedService, appointmentDate, timeSlot, specialInstructions]);
+  }, [confirmedRef, customerName, customerPhone, customerEmail, selectedService, appointmentDate, timeSlot, specialInstructions, logoDataUri]);
 
   // Direct PDF File Download
   const handleDownloadPdf = async () => {
@@ -237,14 +260,24 @@ export const SimpleBookingForm: React.FC<SimpleBookingFormProps> = ({
                 <h3 className={styles.billBrandName}>{salonConfig.name}</h3>
                 <span className={styles.billBrandTagline}>Professional Hair &amp; Beauty Salon and Academy</span>
                 <p className={styles.billAddress}>
-                  {salonConfig.address.fullAddress || "Scheme No 78, Yashraj Complex, Sector C, Aranya Nagar, Vijay Nagar, Indore, MP 452010"}
+                  <LocationOnIcon fontSize="inherit" className={styles.billInlineIcon} />
+                  <span>{salonConfig.address.fullAddress || "Scheme No 78, Yashraj Complex, Sector C, Aranya Nagar, Vijay Nagar, Indore, MP 452010"}</span>
                 </p>
                 <div className={styles.billContactLine}>
-                  <span>📞 {salonConfig.contact.phoneDisplay}</span>
+                  <span className={styles.billContactItem}>
+                    <PhoneIcon fontSize="inherit" className={styles.billInlineIcon} />
+                    <span>{salonConfig.contact.phoneDisplay}</span>
+                  </span>
                   <span>•</span>
-                  <span>💬 WhatsApp: {salonConfig.contact.whatsappDisplay}</span>
+                  <span className={styles.billContactItem}>
+                    <WhatsAppIcon fontSize="inherit" className={styles.billInlineIcon} />
+                    <span>WhatsApp: {salonConfig.contact.whatsappDisplay}</span>
+                  </span>
                   <span>•</span>
-                  <span>✉️ {salonConfig.contact.bookingEmail}</span>
+                  <span className={styles.billContactItem}>
+                    <EmailIcon fontSize="inherit" className={styles.billInlineIcon} />
+                    <span>{salonConfig.contact.bookingEmail}</span>
+                  </span>
                 </div>
               </div>
             </div>
