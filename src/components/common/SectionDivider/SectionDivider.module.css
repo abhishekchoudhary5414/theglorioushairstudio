@@ -1,0 +1,24 @@
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3.5rem auto;
+  max-width: var(--max-width-site);
+  padding: 0 1.5rem;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border), transparent);
+}
+
+.gem {
+  width: 7px;
+  height: 7px;
+  background-color: var(--color-secondary);
+  transform: rotate(45deg);
+  opacity: 0.8;
+}
+

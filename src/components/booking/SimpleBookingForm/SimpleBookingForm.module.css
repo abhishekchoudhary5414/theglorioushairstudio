@@ -1,0 +1,780 @@
+.bookingCard {
+  max-width: 820px;
+  margin: 0 auto;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 3rem 2.5rem;
+  position: relative;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formHeader {
+  text-align: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: 1.5rem;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.subheading {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.sectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.sectionTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionIcon {
+  color: var(--color-secondary);
+}
+
+.sectionLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.subLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.selectInput,
+.textInput,
+.textareaInput {
+  width: 100%;
+  padding: 0.85rem 1.15rem;
+  background-color: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.selectInput:focus,
+.textInput:focus,
+.textareaInput:focus {
+  border-color: var(--color-secondary);
+  background-color: var(--color-surface);
+  box-shadow: 0 0 0 3px var(--color-secondary-glow);
+}
+
+.inputError {
+  border-color: var(--color-error) !important;
+}
+
+.errorText {
+  color: var(--color-error);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.serviceBadgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-secondary-light);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-sm);
+}
+
+.serviceBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.badgeCategory {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.badgeDivider {
+  color: var(--color-secondary);
+}
+
+.badgeName {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.badgePrice {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.serviceDetailsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-secondary-hover);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.serviceDetailsLink:hover {
+  color: var(--color-primary);
+}
+
+.dateTimeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 1.5rem;
+}
+
+.fieldCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.slotsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 0.5rem;
+}
+
+.slotPill {
+  padding: 0.55rem 0.4rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.slotPill:hover {
+  border-color: var(--color-secondary);
+  background-color: var(--color-surface);
+}
+
+.slotPillActive {
+  background-color: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
+  border-color: var(--color-primary) !important;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.clientFieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.instructionCol {
+  margin-top: 0.75rem;
+}
+
+.locationNotice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.95rem 1.25rem;
+  background-color: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.locationIcon {
+  color: var(--color-secondary);
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.locationNoticeText {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.locationNoticeText strong {
+  color: var(--color-text-primary);
+}
+
+.submitRow {
+  margin-top: 0.5rem;
+}
+
+.submitBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1rem 2rem;
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-secondary-hover);
+  border-radius: var(--radius-full);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-gold);
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: var(--color-secondary-hover);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold-hover);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.quickHelpRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.quickCallLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.quickCallLink:hover {
+  color: var(--color-secondary);
+}
+
+.quickWhatsappLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-whatsapp);
+  font-weight: 600;
+}
+
+.quickWhatsappLink:hover {
+  text-decoration: underline;
+}
+
+/* Success Ticket Card */
+.successBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.successIconWrapper {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.successIcon {
+  font-size: 2.75rem !important;
+}
+
+.successEyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-secondary-hover);
+  margin-bottom: 0.35rem;
+}
+
+.successTitle {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 1.75rem;
+}
+
+.ticketCard {
+  width: 100%;
+  max-width: 640px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-sm);
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.ticketCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-accent), var(--color-secondary));
+}
+
+.billBrandHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.billLogoWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1.5px solid var(--color-border-gold);
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.billLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.billBrandInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.billBrandName {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+}
+
+.billBrandTagline {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary-hover);
+  font-weight: 600;
+}
+
+.billAddress {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+.billContactLine {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+.billStatusBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-secondary-light);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-xs);
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.billStatusLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.billStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-success);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.billIssueDate {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.billRefCode {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.billRefCodeLabel {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.billRefCodeValue {
+  font-family: monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.08em;
+}
+
+.billDetailsTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.5rem 0;
+}
+
+.ticketRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.ticketRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ticketLabel {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.ticketValue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-align: right;
+}
+
+.serviceCategoryMuted {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.ticketValueHighlight {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-align: right;
+}
+
+.ticketValuePrice {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-secondary-hover);
+  text-align: right;
+}
+
+.billFooterNotice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.billFooterNoteText {
+  font-size: 0.775rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  flex: 1;
+  min-width: 240px;
+}
+
+.billSealBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed var(--color-border-gold);
+  border-radius: var(--radius-xs);
+  padding: 0.4rem 0.85rem;
+  background-color: var(--color-secondary-light);
+  color: var(--color-primary);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.billSealBox span {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.billSealBox small {
+  font-size: 0.625rem;
+  color: var(--color-secondary-hover);
+}
+
+.successNote {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.successActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.downloadSlipBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.downloadSlipBtn:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.whatsappConfirmBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  background-color: var(--color-whatsapp);
+  color: var(--color-surface);
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.whatsappConfirmBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--color-whatsapp-border);
+}
+
+.newBookingBtn {
+  padding: 0.85rem 1.6rem;
+  background-color: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.newBookingBtn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+@media (max-width: 768px) {
+  .bookingCard {
+    padding: 2rem 1.25rem;
+  }
+  .dateTimeGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .clientFieldsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .slotsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .successActions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .successActions > * {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Print & Download Slip Styles (Zero Top Margin & Clean Full Page PDF) */
+@page {
+  margin: 0;
+  size: auto;
+}
+
+@media print {
+  /* Hide all website elements except the confirmation ticket */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .ticketCard,
+  .ticketCard * {
+    visibility: visible;
+  }
+
+  .ticketCard {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: 2px solid var(--color-primary) !important;
+    padding: 24px 32px !important;
+    box-shadow: none !important;
+    background-color: var(--color-surface) !important;
+    color: var(--color-text-primary) !important;
+    page-break-inside: avoid;
+    border-radius: 0 !important;
+  }
+
+  .ticketCard::before {
+    display: block !important;
+    height: 6px !important;
+  }
+
+  .billBrandHeader {
+    border-bottom: 2px solid var(--color-border) !important;
+    padding-top: 8px !important;
+  }
+
+  .billLogoWrapper {
+    border: 1px solid var(--color-border) !important;
+    width: 68px !important;
+    height: 68px !important;
+  }
+
+  .billStatusBanner {
+    background-color: var(--color-surface-subtle) !important;
+    border: 1px solid var(--color-border) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .ticketRow {
+    border-bottom: 1px dashed var(--color-border) !important;
+    padding: 7px 0 !important;
+  }
+
+  .billSealBox {
+    background-color: var(--color-surface-subtle) !important;
+    border: 1.5px dashed var(--color-primary) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

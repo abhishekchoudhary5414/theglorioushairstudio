@@ -1,0 +1,24 @@
+{
+  "heading": "Book Your Salon Appointment",
+  "subheading": "Fill this simple 1-minute form to reserve your slot at our Scheme 78, Vijay Nagar salon.",
+  "timeSlots": [
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "01:30 PM",
+    "02:30 PM",
+    "03:30 PM",
+    "04:30 PM",
+    "05:30 PM",
+    "06:30 PM",
+    "07:30 PM",
+    "08:00 PM"
+  ],
+  "defaultSlot": "11:00 AM",
+  "bookingNotice": "No advance payment needed! You can pay at the salon via Cash, UPI, or Card after your session.",
+  "locationVenue": "Scheme No 78, Yashraj Complex, Sector C, Aranya Nagar, Vijay Nagar, Indore",
+  "openingHoursNote": "Open all 7 days from 10:00 AM to 09:00 PM.",
+  "successTitle": "We Look Forward to Welcoming You",
+  "successEyebrow": "Appointment Confirmed!",
+  "instructions": "Please arrive 5-10 minutes before your slot. For bridal or hair length quotation changes, inform our concierge desk."
+}

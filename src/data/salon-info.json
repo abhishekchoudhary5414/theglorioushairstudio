@@ -1,0 +1,69 @@
+{
+  "name": "The Glorious Hair Studio",
+  "logo": "/images/logo.jpg",
+  "tagline": "Professional Hair & Beauty Salon",
+  "subTagline": "Haircut • Styling • Makeup • Quality Service at Best Price",
+  "established": 2018,
+  "description": "The Glorious Hair Studio is a professional hair & beauty salon in Scheme 78, Vijay Nagar, Indore. We provide expert haircuts, styling, treatments, glowing facials, and wedding bridal makeup with top quality service at the best price.",
+  "contact": {
+    "phone": "+917987583445",
+    "phoneDisplay": "+91 79875 83445",
+    "whatsapp": "+917987583445",
+    "whatsappDisplay": "+91 79875 83445",
+    "email": "hello@theglorioushairstudio.com",
+    "bookingEmail": "appointments@theglorioushairstudio.com"
+  },
+  "address": {
+    "line1": "Scheme No 78, Yashraj Complex, Sector C",
+    "line2": "Aranya Nagar, Scheme 78, Vijay Nagar",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "pincode": "452010",
+    "country": "India",
+    "fullAddress": "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar, Aranya Nagar, Scheme 78, Vijay Nagar, Indore, Madhya Pradesh 452010, India",
+    "googleMapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.336696766461!2d75.8920197!3d22.7686524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39630325f0535e5d%3A0x7d6a5c102a0617ec!2sScheme%2078%2C%20Vijay%20Nagar%2C%20Indore%2C%20Madhya%20Pradesh%20452010!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin",
+    "directionsUrl": "https://maps.google.com/?q=Scheme+No+78+Yashraj+Complex+Sector+C+Vijay+Nagar+Indore"
+  },
+  "hours": [
+    { "days": "Monday – Sunday", "time": "10:00 AM – 09:00 PM", "note": "Open all 7 days" },
+    { "days": "Wedding & Bridal Bookings", "time": "Early morning 06:00 AM slots available on request", "note": "Prior booking required" }
+  ],
+  "socials": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com",
+    "youtube": "https://youtube.com",
+    "pinterest": "https://pinterest.com"
+  },
+  "branches": [
+    {
+      "id": "branch-scheme-78",
+      "name": "The Glorious Hair Studio – Scheme 78",
+      "area": "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar",
+      "address": "Scheme No 78, Yashraj Complex, Sector C, Aranya Nagar, Scheme 78, Vijay Nagar, Indore, MP 452010",
+      "phone": "+91 79875 83445",
+      "timing": "10:00 AM – 9:00 PM"
+    }
+  ],
+  "features": [
+    {
+      "title": "Certified Master Stylists",
+      "description": "Experienced hair and skin professionals trained with top brands like L'Oreal, Schwarzkopf, and MAC.",
+      "icon": "Diamond"
+    },
+    {
+      "title": "Clean & 100% Hygienic",
+      "description": "Sanitized tools, disposable sheets, fresh towels, and clean air-conditioned private styling rooms.",
+      "icon": "Shield"
+    },
+    {
+      "title": "100% Original Products",
+      "description": "We only use genuine international brands like Olaplex, Cheryl's, O3+, and Kryolan. No cheap duplicates.",
+      "icon": "Spa"
+    },
+    {
+      "title": "Private Bridal Suite",
+      "description": "Special bridal makeup room with proper lighting, dress changing space, and comfortable seating for family.",
+      "icon": "Favorite"
+    }
+  ]
+}

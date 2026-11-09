@@ -1,0 +1,197 @@
+.headerWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  background-color: var(--color-nav-backdrop);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  transition: all var(--transition-normal);
+}
+
+.scrolled {
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  border-bottom-color: var(--color-border-gold);
+}
+
+.container {
+  max-width: var(--max-width-site);
+  margin: 0 auto;
+  padding: 0.95rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: padding var(--transition-normal);
+}
+
+.scrolled .container {
+  padding: 0.75rem 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+}
+
+.logoImageWrapper {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-gold);
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoText {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.15;
+  transition: color var(--transition-fast);
+}
+
+.brand:hover .logoText {
+  color: var(--color-secondary);
+}
+
+.tagline {
+  font-size: 0.625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.navLink {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
+  position: relative;
+  padding: 0.4rem 0;
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-secondary);
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 1.5px;
+  background-color: var(--color-secondary);
+  transition: all var(--transition-normal);
+  transform: translateX(-50%);
+}
+
+.navLink:hover::after,
+.navLinkActive::after {
+  width: 100%;
+}
+
+.navLinkActive {
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.desktopAppointmentBtn {
+  display: flex;
+}
+
+.mobileToggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: transform var(--transition-fast);
+}
+
+.mobileToggle:hover {
+  transform: scale(1.08);
+  color: var(--color-secondary);
+}
+
+@media (max-width: 1024px) {
+  .nav {
+    display: none;
+  }
+  .mobileToggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktopAppointmentBtn {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0.65rem 1rem;
+  }
+  .brandText {
+    max-width: 180px;
+  }
+  .logoText {
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tagline {
+    font-size: 0.55rem;
+  }
+  .actions {
+    gap: 0.75rem;
+  }
+}

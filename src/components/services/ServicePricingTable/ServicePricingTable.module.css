@@ -1,0 +1,130 @@
+.tableWrapper {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.tableHeader {
+  padding: 1.25rem 1.75rem;
+  background-color: var(--color-surface-subtle);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tableGroupTitle {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tr {
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background-color: var(--color-surface-subtle);
+}
+
+.tdService {
+  padding: 1.15rem 1.75rem;
+}
+
+.serviceName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.serviceDesc {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}
+
+.serviceBadge {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-secondary-light);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border-gold);
+}
+
+.tdPrice {
+  padding: 1.15rem 1.75rem;
+  text-align: right;
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+/* Additional Scalp & Impulse Addons Box */
+.addonsBox {
+  background-color: var(--color-surface-subtle);
+  border-top: 1px dashed var(--color-border);
+  padding: 1.25rem 1.75rem;
+}
+
+.addonsTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.addonsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.addonItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.8125rem;
+  color: var(--color-text-primary);
+}
+
+.addonPrice {
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+@media (max-width: 640px) {
+  .tdService,
+  .tdPrice,
+  .tableHeader,
+  .addonsBox {
+    padding: 1rem 1.15rem;
+  }
+}

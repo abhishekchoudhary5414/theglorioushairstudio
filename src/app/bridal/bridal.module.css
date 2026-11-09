@@ -1,0 +1,207 @@
+.page {
+  background-color: var(--color-background);
+}
+
+.contentWrapper {
+  max-width: var(--max-width-site);
+  margin: 0 auto;
+  padding: 5.5rem 1.5rem 6.5rem;
+}
+
+.introSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.5rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.introImgWrapper {
+  position: relative;
+  height: 520px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+.introImg {
+  object-fit: cover;
+}
+
+.leadText {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--color-primary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.bodyText {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.packageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+  margin-bottom: 6rem;
+}
+
+.packageCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.packageCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
+}
+
+.highlightCard {
+  border-color: var(--color-secondary);
+  background: linear-gradient(to bottom, #ffffff, #faf7f2);
+}
+
+.packageBadge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  background-color: var(--color-secondary-light);
+  border: 1px solid var(--color-border-gold);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-xs);
+}
+
+.packageName {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.packageSubtitle {
+  font-size: 0.875rem;
+  color: var(--color-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.priceBlock {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.packagePrice {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.packageFeatureList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  margin-bottom: 2.5rem;
+  flex: 1;
+}
+
+.packageFeatureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.packageCheck {
+  color: var(--color-secondary);
+  margin-top: 0.15rem;
+}
+
+.consultationBanner {
+  background-color: var(--color-surface-dark);
+  color: var(--color-text-inverse);
+  padding: 4rem 3rem;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.bannerTitle {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--color-text-inverse);
+  margin-bottom: 0.75rem;
+}
+
+.bannerDesc {
+  color: var(--color-border);
+  font-size: 1rem;
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+.bannerActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.whatsappAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background-color: var(--color-whatsapp);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-xs);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+}
+
+.whatsappAction:hover {
+  filter: brightness(0.95);
+}
+
+@media (max-width: 960px) {
+  .introSection {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .consultationBanner {
+    padding: 2.5rem 1.5rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  .bannerActions {
+    justify-content: center;
+  }
+}

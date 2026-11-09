@@ -1,0 +1,79 @@
+.section {
+  padding: 5.5rem 1.5rem 4rem;
+  scroll-margin-top: 140px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sectionAlt {
+  background-color: var(--color-surface);
+}
+
+.container {
+  max-width: var(--max-width-site);
+  margin: 0 auto;
+}
+
+.categoryHeader {
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrowWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.eyebrowLine {
+  width: 24px;
+  height: 1px;
+  background-color: var(--color-secondary);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  max-width: 680px;
+}
+
+/* Card layout for Academy and visually-rich categories */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+/* Table layout for multi-item categories */
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+}
