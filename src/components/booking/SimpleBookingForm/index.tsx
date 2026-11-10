@@ -386,7 +386,7 @@ export const SimpleBookingForm: React.FC<SimpleBookingFormProps> = ({
             </button>
 
             {/* Download as Image Button */}
-            <button
+            {/* <button
               type="button"
               onClick={handleDownloadImage}
               disabled={isDownloadingImage}
@@ -395,7 +395,7 @@ export const SimpleBookingForm: React.FC<SimpleBookingFormProps> = ({
             >
               <ImageIcon fontSize="small" />
               <span>{isDownloadingImage ? "Creating Image..." : "Download Image"}</span>
-            </button>
+            </button> */}
 
             {/* Send on WhatsApp */}
             <a
