@@ -2,23 +2,14 @@
 
 import React from "react";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import PhoneIcon from "@mui/icons-material/Phone";
 import { salonConfig } from "@/config/salon.config";
 import { trackInteraction } from "@/lib/utils/analytics";
 import styles from "./FloatingWhatsApp.module.css";
 
 export const FloatingWhatsApp: React.FC = () => {
   const whatsappUrl = `https://wa.me/${salonConfig.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-    `Hello ${salonConfig.name}, I would like to enquire about appointment availability.`
+    `Hello ${salonConfig.name}, I would like to book an appointment.`
   )}`;
-
-  const handleCallClick = () => {
-    trackInteraction({
-      eventType: "call_click",
-      sourceLocation: "floating_bottom_right",
-      targetUrl: `tel:${salonConfig.contact.phone}`
-    });
-  };
 
   const handleWhatsappClick = () => {
     trackInteraction({
@@ -28,20 +19,25 @@ export const FloatingWhatsApp: React.FC = () => {
     });
   };
 
+  const handleBookingClick = () => {
+    trackInteraction({
+      eventType: "booking_click",
+      sourceLocation: "floating_bottom_right",
+      targetUrl: "/booking"
+    });
+  };
+
   return (
     <div className={styles.floatingContainer}>
-      {/* Call Button */}
       <a
-        href={`tel:${salonConfig.contact.phone}`}
-        onClick={handleCallClick}
-        className={`${styles.floatBtn} ${styles.callBtn}`}
-        aria-label={`Call Salon at ${salonConfig.contact.phoneDisplay}`}
+        href="/booking"
+        onClick={handleBookingClick}
+        className={`${styles.floatBtn} ${styles.bookBtn}`}
+        aria-label="Book an appointment now"
       >
-        <PhoneIcon fontSize="medium" />
-        <span className={styles.label}>Call Us</span>
+        <span className={styles.label}>Book Now</span>
       </a>
 
-      {/* WhatsApp Button */}
       <a
         href={whatsappUrl}
         onClick={handleWhatsappClick}
