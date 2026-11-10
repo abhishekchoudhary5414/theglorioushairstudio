@@ -9,10 +9,16 @@ import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./MobileMenu.module.css";
 
+interface MobileMenuNavItem {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+}
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  navItems: { label: string; href: string }[];
+  navItems: MobileMenuNavItem[];
 }
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navItems }) => {
@@ -47,17 +53,47 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navItem
         </div>
 
         <nav className={styles.links}>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={styles.link}
-              onClick={onClose}
-            >
-              <span>{item.label}</span>
-              <ChevronRightIcon fontSize="small" style={{ color: "var(--color-secondary)" }} />
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            if (item.children) {
+              return (
+                <div key={item.href} className={styles.groupedLinks}>
+                  <Link
+                    href={item.href}
+                    className={styles.link}
+                    onClick={onClose}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRightIcon fontSize="small" style={{ color: "var(--color-secondary)" }} />
+                  </Link>
+
+                  <div className={styles.subLinks}>
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className={styles.subLink}
+                        onClick={onClose}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={styles.link}
+                onClick={onClose}
+              >
+                <span>{item.label}</span>
+                <ChevronRightIcon fontSize="small" style={{ color: "var(--color-secondary)" }} />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className={styles.footer}>

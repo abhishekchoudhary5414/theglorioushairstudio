@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { PrimaryButton } from "@/components/common/PrimaryButton";
@@ -12,10 +12,22 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./Header.module.css";
 
+const SERVICE_MENU_ITEMS = [
+  { label: "All Services", href: "/services" },
+  { label: "Academy Courses", href: "/services?category=academy-courses" },
+  { label: "Makeup & Hair Styling", href: "/services?category=makeup-hair-styling" },
+  { label: "Professional Hair Treatments", href: "/services?category=hair-treatments" },
+  { label: "Haircuts & Basic Services", href: "/services?category=haircuts-basic" },
+  { label: "Wax & Body Care", href: "/services?category=wax-body-care" },
+  { label: "Facial & Cleanup Services", href: "/services?category=facial-cleanup" },
+  { label: "Hair Colour Services", href: "/services?category=hair-colour" },
+  { label: "Hair Spa Services", href: "/services?category=hair-spa" },
+];
+
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "Services", href: "/services", children: SERVICE_MENU_ITEMS },
   { label: "Experts", href: "/experts" },
   { label: "Gallery", href: "/gallery" },
   { label: "Bridal", href: "/bridal" },
@@ -26,7 +38,10 @@ const NAV_ITEMS = [
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeServiceCategory = searchParams.get("category");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,6 +77,50 @@ export const Header: React.FC = () => {
 
             <nav className={styles.nav}>
               {NAV_ITEMS.map((item) => {
+                if (item.children) {
+                  const isActive =
+                    pathname === item.href ||
+                    item.children.some((child) => pathname === child.href);
+
+                  return (
+                    <div
+                      key={item.href}
+                      className={styles.servicesMenuWrapper}
+                      onMouseEnter={() => setServicesMenuOpen(true)}
+                      onMouseLeave={() => setServicesMenuOpen(false)}
+                    >
+                      <Link
+                        href={item.href}
+                        className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
+                      >
+                        {item.label}
+                      </Link>
+
+                      <div
+                        className={`${styles.servicesDropdown} ${servicesMenuOpen ? styles.servicesDropdownOpen : ""}`}
+                      >
+                        {item.children.map((child) => {
+                          const isChildActive =
+                            pathname === "/services" &&
+                            ((child.href === "/services" && !activeServiceCategory) ||
+                              (activeServiceCategory && child.href === `/services?category=${activeServiceCategory}`));
+
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={`${styles.servicesDropdownLink} ${isChildActive ? styles.servicesDropdownLinkActive : ""}`}
+                              onClick={() => setServicesMenuOpen(false)}
+                            >
+                              {child.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+
                 const isActive = pathname === item.href;
                 return (
                   <Link

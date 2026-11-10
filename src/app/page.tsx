@@ -34,8 +34,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${salonConfig.name} | Best Unisex Salon in Indore`,
     description: salonConfig.description,
-    images: [{ url: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=1200&auto=format&fit=crop" }],
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630 }],
     type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${salonConfig.name} | Best Unisex Salon in Indore`,
+    description: salonConfig.description,
+    images: ["/images/og-image.png"]
   }
 };
 

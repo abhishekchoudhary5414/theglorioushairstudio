@@ -97,6 +97,54 @@
   gap: 1.75rem;
 }
 
+.servicesMenuWrapper {
+  position: relative;
+}
+
+.servicesDropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  min-width: 260px;
+  display: grid;
+  gap: 0.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  padding: 0.7rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all var(--transition-normal);
+  z-index: 20;
+}
+
+.servicesDropdownOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.servicesDropdownLink {
+  display: block;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.servicesDropdownLink:hover,
+.servicesDropdownLinkActive {
+  background-color: var(--color-secondary-light);
+  color: var(--color-secondary);
+}
+
 .navLink {
   font-size: 0.85rem;
   font-weight: 500;

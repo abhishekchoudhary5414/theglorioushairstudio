@@ -80,6 +80,29 @@
   flex: 1;
 }
 
+.groupedLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.subLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-left: 1rem;
+}
+
+.subLink {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  padding: 0.35rem 0;
+}
+
+.subLink:hover {
+  color: var(--color-secondary);
+}
+
 .link {
   font-size: 1.125rem;
   font-weight: 500;

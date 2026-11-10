@@ -12,7 +12,21 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: salonConfig.name,
     locale: "en_IN",
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${salonConfig.name} | Hair Studio & Academy`
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${salonConfig.name} | Hair Studio & Academy`,
+    description: `${salonConfig.name} - ${salonConfig.tagline}. Located in ${salonConfig.address.city}, India.`,
+    images: ["/images/og-image.png"]
   }
 };
 
@@ -25,7 +39,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": ["BeautySalon", "HairSalon"],
     "name": salonConfig.name,
-    "image": "https://theglorioushairstudio.com/images/logo.jpg",
+    "image": "https://theglorioushairstudio.com/images/og-image.png",
     "description": salonConfig.description,
     "url": "https://theglorioushairstudio.com",
     "telephone": salonConfig.contact.phone,

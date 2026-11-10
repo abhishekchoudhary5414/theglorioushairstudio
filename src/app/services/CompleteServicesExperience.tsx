@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { SALON_SERVICES_CATEGORIES } from "@/data/services";
 import { ServicesHero } from "@/components/services/ServicesHero";
 import { ServiceCategoryNavigation } from "@/components/services/ServiceCategoryNavigation";
@@ -9,17 +10,40 @@ import { ServicesFAQ } from "@/components/services/ServicesFAQ";
 import { ServicesBookingCTA } from "@/components/services/ServicesBookingCTA";
 
 export const CompleteServicesExperience: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>(
-    SALON_SERVICES_CATEGORIES[0].id
+  const searchParams = useSearchParams();
+  const categoryFromQuery = searchParams.get("category");
+  const validQueryCategory =
+    categoryFromQuery && SALON_SERVICES_CATEGORIES.some((cat) => cat.id === categoryFromQuery)
+      ? categoryFromQuery
+      : null;
+
+  const [scrollActiveCategory, setScrollActiveCategory] = useState<string>(
+    validQueryCategory || SALON_SERVICES_CATEGORIES[0].id
   );
 
+  const activeCategory = validQueryCategory || scrollActiveCategory;
+
   const handleSelectCategory = (categoryId: string) => {
-    setActiveCategory(categoryId);
+    setScrollActiveCategory(categoryId);
+    const nextUrl = categoryId === "all" ? "/services" : `/services?category=${categoryId}`;
+    window.history.pushState({}, "", nextUrl);
+
     const element = document.getElementById(categoryId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+
+  useEffect(() => {
+    if (!validQueryCategory) return;
+
+    const element = document.getElementById(validQueryCategory);
+    if (element) {
+      requestAnimationFrame(() => {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [validQueryCategory]);
 
   // Update active category on user scroll
   useEffect(() => {
@@ -30,7 +54,7 @@ export const CompleteServicesExperience: React.FC = () => {
         const cat = SALON_SERVICES_CATEGORIES[i];
         const el = document.getElementById(cat.id);
         if (el && el.offsetTop <= scrollPosition) {
-          setActiveCategory(cat.id);
+          setScrollActiveCategory(cat.id);
           break;
         }
       }
