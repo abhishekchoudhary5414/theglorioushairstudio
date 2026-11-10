@@ -44,12 +44,24 @@ export function escapeSvgText(str: string): string {
  */
 export function splitAddressToLines(address: string): [string, string] {
   if (!address) return ["", ""];
-  const parts = address.split(",").map((p) => p.trim());
-  if (parts.length <= 2) return [address, ""];
 
-  const mid = Math.ceil(parts.length / 2);
-  const line1 = parts.slice(0, mid).join(", ");
-  const line2 = parts.slice(mid).join(", ");
+  const trimmed = address.trim();
+  const parts = trimmed
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  if (parts.length === 0) return ["", ""];
+  if (parts.length === 1) return [parts[0], ""];
+  if (parts.length === 2) return [parts[0], parts[1]];
+
+  // Keep a structured address together instead of cutting it at a raw midpoint.
+  // For long salon addresses, Line 1 should usually keep the building/block details,
+  // and Line 2 should keep the locality/area details together.
+  const preferredMid = parts.length >= 6 ? 3 : Math.ceil(parts.length / 2);
+  const line1 = parts.slice(0, preferredMid).join(", ");
+  const line2 = parts.slice(preferredMid).join(", ");
+
   return [line1, line2];
 }
 
@@ -163,13 +175,18 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
         PROFESSIONAL HAIR &amp; BEAUTY SALON AND ACADEMY
       </text>
 
-      <!-- Address Line (Single or Two-Line Safe) -->
+      <!-- Address Line (Two-part layout) -->
       <g transform="translate(0, 52) scale(0.65)">
         <path d="${MUI_SVG_PATHS.locationOn}" fill="#c5a059" />
       </g>
       <text x="20" y="64" class="font-sans txt-muted" font-size="11">
-        ${safeAddrLine1}${safeAddrLine2 ? `, ${safeAddrLine2}` : ""}
+        ${safeAddrLine1}
       </text>
+      ${safeAddrLine2 ? `
+      <text x="20" y="78" class="font-sans txt-muted" font-size="11">
+        ${safeAddrLine2}
+      </text>
+      ` : ""}
 
       <!-- Contact Line with Phone, WhatsApp & Email Icons -->
       <g transform="translate(0, 74)">

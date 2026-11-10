@@ -38,7 +38,12 @@ export async function POST(req: Request) {
       year: "numeric",
     });
 
-    const salonAddress: string = salonConfig.address.fullAddress || "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar, Indore";
+    const salonAddress: string = [
+      salonConfig.address.line1 || "Scheme No 78, Yashraj Complex, Sector C",
+      salonConfig.address.line2 || "Aranya Nagar, Scheme 78, Vijay Nagar",
+    ]
+      .filter(Boolean)
+      .join(", ");
 
     const slipData = {
       bookingRef: bookingRef || `GG-${Math.floor(100000 + Math.random() * 900000)}`,
