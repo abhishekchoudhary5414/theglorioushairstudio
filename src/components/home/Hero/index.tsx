@@ -16,6 +16,7 @@ import { SecondaryButton } from "@/components/common/SecondaryButton";
 import { salonConfig } from "@/config/salon.config";
 import { trackInteraction } from "@/lib/utils/analytics";
 import styles from "./Hero.module.css";
+import HeroImage from "../../../../public/hero/hero-girl.png"
 
 export const Hero: React.FC = () => {
   const whatsappUrl = `https://wa.me/${salonConfig.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
@@ -79,37 +80,9 @@ export const Hero: React.FC = () => {
               <ArrowForwardIcon fontSize="small" />
             </PrimaryButton>
 
-            <a
-              href={`tel:${salonConfig.contact.phone}`}
-              className={styles.callDirectBtn}
-              onClick={() =>
-                trackInteraction({
-                  eventType: "call_click",
-                  sourceLocation: "hero_section",
-                  targetUrl: `tel:${salonConfig.contact.phone}`
-                })
-              }
-            >
-              <PhoneIcon fontSize="small" />
-              <span>Call {salonConfig.contact.phoneDisplay}</span>
-            </a>
+          
 
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.whatsappDirectBtn}
-              onClick={() =>
-                trackInteraction({
-                  eventType: "whatsapp_click",
-                  sourceLocation: "hero_section",
-                  targetUrl: whatsappUrl
-                })
-              }
-            >
-              <WhatsAppIcon fontSize="small" />
-              <span>WhatsApp Us</span>
-            </a>
+        
 
             <SecondaryButton href="/services" inverse>
               View Services &amp; Prices
@@ -135,21 +108,13 @@ export const Hero: React.FC = () => {
         <div className={styles.imageShowcase}>
           <div className={styles.mainCard}>
             <Image
-              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop"
+              src={HeroImage}
               alt="Professional Hair Styling and Makeup Session at The Glorious Hair Studio Indore"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 420px"
               className={styles.showcaseImg}
             />
-          </div>
-
-          <div className={styles.floatingTag}>
-            <div className={styles.tagRating}>
-              <StarIcon fontSize="small" />
-              <span>4.9 / 5 Rating</span>
-            </div>
-            <span className={styles.tagText}>Scheme 78, Vijay Nagar, Indore</span>
           </div>
         </div>
       </div>
