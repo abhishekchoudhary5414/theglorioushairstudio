@@ -34,37 +34,6 @@ export const CATEGORIES_LIST = [
 export const SERVICES_DATA: ServiceItem[] = [
   // 1. Academy Courses
   {
-    id: "serv-acad-hair",
-    slug: "hair-course",
-    name: "Professional Hair Course",
-    tagline: "Certified professional hair cutting, chemical treatments & styling",
-    category: "hair-care",
-    categoryName: "Academy Courses",
-    durationMinutes: 180,
-    priceINR: 15000,
-    priceDisplay: "₹15,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.academy,
-    shortDescription: "Complete hands-on professional hair training covering scissor work, chemical botox/keratin, coloring, and salon client management.",
-    fullDescription: "Build your career in the beauty industry with our comprehensive Professional Hair Course in Indore. Learn Vidal Sassoon sectioning, advanced scissor texturing, balayage hair painting, keratin/nanoplastia chemistry, and client consultations with 100% live model training.",
-    benefits: [
-      "Authorized professional completion certification",
-      "Hands-on practical training on live models",
-      "In-depth knowledge of chemical bonds & formulations",
-      "Placement assistance and salon setup guidance"
-    ],
-    process: [
-      { step: 1, title: "Theory & Hair Anatomy", description: "Understanding hair porosity, texture analysis, and tool ergonomics." },
-      { step: 2, title: "Precision Scissor & Clipper Cutting", description: "Mastering blunt bobs, layers, fades, and graduation techniques." },
-      { step: 3, title: "Chemical Restructuring & Color", description: "Hands-on formulation for Keratin, Botox, Nanoplastia, and Balayage." },
-      { step: 4, title: "Client Service & Final Assessment", description: "Full client consultation and practical evaluation." }
-    ],
-    faqs: [
-      { question: "What is the duration of this hair course?", answer: "The course runs for 4 to 6 weeks with flexible weekday and weekend practical batches." },
-      { question: "Do I get a certificate upon completion?", answer: "Yes, you receive an authorized certificate from The Glorious Hair Studio and Academy." }
-    ]
-  },
-  {
     id: "serv-acad-skin",
     slug: "skin-course",
     name: "Professional Skin & Aesthetic Course",
@@ -92,36 +61,6 @@ export const SERVICES_DATA: ServiceItem[] = [
     ],
     faqs: [
       { question: "Is prior beauty experience required?", answer: "No, this course is designed from beginner fundamentals up to advanced practical aesthetics." }
-    ]
-  },
-  {
-    id: "serv-acad-makeup",
-    slug: "makeup-course",
-    name: "Master Bridal & HD Makeup Course",
-    tagline: "Hands-on training in HD, Airbrush, Bridal looks & Saree draping",
-    category: "makeup",
-    categoryName: "Academy Courses",
-    durationMinutes: 180,
-    priceINR: 15000,
-    priceDisplay: "₹15,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.bridal,
-    shortDescription: "Learn professional bridal makeup from senior artists. Covers color theory, skin prep, smokey eyes, contouring, and saree draping.",
-    fullDescription: "Step into the lucrative bridal industry with our master makeup program. Work with premium international brands like MAC, Huda Beauty, NARS, and Kryolan. Perfect your bridal eye work, waterproof base building, matha patti fixing, and dupatta pin-ups.",
-    benefits: [
-      "100% practical live model sessions for every look",
-      "Mastery of flash-proof, 4K camera-ready bases",
-      "Complete dupatta, lehenga, and saree draping lessons",
-      "Portfolio photography assistance for your social media"
-    ],
-    process: [
-      { step: 1, title: "Color Theory & Undertone Mapping", description: "Warm, cool, olive undertones and flawless color correction." },
-      { step: 2, title: "Base Architecture & Contouring", description: "Waterproof HD airbrush bases, powder baking, and strobing." },
-      { step: 3, title: "Eye Artistry & Lashes", description: "Smokey eyes, cut-crease, glitter foil work, and 3D lash fixing." },
-      { step: 4, title: "Bridal Draping & Trousseau", description: "Sabyasachi draping, traditional Kanjeevaram pleating, and jewelry setting." }
-    ],
-    faqs: [
-      { question: "Do you provide makeup products during practice?", answer: "Yes, studio demo makeup vanity kits and brushes are provided during academy sessions." }
     ]
   },
   {
@@ -157,52 +96,6 @@ export const SERVICES_DATA: ServiceItem[] = [
 
   // 2. Makeup & Hair Styling
   {
-    id: "serv-mk-party",
-    slug: "party-makeup",
-    name: "Party & Occasion Makeup",
-    tagline: "Flawless, radiant glam for cocktail events and celebrations",
-    category: "makeup",
-    categoryName: "Makeup & Hair Styling",
-    durationMinutes: 60,
-    priceINR: 1000,
-    priceDisplay: "₹1,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.bridal,
-    shortDescription: "Glow with photo-ready HD party makeup tailored to your outfit and face structure. Includes skin prep and soft eye detailing.",
-    fullDescription: "Attending a family wedding, birthday, or cocktail reception in Indore? Our party makeup provides lightweight, radiant coverage that stays fresh for hours without looking overdone.",
-    benefits: ["Dewy or matte skin finish", "Subtle customized eye makeup", "Sweat-resistant long-lasting base", "Includes pre-makeup skin priming"],
-    process: [
-      { step: 1, title: "Skin Prep", description: "Hydrating serum and pore-smoothing primer application." },
-      { step: 2, title: "HD Base Blend", description: "Skin tone matched foundation and subtle cream contouring." },
-      { step: 3, title: "Eye Detailing", description: "Soft shimmer, eyeliner, and volumizing mascara." },
-      { step: 4, title: "Lip Color & Setting Mist", description: "Long-wear lipstick and fine setting spray." }
-    ],
-    faqs: [{ question: "Can I bring my own lipstick shade?", answer: "Yes, our artists are happy to work with your favorite lip shades." }]
-  },
-  {
-    id: "serv-mk-bridal",
-    slug: "bridal-makeup",
-    name: "Royal HD Bridal Makeup",
-    tagline: "Sweat-proof, 16-hour camera-ready wedding day makeup",
-    category: "bridal-makeup",
-    categoryName: "Makeup & Hair Styling",
-    durationMinutes: 180,
-    priceINR: 5000,
-    priceDisplay: "Starting from ₹5,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.bridalPortrait,
-    shortDescription: "Complete bridal package with 16-hour waterproof HD base, lashes, lenses, jewelry setting, and perfect lehenga/saree draping.",
-    fullDescription: "Make your wedding day unforgettable. Our senior bridal artists specialize in natural-looking, radiant bridal makeup using MAC, Huda Beauty, NARS, and Kryolan that remains flawless under 4K lenses and varmala/phera warmth.",
-    benefits: ["100% waterproof and flash-tested", "Includes 3D mink lashes and lenses", "Precision matha patti and jewelry fixing", "Expert double-dupatta or saree draping"],
-    process: [
-      { step: 1, title: "Hydration Mask", description: "Deep prep sheet mask to ensure smooth base." },
-      { step: 2, title: "HD Base Sculpting", description: "Micro-fine foundation match for weightless coverage." },
-      { step: 3, title: "Regal Eye Art", description: "Custom glitter or smokey eye with luxury lashes." },
-      { step: 4, title: "Bridal Draping", description: "Saree or lehenga dupatta pinning and jewelry setup." }
-    ],
-    faqs: [{ question: "Do you offer makeup trials?", answer: "Yes, you can schedule a pre-wedding consultation and trial at our salon." }]
-  },
-  {
     id: "serv-hd-style",
     slug: "hair-styling-and-draping",
     name: "Hair Styling & Saree Draping",
@@ -227,75 +120,6 @@ export const SERVICES_DATA: ServiceItem[] = [
   },
 
   // 3. Hair Treatments
-  {
-    id: "serv-ht-keratin",
-    slug: "keratin-hair-treatment",
-    name: "Keratin Hair Treatment",
-    tagline: "Restores protein, removes frizz, and adds silky smooth shine",
-    category: "hair-care",
-    categoryName: "Hair Treatments",
-    durationMinutes: 120,
-    priceINR: 2000,
-    priceDisplay: "₹2,000 – ₹6,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.treatment,
-    shortDescription: "Our most popular hair restructuring therapy. Eliminates up to 90% frizz and gives naturally straight, shiny, manageable hair.",
-    fullDescription: "Say goodbye to humidity frizz and rough tangled hair. Our gentle, formaldehyde-free keratin treatment infuses hydrolyzed proteins deep into the hair cortex, sealing open cuticles and leaving strands silky soft for 4 to 6 months.",
-    benefits: ["Eliminates 90% humidity frizz", "Drastically cuts down daily blow-dry time", "Adds mirror-like gloss and softness", "Safe for color-treated hair"],
-    process: [
-      { step: 1, title: "Clarifying Wash", description: "Opens cuticles and removes mineral build-up." },
-      { step: 2, title: "Keratin Infusion", description: "Section-by-section application of protein elixir." },
-      { step: 3, title: "Ceramic Ironing", description: "Thermal sealing to lock proteins into the fiber." },
-      { step: 4, title: "Nourishing Rinse", description: "Hydrating seal and smooth blowout." }
-    ],
-    faqs: [{ question: "How is the exact price determined?", answer: "Exact pricing (₹2,000 – ₹6,000) depends on your hair length and thickness. Share a photo on WhatsApp for an exact quote." }]
-  },
-  {
-    id: "serv-ht-botox",
-    slug: "hair-botox-treatment",
-    name: "Hair Botox Deep Conditioning",
-    tagline: "Anti-aging cellular repair for brittle, chemically damaged strands",
-    category: "hair-care",
-    categoryName: "Hair Treatments",
-    durationMinutes: 120,
-    priceINR: 2000,
-    priceDisplay: "₹2,000 – ₹6,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.treatment,
-    shortDescription: "Intense moisture and cuticle repair treatment for bleached, color-damaged, or heat-stressed hair without flattening natural volume.",
-    fullDescription: "Hair Botox acts like a deep filler for damaged hair fibers. Packed with amino acids, caviar oil, and collagen, it repairs broken bonds, eliminates split-end roughness, and restores bounce and youthfulness.",
-    benefits: ["Repairs extreme chemical damage", "Preserves natural volume and bounce", "Silky smooth feel with high shine", "Long-lasting results for up to 3–4 months"],
-    process: [
-      { step: 1, title: "Scalp & Hair Prep", description: "Gentle detoxifying wash." },
-      { step: 2, title: "Botox Cocktail Blend", description: "Deeply massaged into every strand." },
-      { step: 3, title: "Steam Activation", description: "Opens fibers to absorb the collagen cocktail." },
-      { step: 4, title: "Cold Seal Blowout", description: "Locks hydration and enhances shine." }
-    ],
-    faqs: [{ question: "Is hair botox different from keratin?", answer: "Yes, botox focuses on deep cellular moisture repair without chemically flattening hair." }]
-  },
-  {
-    id: "serv-ht-nano",
-    slug: "nanoplastia-hair-treatment",
-    name: "Nanoplastia Organic Straightening",
-    tagline: "Formaldehyde-free organic straightening for glass-hair finish",
-    category: "hair-care",
-    categoryName: "Hair Treatments",
-    durationMinutes: 150,
-    priceINR: 2500,
-    priceDisplay: "₹2,500 – ₹10,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.hairColor,
-    shortDescription: "Revolutionary organic straightening using amino acids and natural oils that delivers sleek, straight, and glossy hair for up to 8 months.",
-    fullDescription: "Nanoplastia is the modern alternative to harsh chemical rebonding. Using plant-based acids, it penetrates into the hair cuticle to restructure curls from within, leaving your hair poker straight, healthy, and ultra-glossy with zero unpleasant fumes.",
-    benefits: ["100% formaldehyde-free and safe", "Delivers sleek straight mirror-glass shine", "Lasts 6 to 8 months with proper care", "Safe for bleached and highlighted hair"],
-    process: [
-      { step: 1, title: "Fiber Preparation", description: "Chelating wash to remove product build-up." },
-      { step: 2, title: "Nanoplastia Elixir", description: "Organic amino acid solution applied evenly." },
-      { step: 3, title: "Nano-Thermal Sealing", description: "Precision ceramic flat iron passes at optimal heat." },
-      { step: 4, title: "Silk Rinse & Polish", description: "pH-neutralizing rinse and blow-dry." }
-    ],
-    faqs: [{ question: "Will my hair look unnaturally pin-straight?", answer: "Nanoplastia straightens hair while keeping natural fluidity and movement." }]
-  },
 
   // 4. Haircuts & Basic Services
   {
@@ -320,29 +144,6 @@ export const SERVICES_DATA: ServiceItem[] = [
       { step: 4, title: "Wash & Style", description: "Refreshing rinse and styling wax or matte paste." }
     ],
     faqs: [{ question: "Do you accept walk-ins for men's haircuts?", answer: "Yes, walk-ins are welcome, or you can book online to avoid waiting." }]
-  },
-  {
-    id: "serv-hc-women",
-    slug: "womens-haircut-and-blowdry",
-    name: "Women's Basic & Advance Haircut",
-    tagline: "Layered cuts, feather styling, butterfly bangs & bouncy blowout",
-    category: "hair-care",
-    categoryName: "Haircuts & Basic Services",
-    durationMinutes: 45,
-    priceINR: 300,
-    priceDisplay: "Basic ₹300 | Advance ₹400",
-    isPopular: true,
-    image: SALON_IMAGE_SET.hairColor,
-    shortDescription: "Revamp your style with clean split-end trims, trending layers, curtain bangs, or chic bobs followed by a bouncy blowdry.",
-    fullDescription: "From simple U/V shape maintenance trims to trending face-framing layers and butterfly cuts, our senior hair stylists listen carefully to your length preferences and give you a haircut that grows out gracefully.",
-    benefits: ["Removes split ends and dry damage", "Enhances natural bounce and face shape", "Includes consultation on daily styling", "Complete with volume blowout"],
-    process: [
-      { step: 1, title: "Hair Analysis", description: "Assessing face shape, cowlicks, and density." },
-      { step: 2, title: "Precision Sectioning", description: "Clean structural parting." },
-      { step: 3, title: "Scissor Craft", description: "Layering, sliding cut, and weight reduction." },
-      { step: 4, title: "Volume Blowdry", description: "Styling with round ceramic brush." }
-    ],
-    faqs: [{ question: "What is the difference between basic and advance cut?", answer: "Basic covers straight/U/V trims; advance includes multi-layers, feathering, bobs, and bangs." }]
   },
 
   // 5. Wax & Body Care
@@ -371,79 +172,10 @@ export const SERVICES_DATA: ServiceItem[] = [
   },
 
   // 6. Facial & Cleanup
-  {
-    id: "serv-fc-o3",
-    slug: "o3-and-hydra-facial",
-    name: "O3+ Radiance & HydraFacial Treatment",
-    tagline: "Instant tan removal, pore tightening & deep vacuum hydration",
-    category: "facials",
-    categoryName: "Facial & Cleanup",
-    durationMinutes: 60,
-    priceINR: 1200,
-    priceDisplay: "Hydra ₹1,200 | O3+ Facial ₹2,500",
-    isPopular: true,
-    image: SALON_IMAGE_SET.facial,
-    shortDescription: "Visible skin brightening and vacuum pore cleansing. Eliminates whiteheads, blackheads, and dullness for party-ready glow.",
-    fullDescription: "Our range of cleanups (Lilium, Gold, Lotus, O3+) and advanced facials (Gold, Lotus, O3+, HydraFacial) give your skin intense hydration, active tan removal, and improved elasticity. Every facial includes relaxing face and neck massage.",
-    benefits: ["Painless vacuum extraction of blackheads", "Fades stubborn sun tan and dullness", "Includes 20-minute acupressure face massage", "Cooling rubber/gold mask locks in glow"],
-    process: [
-      { step: 1, title: "Deep Cleansing", description: "Cleans makeup, dust, and excess sebum." },
-      { step: 2, title: "D-Tan Pack & Steam", description: "Lightens tanning and loosens clogged pores." },
-      { step: 3, title: "Acupressure Massage", description: "Nourishing cream massage to boost blood flow." },
-      { step: 4, title: "Hydro-Rubber Mask", description: "Locks active glow ingredients into skin." }
-    ],
-    faqs: [{ question: "How long does the facial glow last?", answer: "With basic sun protection, the radiant glow lasts between 3 to 4 weeks." }]
-  },
 
   // 7. Hair Colour
-  {
-    id: "serv-col-global",
-    slug: "hair-colour-and-root-touchup",
-    name: "Men & Women Hair Colour (L'Oreal / Matrix / Wella)",
-    tagline: "Ammonia-free Inoa, global hair coloring & root touch-ups",
-    category: "hair-colouring",
-    categoryName: "Hair Colour",
-    durationMinutes: 90,
-    priceINR: 300,
-    priceDisplay: "Men from ₹300 | Women ₹2,000 – ₹4,000",
-    isPopular: true,
-    image: SALON_IMAGE_SET.hairColor,
-    shortDescription: "Original branded colors from Streax, Matrix, L'Oreal, and ammonia-free Inoa. Seamless grey coverage and rich multi-tone shades.",
-    fullDescription: "Refresh your natural color or try a bold new shade. We work exclusively with certified salon brands that protect your hair cuticles while delivering long-lasting color brilliance, seamless grey coverage, and deep conditioning.",
-    benefits: ["Sealed original color tubes opened in front of you", "Ammonia-free Inoa options for sensitive scalp", "No harsh brassy tones as hair grows out", "Includes color-lock gloss rinse"],
-    process: [
-      { step: 1, title: "Shade Selection", description: "Matching color to your natural skin tone." },
-      { step: 2, title: "Precise Application", description: "Carefully applied to roots or hair lengths." },
-      { step: 3, title: "Color Processing", description: "Timed development for rich pigment uptake." },
-      { step: 4, title: "Color-Lock Wash", description: "Acidic rinse to seal cuticles and blow-dry." }
-    ],
-    faqs: [{ question: "Will coloring make my hair rough?", answer: "We use low-ammonia and ammonia-free formulations that include conditioning lipids to maintain hair softness." }]
-  },
 
   // 8. Hair Spa
-  {
-    id: "serv-spa-deep",
-    slug: "hair-spa-and-detox",
-    name: "L'Oreal & Wella Deep Hair Spa & Detox",
-    tagline: "Acupressure scalp massage, steam & targeted impulse boosters",
-    category: "spa-wellness",
-    categoryName: "Hair Spa",
-    durationMinutes: 60,
-    priceINR: 500,
-    priceDisplay: "Men from ₹500 | Women from ₹600",
-    isPopular: true,
-    image: SALON_IMAGE_SET.spa,
-    shortDescription: "Recharge stressed hair with hydrating cream baths, soothing head massage, hot steam, and anti-dandruff or hairfall boosters.",
-    fullDescription: "A soothing 60-minute escape for dry, overworked hair and stressed scalps. Our hair spa combines rich nourishing cream baths from Matrix, L'Oreal, or Wella with targeted impulse boosters (+₹150 to +₹250) for dandruff, hairfall, and extreme dryness.",
-    benefits: ["Deep scalp nourishment and stress relief", "Eliminates scalp itchiness and flaking", "Smoothens rough cuticles and split ends", "Detox hair spa options available for men and women"],
-    process: [
-      { step: 1, title: "Cleansing Shampoo", description: "Prepares hair cuticles for deep absorption." },
-      { step: 2, title: "Cream Bath Massage", description: "20-minute therapeutic scalp acupressure." },
-      { step: 3, title: "Aroma Steam", description: "Opens hair shafts for deep moisture penetration." },
-      { step: 4, title: "Conditioning Rinse", description: "Detangling wash and soft blow-dry." }
-    ],
-    faqs: [{ question: "How often should I get a hair spa?", answer: "Once every 3 to 4 weeks is recommended for maintaining healthy hair and scalp." }]
-  }
 ];
 
 export const STYLISTS_DATA: StylistExpert[] = [

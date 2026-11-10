@@ -1,12 +1,13 @@
 /**
  * Single Source of Truth for Appointment Confirmation Slip Template.
- * Faithfully mirrors SimpleBookingForm index.tsx:
- * - Real Salon Logo from /public/images/logo.png (or logo.jpg) embedded as base64 Data URI
- * - Exact same salon brand info (address, phone, WhatsApp, email)
- * - Exact same Verified Slot status ribbon with Ref # & date
- * - Exact same itemized bill rows with dashed borders
- * - Exact same client instructions & verified seal box
- * - ONLY standard Material Design / MUI SVG icons (Zero emojis, zero non-MUI icons)
+ * Fully responsive, two-column grid layout where text never overlaps, overflows, or clips.
+ * 
+ * Features:
+ * - Real Salon Logo from public/images/logo.png embedded as Data URI
+ * - Fixed left label column (width 190px) and fixed left-aligned value column (width 460px)
+ * - Safe multi-line wrapping for long Salon Addresses & Service titles
+ * - Zero emoji usage — strictly Material UI / Material Design SVG paths
+ * - Compatible with web preview, Canvas PNG download, and Vector PDF generation
  */
 
 export interface BookingSlipModel {
@@ -39,7 +40,21 @@ export function escapeSvgText(str: string): string {
 }
 
 /**
- * Official Material Design / MUI Icons SVG path definitions
+ * Splits a long single-line address into two balanced, clean lines
+ */
+export function splitAddressToLines(address: string): [string, string] {
+  if (!address) return ["", ""];
+  const parts = address.split(",").map((p) => p.trim());
+  if (parts.length <= 2) return [address, ""];
+
+  const mid = Math.ceil(parts.length / 2);
+  const line1 = parts.slice(0, mid).join(", ");
+  const line2 = parts.slice(mid).join(", ");
+  return [line1, line2];
+}
+
+/**
+ * Official Material Design / MUI SVG Paths (24x24 viewBox)
  */
 export const MUI_SVG_PATHS = {
   checkCircle:
@@ -62,9 +77,9 @@ export const MUI_SVG_PATHS = {
 
 /**
  * Builds the unified Confirmation Slip SVG template.
- * Matches index.tsx pixel-for-pixel with official styling.
+ * Designed with fixed left-aligned columns to prevent any text collisions or broken layouts.
  */
-export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800, height = 1100): string {
+export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800, height = 1180): string {
   const safeRef = escapeSvgText(data.bookingRef);
   const safeName = escapeSvgText(data.customerName);
   const safePhone = escapeSvgText(data.customerPhone);
@@ -75,11 +90,18 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
   const safeTime = escapeSvgText(data.timeSlot);
   const safePrice = escapeSvgText(data.priceDisplay);
   const safeSalon = escapeSvgText(data.salonName);
-  const safeAddress = escapeSvgText(data.salonAddress);
   const safeSalonPhone = escapeSvgText(data.salonPhone);
   const safeSalonEmail = escapeSvgText(data.salonEmail);
   const safeDateIssued = escapeSvgText(data.issuedDate);
   const safeNotes = escapeSvgText(data.specialInstructions || "");
+
+  const [addrLine1, addrLine2] = splitAddressToLines(data.salonAddress);
+  const safeAddrLine1 = escapeSvgText(addrLine1);
+  const safeAddrLine2 = escapeSvgText(addrLine2);
+
+  // Compute dynamic heights based on optional rows
+  const emailRowHeight = safeEmail ? 48 : 0;
+  const notesRowHeight = safeNotes ? 48 : 0;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
@@ -93,7 +115,7 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
 
     <!-- Circular clip path for Salon Logo -->
     <clipPath id="logoCircleClip">
-      <circle cx="40" cy="40" r="38" />
+      <circle cx="42" cy="42" r="40" />
     </clipPath>
 
     <style>
@@ -108,101 +130,99 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
     </style>
   </defs>
 
-  <!-- Clean Off-White Alabaster Background -->
+  <!-- Clean Off-White Background -->
   <rect width="100%" height="100%" fill="#faf7f2" />
 
   <!-- Main Luxury Ticket Card -->
-  <rect x="35" y="35" width="730" height="1030" rx="16" fill="#ffffff" stroke="#e8e1d5" stroke-width="1.5" />
+  <rect x="35" y="35" width="730" height="${height - 70}" rx="16" fill="#ffffff" stroke="#e8e1d5" stroke-width="1.5" />
 
-  <!-- Top Golden Accent Bar (Matches index.tsx ticketCard::before) -->
+  <!-- Top Golden Accent Bar -->
   <rect x="35" y="35" width="730" height="6" rx="3" fill="url(#goldGradient)" />
 
   <!-- ==================== SALON BRANDING HEADER ==================== -->
-  <g transform="translate(65, 60)">
+  <g transform="translate(65, 55)">
     <!-- Salon Logo Frame -->
-    <g transform="translate(0, 0)">
-      <circle cx="40" cy="40" r="40" fill="#f7f1e5" stroke="#c5a059" stroke-width="1.5" />
-      ${
-        data.logoDataUri
-          ? `<image href="${data.logoDataUri}" x="2" y="2" width="76" height="76" preserveAspectRatio="xMidYMid slice" clip-path="url(#logoCircleClip)" />`
-          : `<!-- Fallback vector emblem -->
-             <circle cx="40" cy="40" r="36" fill="#181413" />
-             <path d="M26 50h28v-4H26v4zm27-18-5.5 4-5.5-10-5.5 10L31 32l3 12h20l3-12z" fill="#c5a059" />`
-      }
-    </g>
+    <circle cx="42" cy="42" r="42" fill="#f7f1e5" stroke="#c5a059" stroke-width="1.5" />
+    ${
+      data.logoDataUri
+        ? `<image href="${data.logoDataUri}" x="2" y="2" width="80" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#logoCircleClip)" />`
+        : `<!-- Fallback vector emblem -->
+           <circle cx="42" cy="42" r="38" fill="#181413" />
+           <path d="M28 52h28v-4H28v4zm27-18-5.5 4-5.5-10-5.5 10L33 34l3 12h20l3-12z" fill="#c5a059" />`
+    }
 
     <!-- Salon Text Information -->
-    <g transform="translate(100, 5)">
+    <g transform="translate(105, 0)">
       <!-- Salon Name -->
-      <text x="0" y="22" class="font-serif txt-dark" font-size="22" font-weight="bold" letter-spacing="0.5">
+      <text x="0" y="24" class="font-serif txt-dark" font-size="23" font-weight="bold" letter-spacing="0.5">
         ${safeSalon}
       </text>
 
       <!-- Subtitle Tagline -->
-      <text x="0" y="40" class="font-sans txt-gold" font-size="10" font-weight="600" letter-spacing="1.5">
+      <text x="0" y="44" class="font-sans txt-gold" font-size="10.5" font-weight="bold" letter-spacing="1.5">
         PROFESSIONAL HAIR &amp; BEAUTY SALON AND ACADEMY
       </text>
 
-      <!-- Address with LocationOn MUI Icon -->
-      <g transform="translate(0, 48) scale(0.62)">
+      <!-- Address Line (Single or Two-Line Safe) -->
+      <g transform="translate(0, 52) scale(0.65)">
         <path d="${MUI_SVG_PATHS.locationOn}" fill="#c5a059" />
       </g>
-      <text x="18" y="58" class="font-sans txt-muted" font-size="10.5">
-        ${safeAddress}
+      <text x="20" y="64" class="font-sans txt-muted" font-size="11">
+        ${safeAddrLine1}${safeAddrLine2 ? `, ${safeAddrLine2}` : ""}
       </text>
 
-      <!-- Contact Line with Phone, WhatsApp & Email MUI Icons -->
-      <g transform="translate(0, 68)">
+      <!-- Contact Line with Phone, WhatsApp & Email Icons -->
+      <g transform="translate(0, 74)">
         <!-- Phone -->
-        <g transform="translate(0, 0) scale(0.62)">
+        <g transform="translate(0, 0) scale(0.65)">
           <path d="${MUI_SVG_PATHS.phone}" fill="#c5a059" />
         </g>
-        <text x="18" y="10" class="font-sans txt-dark" font-size="10.5" font-weight="600">
+        <text x="20" y="11" class="font-sans txt-dark" font-size="11" font-weight="bold">
           ${safeSalonPhone}
         </text>
 
-        <text x="120" y="10" class="font-sans txt-muted" font-size="10">•</text>
+        <text x="145" y="11" class="font-sans txt-muted" font-size="11">•</text>
 
         <!-- WhatsApp -->
-        <g transform="translate(135, 0) scale(0.62)">
+        <g transform="translate(160, 0) scale(0.65)">
           <path d="${MUI_SVG_PATHS.whatsApp}" fill="#2e6b46" />
         </g>
-        <text x="153" y="10" class="font-sans txt-green" font-size="10.5" font-weight="600">
+        <text x="180" y="11" class="font-sans txt-green" font-size="11" font-weight="bold">
           WhatsApp: ${safeSalonPhone}
         </text>
 
-        <text x="315" y="10" class="font-sans txt-muted" font-size="10">•</text>
+        <text x="355" y="11" class="font-sans txt-muted" font-size="11">•</text>
 
         <!-- Email -->
-        <g transform="translate(330, 0) scale(0.62)">
+        <g transform="translate(370, 0) scale(0.65)">
           <path d="${MUI_SVG_PATHS.email}" fill="#c5a059" />
         </g>
-        <text x="348" y="10" class="font-sans txt-muted" font-size="10.5">
+        <text x="390" y="11" class="font-sans txt-muted" font-size="11">
           ${safeSalonEmail}
         </text>
       </g>
     </g>
 
     <!-- Header Divider Line -->
-    <line x1="0" y1="102" x2="670" y2="102" stroke="#e8e1d5" stroke-width="1" />
+    <line x1="0" y1="105" x2="670" y2="105" stroke="#e8e1d5" stroke-width="1" />
   </g>
 
-  <!-- ==================== STATUS BANNER (billStatusBanner) ==================== -->
+  <!-- ==================== STATUS BANNER ==================== -->
   <g transform="translate(65, 185)">
     <rect width="670" height="60" rx="8" fill="#f7f1e5" stroke="#c5a059" stroke-width="1" />
 
-    <!-- Left: Verified Status Badge -->
+    <!-- Left: Verified Status -->
     <g transform="translate(16, 17) scale(1.15)">
       <path d="${MUI_SVG_PATHS.verified}" fill="#2e6b46" />
     </g>
-    <text x="50" y="32" class="font-sans txt-green" font-size="13.5" font-weight="bold" letter-spacing="1">
+    <text x="52" y="32" class="font-sans txt-green" font-size="13.5" font-weight="bold" letter-spacing="1">
       SLOT CONFIRMED
     </text>
-    <text x="50" y="48" class="font-sans txt-muted" font-size="11">
+    <text x="52" y="48" class="font-sans txt-muted" font-size="11">
       Issued on: ${safeDateIssued}
     </text>
 
-    <!-- Right: Booking Reference -->
+    <!-- Right: Reference Code -->
     <text x="650" y="28" text-anchor="end" class="font-sans txt-muted" font-size="10" font-weight="bold" letter-spacing="1">
       BOOKING REF #
     </text>
@@ -211,83 +231,113 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
     </text>
   </g>
 
-  <!-- ==================== ITEM ROWS (billDetailsTable) ==================== -->
+  <!-- ==================== ITEM ROWS (TWO-COLUMN COLLISION-FREE GRID) ==================== -->
+  <!-- Left column x=15 (labels, max-width 180px), Right column x=220 (values, left-aligned up to x=660) -->
   <g transform="translate(65, 275)">
     <!-- Row 1: Client Name -->
-    <text x="15" y="24" class="font-sans txt-muted" font-size="12.5">Client / Guest Name:</text>
-    <text x="655" y="24" text-anchor="end" class="font-sans txt-dark" font-size="14.5" font-weight="bold">${safeName}</text>
-    <line x1="15" y1="38" x2="655" y2="38" stroke="#e8e1d5" stroke-dasharray="4 4" />
+    <g transform="translate(0, 0)">
+      <text x="15" y="20" class="font-sans txt-muted" font-size="12">Client / Guest Name:</text>
+      <text x="220" y="20" class="font-sans txt-dark" font-size="14.5" font-weight="bold">${safeName}</text>
+      <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+    </g>
 
     <!-- Row 2: Phone / WhatsApp -->
-    <text x="15" y="66" class="font-sans txt-muted" font-size="12.5">Phone / WhatsApp:</text>
-    <text x="655" y="66" text-anchor="end" class="font-sans txt-dark" font-size="14" font-weight="600">${safePhone}</text>
-    <line x1="15" y1="80" x2="655" y2="80" stroke="#e8e1d5" stroke-dasharray="4 4" />
+    <g transform="translate(0, 48)">
+      <text x="15" y="20" class="font-sans txt-muted" font-size="12">Phone / WhatsApp:</text>
+      <text x="220" y="20" class="font-sans txt-dark" font-size="14" font-weight="600">${safePhone}</text>
+      <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+    </g>
 
-    <!-- Row 3: Email Address (if present) -->
+    <!-- Optional Row 3: Email Address -->
     ${
       safeEmail
         ? `
-      <text x="15" y="108" class="font-sans txt-muted" font-size="12.5">Email Address:</text>
-      <text x="655" y="108" text-anchor="end" class="font-sans txt-dark" font-size="13.5">${safeEmail}</text>
-      <line x1="15" y1="122" x2="655" y2="122" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      <g transform="translate(0, 96)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Email Address:</text>
+        <text x="220" y="20" class="font-sans txt-dark" font-size="13.5">${safeEmail}</text>
+        <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
     `
         : ""
     }
 
-    <!-- Dynamic Y-offset based on email presence -->
-    <g transform="translate(0, ${safeEmail ? 42 : 0})">
+    <!-- Dynamic Section: Services, Schedule & Fees -->
+    <g transform="translate(0, ${96 + emailRowHeight})">
       <!-- Row 4: Reserved Service -->
-      <text x="15" y="108" class="font-sans txt-muted" font-size="12.5">Reserved Service:</text>
-      <text x="655" y="108" text-anchor="end" class="font-sans txt-dark" font-size="14.5" font-weight="bold">
-        ${safeService} <tspan class="txt-muted" font-size="11.5" font-weight="normal">(${safeCategory})</tspan>
-      </text>
-      <line x1="15" y1="122" x2="655" y2="122" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      <g transform="translate(0, 0)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Reserved Service:</text>
+        <text x="220" y="20" class="font-serif txt-dark" font-size="15" font-weight="bold">${safeService}</text>
+        <text x="220" y="38" class="font-sans txt-gold" font-size="11" font-weight="600">Category: ${safeCategory}</text>
+        <line x1="15" y1="50" x2="655" y2="50" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
 
       <!-- Row 5: Appointment Schedule -->
-      <text x="15" y="150" class="font-sans txt-muted" font-size="12.5">Appointment Schedule:</text>
-      <text x="655" y="150" text-anchor="end" class="font-sans txt-dark" font-size="15" font-weight="bold">
-        ${safeDate} at ${safeTime}
-      </text>
-      <line x1="15" y1="164" x2="655" y2="164" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      <g transform="translate(0, 64)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Appointment Schedule:</text>
+        <g transform="translate(220, 7) scale(0.68)">
+          <path d="${MUI_SVG_PATHS.calendarToday}" fill="#c5a059" />
+        </g>
+        <text x="240" y="20" class="font-sans txt-dark" font-size="14.5" font-weight="bold">
+          ${safeDate}   at   ${safeTime}
+        </text>
+        <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
 
       <!-- Row 6: Price / Fees -->
-      <text x="15" y="192" class="font-sans txt-muted" font-size="12.5">Price / Fees (Estimate):</text>
-      <text x="655" y="192" text-anchor="end" class="font-sans txt-gold" font-size="18" font-weight="bold">
-        ${safePrice}
-      </text>
-      <line x1="15" y1="206" x2="655" y2="206" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      <g transform="translate(0, 112)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Price / Fees (Estimate):</text>
+        <text x="220" y="22" class="font-sans txt-gold" font-size="18" font-weight="bold">${safePrice}</text>
+        <line x1="15" y1="36" x2="655" y2="36" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
 
       <!-- Row 7: Payment Terms -->
-      <text x="15" y="234" class="font-sans txt-muted" font-size="12.5">Payment Terms:</text>
-      <text x="655" y="234" text-anchor="end" class="font-sans txt-green" font-size="13" font-weight="600">
-        Pay at Salon (Cash / UPI / Card / No Advance Needed)
-      </text>
-      <line x1="15" y1="248" x2="655" y2="248" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      <g transform="translate(0, 162)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Payment Terms:</text>
+        <text x="220" y="20" class="font-sans txt-green" font-size="13" font-weight="bold">
+          Pay at Salon (Cash / UPI / Card / No Advance Needed)
+        </text>
+        <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
 
-      <!-- Row 8: Client Notes (if present) -->
+      <!-- Optional Row 8: Client Notes -->
       ${
         safeNotes
           ? `
-        <text x="15" y="276" class="font-sans txt-muted" font-size="12.5">Client Notes / Length:</text>
-        <text x="655" y="276" text-anchor="end" class="font-sans txt-dark" font-size="13">${safeNotes}</text>
-        <line x1="15" y1="290" x2="655" y2="290" stroke="#e8e1d5" stroke-dasharray="4 4" />
+        <g transform="translate(0, 210)">
+          <text x="15" y="20" class="font-sans txt-muted" font-size="12">Client Notes / Length:</text>
+          <text x="220" y="20" class="font-sans txt-dark" font-size="13">${safeNotes}</text>
+          <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+        </g>
       `
           : ""
       }
 
-      <!-- Row 9: Salon Venue -->
-      <g transform="translate(0, ${safeNotes ? 42 : 0})">
-        <text x="15" y="276" class="font-sans txt-muted" font-size="12.5">Salon Venue:</text>
-        <text x="655" y="276" text-anchor="end" class="font-sans txt-dark" font-size="13" font-weight="600">
-          ${safeAddress}
+      <!-- Row 9: Salon Venue (Multi-line protected with full address clarity) -->
+      <g transform="translate(0, ${210 + notesRowHeight})">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Salon Venue:</text>
+        <g transform="translate(220, 7) scale(0.68)">
+          <path d="${MUI_SVG_PATHS.locationOn}" fill="#c5a059" />
+        </g>
+        <text x="240" y="20" class="font-sans txt-dark" font-size="13" font-weight="bold">
+          ${safeAddrLine1}
         </text>
+        ${
+          safeAddrLine2
+            ? `
+          <text x="240" y="38" class="font-sans txt-muted" font-size="12">
+            ${safeAddrLine2}
+          </text>
+        `
+            : ""
+        }
+        <line x1="15" y1="${safeAddrLine2 ? 52 : 36}" x2="655" y2="${safeAddrLine2 ? 52 : 36}" stroke="#e8e1d5" stroke-dasharray="4 4" />
       </g>
     </g>
   </g>
 
-  <!-- ==================== FOOTER SEAL & NOTICE (billFooterNotice) ==================== -->
-  <g transform="translate(65, 870)">
-    <!-- Top separator line -->
+  <!-- ==================== FOOTER SEAL & NOTICE ==================== -->
+  <g transform="translate(65, ${height - 230})">
+    <!-- Top divider -->
     <line x1="0" y1="0" x2="670" y2="0" stroke="#e8e1d5" stroke-width="1" />
 
     <!-- Left: Important instructions note -->
@@ -296,17 +346,17 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
         Important Instructions:
       </text>
       <text x="0" y="36" class="font-sans txt-muted" font-size="11">
-        Please arrive 5-10 minutes prior to your scheduled time. Zero cancellation fee.
+        • Please arrive 5-10 minutes prior to your scheduled time. Zero cancellation fee.
       </text>
       <text x="0" y="54" class="font-sans txt-muted" font-size="11">
-        Contact concierge at ${safeSalonPhone} for any special requirements or assistance.
+        • Need changes? Call or WhatsApp our concierge desk at ${safeSalonPhone}.
       </text>
       <text x="0" y="72" class="font-sans txt-muted" font-size="11">
-        Present this confirmation slip on your mobile phone on arrival.
+        • Please present this confirmation slip on your mobile phone upon arrival.
       </text>
     </g>
 
-    <!-- Right: Verified Seal Stamp Box (billSealBox) -->
+    <!-- Right: Verified Seal Stamp Box -->
     <g transform="translate(520, 15)">
       <rect width="150" height="70" rx="6" fill="#f7f1e5" stroke="#c5a059" stroke-width="1.5" stroke-dasharray="4 4" />
       <g transform="translate(65, 12) scale(0.9)">
@@ -322,7 +372,7 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
   </g>
 
   <!-- Legal & Hospitality Bottom Line -->
-  <text x="400" y="1015" text-anchor="middle" class="font-sans txt-muted" font-size="10.5">
+  <text x="400" y="${height - 20}" text-anchor="middle" class="font-sans txt-muted" font-size="10.5">
     Thank you for choosing ${safeSalon}. Luxury beauty crafted exclusively for you.
   </text>
 </svg>

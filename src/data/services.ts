@@ -50,15 +50,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
       {
         items: [
           {
-            id: "acad-hair",
-            slug: "hair-course",
-            name: "Hair Course",
-            price: 15000,
-            priceDisplay: "₹15,000",
-            description: "Complete professional hair styling, cutting, chemical treatments & texture transformations.",
-            badge: "Certified"
-          },
-          {
             id: "acad-skin",
             slug: "skin-course",
             name: "Skin Course",
@@ -66,15 +57,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
             priceDisplay: "₹15,000",
             description: "Dermatological aesthetics, cleanups, facials, skin analysis & machine treatments.",
             badge: "Certified"
-          },
-          {
-            id: "acad-makeup",
-            slug: "makeup-course",
-            name: "Makeup Course",
-            price: 15000,
-            priceDisplay: "₹15,000",
-            description: "HD & Airbrush bridal makeup, party looks, colour correction & contour mastery.",
-            badge: "Hands-on Practical"
           },
           {
             id: "acad-nail",
@@ -105,11 +87,9 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
       {
         groupTitle: "Makeup Services",
         items: [
-          { id: "mk-party", slug: "party-makeup", name: "Party Makeup", price: 1000, priceDisplay: "₹1,000", description: "Radiant, flawless glow for parties, cocktail events and family gatherings." },
           { id: "mk-sider", slug: "party-makeup", name: "Sider Makeup", price: 1000, priceDisplay: "₹1,000", description: "Complementary soft glam for bridesmaids, sisters and wedding guests." },
           { id: "mk-sangeet", slug: "party-makeup", name: "Sangeet Makeup", price: 1000, priceDisplay: "₹1,000", description: "Vibrant eye makeup with sweat-resistant dewy foundation for dancing all night." },
           { id: "mk-haldi", slug: "party-makeup", name: "Haldi Makeup", price: 1000, priceDisplay: "₹1,000", description: "Lightweight, fresh waterproof makeup perfect for daytime Haldi ceremonies." },
-          { id: "mk-bridal", slug: "bridal-makeup", name: "Bridal Makeup", priceDisplay: "Starting from ₹5,000", description: "16-hour sweat-proof HD bridal makeup, lashes, lenses, contouring and accessories setting.", badge: "Signature" }
         ]
       },
       {
@@ -136,9 +116,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
     subGroups: [
       {
         items: [
-          { id: "ht-keratin", slug: "keratin-hair-treatment", name: "Keratin", priceDisplay: "₹2,000 – ₹6,000", description: "Infuses deep protein to eliminate 90% frizz and give high-shine smoothness.", badge: "Most Popular" },
-          { id: "ht-botox", slug: "hair-botox-treatment", name: "Botox", priceDisplay: "₹2,000 – ₹6,000", description: "Intense anti-aging deep-conditioning therapy that repairs damaged & rough hair cuticles." },
-          { id: "ht-nano", slug: "nanoplastia-hair-treatment", name: "Nanoplastia", priceDisplay: "₹2,500 – ₹10,000", description: "Formaldehyde-free organic straightening and restructuring for mirror-glass finish.", badge: "Organic" },
           { id: "ht-smoothing", slug: "brazilian-keratin-hair-spa", name: "Smoothing", priceDisplay: "₹2,500 – ₹10,000", description: "Natural straight feel with manageable bounce and silky soft texture." },
           { id: "ht-straight", slug: "nanoplastia-hair-treatment", name: "Straightening", priceDisplay: "₹2,500 – ₹10,000", description: "Permanent sleek poker-straight finish with high structural shine." },
           { id: "ht-protein", slug: "keratin-hair-treatment", name: "Protein", priceDisplay: "₹2,500 – ₹10,000", description: "Bio-active amino restorative treatment rebuilding broken disulphide hair bonds." }
@@ -165,9 +142,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
       {
         groupTitle: "Women's Services",
         items: [
-          { id: "hc-w-basic", slug: "womens-haircut-and-blowdry", name: "Basic Cut", price: 300, priceDisplay: "₹300", description: "Classic straight, U-cut or V-shape trim removing dry split ends cleanly." },
-          { id: "hc-w-adv", slug: "womens-haircut-and-blowdry", name: "Advance Cut", price: 400, priceDisplay: "₹400", description: "Layered cuts, feather styling, butterfly bangs, bob or textured graduation cuts.", badge: "Trending" },
-          { id: "hc-w-wash", slug: "womens-haircut-and-blowdry", name: "Hair Wash + Blowdry", price: 250, priceDisplay: "₹250", description: "Clarifying wash, deep conditioning, and signature bouncy editorial blow-dry." }
         ]
       }
     ]
@@ -223,8 +197,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
         items: [
           { id: "fc-gold", slug: "o3-and-hydra-facial", name: "Gold Facial", price: 1500, priceDisplay: "₹1,500", description: "Classic 24K gold foil and radiant cream massage with revitalizing peel-off pack." },
           { id: "fc-lotus", slug: "o3-and-hydra-facial", name: "Lotus Facial", price: 2000, priceDisplay: "₹2,000", description: "Pure bio-extract botanical facial targeting dullness and uneven sun tanning." },
-          { id: "fc-o3", slug: "o3-and-hydra-facial", name: "O3 Facial", price: 2500, priceDisplay: "₹2,500", description: "Advanced whitening, pigmentation fade and hydro-rubber mask for wedding glow.", badge: "Bridal Pick" },
-          { id: "fc-hydra", slug: "o3-and-hydra-facial", name: "Hydra Facial", price: 1200, priceDisplay: "₹1,200", description: "Painless hydro-vacuum suction of blackheads with high-pressure serum hydration.", badge: "Top Value" }
         ]
       }
     ]
@@ -251,14 +223,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
       {
         groupTitle: "Female Hair Colour & Touch Up",
         items: [
-          {
-            id: "col-w-global",
-            slug: "hair-colour-and-root-touchup",
-            name: "Female Hair Colour (Loreal / Matrix / Wella)",
-            priceDisplay: "₹2,000 – ₹4,000",
-            description: "Full global transformation or trendy balayage highlights. Price depends on length & thickness.",
-            badge: "Custom Shades"
-          },
           {
             id: "col-w-root",
             slug: "hair-colour-and-root-touchup",
@@ -315,8 +279,6 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
       {
         groupTitle: "Advanced Detox Hair Spa",
         items: [
-          { id: "spa-detox-male", slug: "hair-spa-and-detox", name: "Male Detox Hair Spa", price: 1500, priceDisplay: "₹1,500", description: "Exfoliates scalp buildup, stimulates follicles and restores scalp pH." },
-          { id: "spa-detox-female", slug: "hair-spa-and-detox", name: "Female Detox Hair Spa", price: 2000, priceDisplay: "₹2,000", description: "Complete scalp detoxification with micro-steam, mask and aromatic lymphatic massage." }
         ]
       }
     ]
