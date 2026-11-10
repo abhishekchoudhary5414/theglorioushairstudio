@@ -38,6 +38,8 @@ export async function POST(req: Request) {
       year: "numeric",
     });
 
+    const salonAddress: string = salonConfig.address.fullAddress || "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar, Indore";
+
     const slipData = {
       bookingRef: bookingRef || `GG-${Math.floor(100000 + Math.random() * 900000)}`,
       customerName: customerName || "Valued Client",
@@ -49,7 +51,7 @@ export async function POST(req: Request) {
       timeSlot: timeSlot || "11:00 AM",
       priceDisplay: priceDisplay || "Consultation",
       salonName: salonConfig.name,
-      salonAddress: salonConfig.address.fullAddress,
+      salonAddress,
       salonPhone: salonConfig.contact.phoneDisplay,
       salonEmail: salonConfig.contact.email,
       specialInstructions,

@@ -10,12 +10,15 @@ import EmailIcon from "@mui/icons-material/Email";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import StorageIcon from "@mui/icons-material/Storage";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import SearchIcon from "@mui/icons-material/Search";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Menu";
+import BarChartIcon from "@mui/icons-material/BarChart";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./AdminDashboard.module.css";
 
@@ -65,52 +68,85 @@ interface InteractionEvent {
   created_at: string;
 }
 
+interface PopularService {
+  service_name: string;
+  bookings_count: number;
+  total_revenue: number;
+}
+
 export default function AdminDashboardPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"overview" | "bookings" | "inquiries" | "analytics" | "sql">("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState<"overview" | "bookings" | "receipts" | "inquiries" | "analytics">("overview");
   const [loading, setLoading] = useState(true);
 
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [bookings, setBookings] = useState<BookingRecord[]>([]);
   const [inquiries, setInquiries] = useState<InquiryRecord[]>([]);
   const [events, setEvents] = useState<InteractionEvent[]>([]);
+  const [popularServices, setPopularServices] = useState<PopularService[]>([]);
 
   // Search & filter states for bookings
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
+  // Receipt Generator Form State
+  const [receiptForm, setReceiptForm] = useState({
+    bookingRef: "",
+    customerName: "",
+    customerPhone: "",
+    customerEmail: "",
+    serviceName: "Bridal Signature HD Makeup",
+    categoryTitle: "Luxury Bridal Services",
+    appointmentDate: "",
+    timeSlot: "11:00 AM",
+    priceDisplay: "₹15,000",
+    specialInstructions: "VIP Bridal Session at Scheme 78 Studio",
+  });
+  const [isSendingReceipt, setIsSendingReceipt] = useState(false);
+  const [receiptStatusMsg, setReceiptStatusMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  useEffect(() => {
+    setReceiptForm((prev) => ({
+      ...prev,
+      appointmentDate: prev.appointmentDate || new Date().toISOString().split("T")[0],
+    }));
+  }, []);
+
   const fetchDashboardData = useCallback(async () => {
     setLoading(true);
     try {
-      // Check auth status
       const authRes = await fetch("/api/admin/me");
       if (!authRes.ok) {
-        window.location.href = "/admin/login";
+        router.push("/admin/login");
         return;
       }
 
-      // Fetch stats
+      // 1. Fetch Stats & Graphs
       const statsRes = await fetch("/api/admin/stats");
       const statsData = await statsRes.json();
       if (statsData.success) {
         setStats(statsData.stats);
+        if (statsData.popularServices) {
+          setPopularServices(statsData.popularServices);
+        }
       }
 
-      // Fetch bookings
+      // 2. Fetch Bookings
       const bookingsRes = await fetch(`/api/admin/bookings?search=${encodeURIComponent(searchTerm)}&status=${encodeURIComponent(statusFilter)}`);
       const bookingsData = await bookingsRes.json();
       if (bookingsData.success) {
         setBookings(bookingsData.bookings);
       }
 
-      // Fetch inquiries
+      // 3. Fetch Inquiries
       const inqRes = await fetch("/api/admin/inquiries");
       const inqData = await inqRes.json();
       if (inqData.success) {
         setInquiries(inqData.inquiries);
       }
 
-      // Fetch interaction events
+      // 4. Fetch Events
       const evRes = await fetch("/api/admin/events");
       const evData = await evRes.json();
       if (evData.success) {
@@ -147,30 +183,93 @@ export default function AdminDashboardPage() {
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/logout", { method: "POST" });
-      window.location.href = "/admin/login";
+      router.push("/admin/login");
+      router.refresh();
     } catch (err) {
       console.error("Logout error:", err);
     }
   };
 
+  // Populate receipt generator from an existing booking row
+  const handlePopulateReceipt = (b: BookingRecord) => {
+    setReceiptForm({
+      bookingRef: b.booking_reference,
+      customerName: b.customer_name,
+      customerPhone: b.customer_phone,
+      customerEmail: b.customer_email || "",
+      serviceName: b.service_name,
+      categoryTitle: "Salon Atelier Service",
+      appointmentDate: String(b.appointment_date).split("T")[0],
+      timeSlot: b.time_slot,
+      priceDisplay: b.price_inr ? `₹${Number(b.price_inr).toLocaleString("en-IN")}` : "Consultation",
+      specialInstructions: "Client confirmed via online portal",
+    });
+    setActiveTab("receipts");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Dispatch receipt via email API
+  const handleSendReceipt = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setReceiptStatusMsg(null);
+    setIsSendingReceipt(true);
+
+    try {
+      const res = await fetch("/api/admin/receipt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(receiptForm),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to dispatch receipt.");
+      }
+
+      setReceiptStatusMsg({
+        type: "success",
+        text: `Receipt successfully generated and dispatched to ${receiptForm.customerEmail} with official PDF slip attached!`,
+      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Receipt dispatch failed.";
+      setReceiptStatusMsg({ type: "error", text: msg });
+    } finally {
+      setIsSendingReceipt(false);
+    }
+  };
+
+  const maxBookingsCount = Math.max(...popularServices.map((s) => s.bookings_count), 1);
+
   return (
     <div className={styles.adminShell}>
-      {/* Sidebar Navigation */}
-      <aside className={styles.sidebar}>
+      {/* Fixed Sidebar with Cross Button */}
+      <aside className={`${styles.sidebar} ${!sidebarOpen ? styles.sidebarClosed : ""}`}>
         <div className={styles.sidebarHeader}>
-          <div className={styles.sidebarLogoWrapper}>
-            <Image
-              src="/images/logo.png"
-              alt={salonConfig.name}
-              width={44}
-              height={44}
-              className={styles.sidebarLogoImg}
-            />
+          <div className={brandGroupStyle()}>
+            <div className={styles.sidebarLogoWrapper}>
+              <Image
+                src="/images/logo.png"
+                alt={salonConfig.name}
+                width={42}
+                height={42}
+                className={styles.sidebarLogoImg}
+              />
+            </div>
+            <div className={styles.sidebarBrandInfo}>
+              <span className={styles.sidebarBrandName}>{salonConfig.name}</span>
+              <span className={styles.sidebarBrandTag}>Atelier Control Panel</span>
+            </div>
           </div>
-          <div className={styles.sidebarBrandInfo}>
-            <span className={styles.sidebarBrandName}>{salonConfig.name}</span>
-            <span className={styles.sidebarBrandTag}>Atelier Control Panel</span>
-          </div>
+
+          {/* Cross Button to close sidebar */}
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close Sidebar"
+            className={styles.closeSidebarBtn}
+          >
+            <CloseIcon fontSize="small" />
+          </button>
         </div>
 
         <nav className={styles.sidebarNav}>
@@ -189,7 +288,16 @@ export default function AdminDashboardPage() {
             className={`${styles.navItem} ${activeTab === "bookings" ? styles.navItemActive : ""}`}
           >
             <EventAvailableOutlinedIcon fontSize="small" />
-            <span>Appointments &amp; Bookings</span>
+            <span>Appointments Directory</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("receipts")}
+            className={`${styles.navItem} ${activeTab === "receipts" ? styles.navItemActive : ""}`}
+          >
+            <ReceiptLongIcon fontSize="small" />
+            <span>Receipt Generator &amp; Email</span>
           </button>
 
           <button
@@ -209,15 +317,6 @@ export default function AdminDashboardPage() {
             <TrendingUpIcon fontSize="small" />
             <span>Visitor Clicks &amp; Events</span>
           </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("sql")}
-            className={`${styles.navItem} ${activeTab === "sql" ? styles.navItemActive : ""}`}
-          >
-            <StorageIcon fontSize="small" />
-            <span>SQL Database Setup</span>
-          </button>
         </nav>
 
         <div className={styles.sidebarFooter}>
@@ -235,17 +334,31 @@ export default function AdminDashboardPage() {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className={styles.mainContent}>
+      {/* 100% Width Main Content Area */}
+      <main className={`${styles.mainContent} ${!sidebarOpen ? styles.mainContentFull : ""}`}>
         {/* Top Header Bar */}
         <header className={styles.topBar}>
-          <h1 className={styles.topBarTitle}>
-            {activeTab === "overview" && "Executive Salon Overview"}
-            {activeTab === "bookings" && "Client Appointments Directory"}
-            {activeTab === "inquiries" && "Customer Concierge Inquiries"}
-            {activeTab === "analytics" && "Interaction & Conversion Analytics"}
-            {activeTab === "sql" && "Neon PostgreSQL Architecture & SQL"}
-          </h1>
+          <div className={styles.topBarLeft}>
+            {/* Toggle button to open sidebar when closed */}
+            {!sidebarOpen && (
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(true)}
+                title="Open Sidebar Navigation"
+                className={styles.toggleSidebarBtn}
+              >
+                <MenuIcon fontSize="small" />
+              </button>
+            )}
+
+            <h1 className={styles.topBarTitle}>
+              {activeTab === "overview" && "Executive Salon Overview & Graphs"}
+              {activeTab === "bookings" && "Client Appointments Directory"}
+              {activeTab === "receipts" && "Slip & Receipt Generator (Email PDF)"}
+              {activeTab === "inquiries" && "Customer Concierge Inquiries"}
+              {activeTab === "analytics" && "Interaction & Conversion Analytics"}
+            </h1>
+          </div>
 
           <div className={styles.topBarRight}>
             <div className={styles.liveBadge}>
@@ -270,9 +383,9 @@ export default function AdminDashboardPage() {
           </div>
         </header>
 
-        {/* Dynamic Page Views */}
+        {/* Page Content Body taking 100% full width */}
         <div className={styles.pageBody}>
-          {/* TAB 1: OVERVIEW */}
+          {/* TAB 1: OVERVIEW & GRAPHS */}
           {activeTab === "overview" && (
             <>
               {/* Primary 4 Metric Cards */}
@@ -324,6 +437,80 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
+              {/* Graphical Visualizations Section */}
+              <div className={styles.chartsGrid}>
+                {/* Horizontal Bar Graph: Most Booked Services */}
+                <div className={styles.chartCard}>
+                  <h3 className={styles.chartTitle}>Top Performing Services</h3>
+                  <p className={styles.chartSubtitle}>Most popular salon rituals ranked by reservation count</p>
+
+                  <div className={styles.barChartContainer}>
+                    {popularServices.map((svc) => {
+                      const percentage = Math.round((svc.bookings_count / maxBookingsCount) * 100);
+                      return (
+                        <div key={svc.service_name} className={styles.barRow}>
+                          <div className={styles.barLabelGroup}>
+                            <span className={styles.barName}>{svc.service_name}</span>
+                            <span className={styles.barStats}>
+                              {svc.bookings_count} bookings • ₹{Number(svc.total_revenue || 0).toLocaleString("en-IN")}
+                            </span>
+                          </div>
+                          <div className={styles.barTrack}>
+                            <div className={styles.barFill} style={{ width: `${Math.max(percentage, 10)}%` }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    {popularServices.length === 0 && (
+                      <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", textAlign: "center", padding: "2rem" }}>
+                        Waiting for reservation data to populate charts.
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Status Breakdown Card */}
+                <div className={styles.chartCard}>
+                  <h3 className={styles.chartTitle}>Appointment Status</h3>
+                  <p className={styles.chartSubtitle}>Current distribution of booking stages</p>
+
+                  <div className={styles.statusDonutList}>
+                    <div className={styles.donutItem}>
+                      <div className={styles.donutInfo}>
+                        <span className={styles.donutIndicator} style={{ backgroundColor: "var(--color-success)" }} />
+                        <span className={styles.donutName}>Confirmed</span>
+                      </div>
+                      <span className={styles.donutValue}>{stats?.confirmedBookings || 0}</span>
+                    </div>
+
+                    <div className={styles.donutItem}>
+                      <div className={styles.donutInfo}>
+                        <span className={styles.donutIndicator} style={{ backgroundColor: "var(--color-secondary)" }} />
+                        <span className={styles.donutName}>Pending</span>
+                      </div>
+                      <span className={styles.donutValue}>{stats?.pendingBookings || 0}</span>
+                    </div>
+
+                    <div className={styles.donutItem}>
+                      <div className={styles.donutInfo}>
+                        <span className={styles.donutIndicator} style={{ backgroundColor: "#2b5278" }} />
+                        <span className={styles.donutName}>Completed</span>
+                      </div>
+                      <span className={styles.donutValue}>{stats?.completedBookings || 0}</span>
+                    </div>
+
+                    <div className={styles.donutItem}>
+                      <div className={styles.donutInfo}>
+                        <span className={styles.donutIndicator} style={{ backgroundColor: "var(--color-accent)" }} />
+                        <span className={styles.donutName}>Total Inquiries</span>
+                      </div>
+                      <span className={styles.donutValue}>{stats?.totalInquiries || 0}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Conversion Metrics Bar */}
               <div className={styles.metricsBar}>
                 <div className={styles.metricPill}>
@@ -357,7 +544,7 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
-              {/* Recent Appointments Preview */}
+              {/* Recent Bookings Table */}
               <div className={styles.sectionCard}>
                 <div className={styles.sectionHeader}>
                   <h3 className={styles.sectionTitle}>Recent Appointment Bookings</h3>
@@ -380,6 +567,7 @@ export default function AdminDashboardPage() {
                         <th>Schedule</th>
                         <th>Amount</th>
                         <th>Status</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -412,11 +600,22 @@ export default function AdminDashboardPage() {
                               {b.status}
                             </span>
                           </td>
+                          <td>
+                            <button
+                              type="button"
+                              onClick={() => handlePopulateReceipt(b)}
+                              className={styles.actionBtnSmall}
+                              title="Send Receipt to Customer"
+                            >
+                              <ReceiptLongIcon fontSize="inherit" />
+                              <span>Receipt</span>
+                            </button>
+                          </td>
                         </tr>
                       ))}
                       {bookings.length === 0 && (
                         <tr>
-                          <td colSpan={7} className={styles.emptyNotice}>
+                          <td colSpan={8} className={styles.emptyNotice}>
                             No booking records found in database.
                           </td>
                         </tr>
@@ -434,15 +633,13 @@ export default function AdminDashboardPage() {
               <div className={styles.sectionHeader}>
                 <h3 className={styles.sectionTitle}>All Salon Reservations ({bookings.length})</h3>
                 <div className={styles.filterRow}>
-                  <div style={{ position: "relative" }}>
-                    <input
-                      type="text"
-                      placeholder="Search name, phone, ref..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className={styles.searchInput}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search name, phone, ref..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={styles.searchInput}
+                  />
 
                   <select
                     value={statusFilter}
@@ -471,6 +668,7 @@ export default function AdminDashboardPage() {
                       <th>Fees</th>
                       <th>Current Status</th>
                       <th>Update Status</th>
+                      <th>Send Receipt</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -521,11 +719,21 @@ export default function AdminDashboardPage() {
                             <option value="cancelled">Cancelled</option>
                           </select>
                         </td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => handlePopulateReceipt(b)}
+                            className={styles.actionBtnSmall}
+                          >
+                            <ReceiptLongIcon fontSize="inherit" />
+                            <span>Dispatch</span>
+                          </button>
+                        </td>
                       </tr>
                     ))}
                     {bookings.length === 0 && (
                       <tr>
-                        <td colSpan={9} className={styles.emptyNotice}>
+                        <td colSpan={10} className={styles.emptyNotice}>
                           No reservations match your filter criteria.
                         </td>
                       </tr>
@@ -536,7 +744,155 @@ export default function AdminDashboardPage() {
             </div>
           )}
 
-          {/* TAB 3: CUSTOMER INQUIRIES */}
+          {/* TAB 3: RECEIPT GENERATOR & EMAIL DISPATCH */}
+          {activeTab === "receipts" && (
+            <div className={styles.receiptGenCard}>
+              <div className={styles.receiptGenHeader}>
+                <h2 className={styles.receiptGenTitle}>Atelier Receipt &amp; Slip Generator</h2>
+                <p className={styles.receiptGenSubtitle}>
+                  Creates official branded confirmation PDF using <code>slip-template.ts</code> and emails directly to the client.
+                </p>
+              </div>
+
+              {receiptStatusMsg && (
+                <div
+                  className={`${styles.receiptMsgBanner} ${
+                    receiptStatusMsg.type === "success" ? styles.receiptMsgSuccess : styles.receiptMsgError
+                  }`}
+                >
+                  {receiptStatusMsg.text}
+                </div>
+              )}
+
+              <form onSubmit={handleSendReceipt}>
+                <div className={styles.receiptGrid}>
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Client Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={receiptForm.customerName}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, customerName: e.target.value })}
+                      placeholder="e.g. Priya Sharma"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Recipient Client Email *</label>
+                    <input
+                      type="email"
+                      required
+                      value={receiptForm.customerEmail}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, customerEmail: e.target.value })}
+                      placeholder="client@gmail.com"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Client Phone Number</label>
+                    <input
+                      type="text"
+                      value={receiptForm.customerPhone}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, customerPhone: e.target.value })}
+                      placeholder="+91 98765 43210"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Booking Reference Code</label>
+                    <input
+                      type="text"
+                      value={receiptForm.bookingRef}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, bookingRef: e.target.value })}
+                      placeholder="Auto generated (e.g. GG-849201)"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Reserved Service Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={receiptForm.serviceName}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, serviceName: e.target.value })}
+                      placeholder="Service Name"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Category</label>
+                    <input
+                      type="text"
+                      value={receiptForm.categoryTitle}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, categoryTitle: e.target.value })}
+                      placeholder="e.g. Luxury Hair Treatments"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Appointment Date</label>
+                    <input
+                      type="date"
+                      required
+                      value={receiptForm.appointmentDate}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, appointmentDate: e.target.value })}
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Time Slot</label>
+                    <input
+                      type="text"
+                      required
+                      value={receiptForm.timeSlot}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, timeSlot: e.target.value })}
+                      placeholder="11:00 AM"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+
+                  <div className={styles.receiptFieldGroup}>
+                    <label className={styles.receiptLabel}>Price / Fees (INR)</label>
+                    <input
+                      type="text"
+                      required
+                      value={receiptForm.priceDisplay}
+                      onChange={(e) => setReceiptForm({ ...receiptForm, priceDisplay: e.target.value })}
+                      placeholder="₹2,500"
+                      className={styles.receiptInput}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.receiptFieldGroup}>
+                  <label className={styles.receiptLabel}>Special Notes / Client Instructions</label>
+                  <input
+                    type="text"
+                    value={receiptForm.specialInstructions}
+                    onChange={(e) => setReceiptForm({ ...receiptForm, specialInstructions: e.target.value })}
+                    placeholder="e.g. Arrive 10 minutes prior for hair analysis"
+                    className={styles.receiptInput}
+                  />
+                </div>
+
+                <div className={styles.receiptActions}>
+                  <button type="submit" disabled={isSendingReceipt} className={styles.sendReceiptBtn}>
+                    <SendIcon fontSize="small" />
+                    <span>{isSendingReceipt ? "Generating & Emailing..." : "Send Receipt to Client Email"}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* TAB 4: CUSTOMER INQUIRIES */}
           {activeTab === "inquiries" && (
             <div className={styles.sectionCard}>
               <div className={styles.sectionHeader}>
@@ -590,7 +946,7 @@ export default function AdminDashboardPage() {
             </div>
           )}
 
-          {/* TAB 4: VISITOR ACTIONS & EVENT LOGS */}
+          {/* TAB 5: VISITOR ACTIONS & EVENT LOGS */}
           {activeTab === "analytics" && (
             <div className={styles.sectionCard}>
               <div className={styles.sectionHeader}>
@@ -662,114 +1018,12 @@ export default function AdminDashboardPage() {
               </div>
             </div>
           )}
-
-          {/* TAB 5: SQL QUERIES & SCHEMA DOCUMENTATION */}
-          {activeTab === "sql" && (
-            <div className={styles.sectionCard}>
-              <div className={styles.sectionHeader}>
-                <h3 className={styles.sectionTitle}>Neon PostgreSQL Schema &amp; Alter Queries</h3>
-              </div>
-              <div style={{ padding: "1.5rem" }}>
-                <p style={{ marginTop: 0, color: "var(--color-text-secondary)", fontSize: "0.95rem", lineHeight: 1.6 }}>
-                  Below are the exact SQL DDL &amp; ALTER scripts executed in your Neon database for simple username/password administration and system tracking:
-                </p>
-
-                <h4 style={{ color: "var(--color-primary)", marginTop: "1.5rem", marginBottom: "0.5rem" }}>
-                  1. Alter Table Query for Admin Username:
-                </h4>
-                <pre className={styles.sqlCodeBox}>
-{`-- Add username column to users table with unique constraint
-ALTER TABLE users ADD COLUMN IF NOT EXISTS username VARCHAR(100) UNIQUE;
-
--- Create index for instant login lookup
-CREATE INDEX IF NOT EXISTS idx_users_username ON users(LOWER(username));`}
-                </pre>
-
-                <h4 style={{ color: "var(--color-primary)", marginTop: "1.5rem", marginBottom: "0.5rem" }}>
-                  2. Create / Seed Master Admin Account:
-                </h4>
-                <pre className={styles.sqlCodeBox}>
-{`-- Insert initial Master Admin user (Username: admin | Password: admin123)
--- Password hashed with bcrypt (salt 10)
-INSERT INTO users (name, email, username, password_hash, role)
-VALUES (
-  'Master Admin',
-  'admin@theglorioushairstudio.com',
-  'admin',
-  '$2a$10$wU0uNeqU3aGZz07FfN1K/eU7Q0p0hT4oT95Iqf5g6wE2f6e5e8e8e', -- bcrypt hash of admin123
-  'admin'
-)
-ON CONFLICT (username) DO NOTHING;`}
-                </pre>
-
-                <h4 style={{ color: "var(--color-primary)", marginTop: "1.5rem", marginBottom: "0.5rem" }}>
-                  3. Full Core Database Tables (Neon PostgreSQL):
-                </h4>
-                <pre className={styles.sqlCodeBox}>
-{`-- 1. Users table (Admin & Customer Authentication)
-CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  username VARCHAR(100) UNIQUE,
-  phone VARCHAR(20),
-  password_hash VARCHAR(255) NOT NULL,
-  role VARCHAR(50) DEFAULT 'customer',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
--- 2. Bookings Table (Appointments)
-CREATE TABLE IF NOT EXISTS bookings (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  booking_reference VARCHAR(50) UNIQUE NOT NULL,
-  service_id VARCHAR(100) NOT NULL,
-  service_name VARCHAR(255) NOT NULL,
-  stylist_id VARCHAR(100),
-  stylist_name VARCHAR(255),
-  branch_id VARCHAR(100) NOT NULL,
-  branch_name VARCHAR(255) NOT NULL,
-  appointment_date DATE NOT NULL,
-  time_slot VARCHAR(50) NOT NULL,
-  customer_name VARCHAR(255) NOT NULL,
-  customer_phone VARCHAR(20) NOT NULL,
-  customer_email VARCHAR(255),
-  price_inr NUMERIC(10, 2),
-  status VARCHAR(50) DEFAULT 'confirmed',
-  special_instructions TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
--- 3. Contact Inquiries Table
-CREATE TABLE IF NOT EXISTS contact_inquiries (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(255) NOT NULL,
-  phone VARCHAR(20) NOT NULL,
-  email VARCHAR(255),
-  service_interest VARCHAR(100),
-  message TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
--- 4. Interaction Events Table (Tracking phone, whatsapp, and booking clicks)
-CREATE TABLE IF NOT EXISTS interaction_events (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  event_type VARCHAR(50) NOT NULL,
-  service_name VARCHAR(255),
-  source_location VARCHAR(100),
-  target_url TEXT,
-  page_path VARCHAR(255),
-  device_type VARCHAR(50),
-  ip_address VARCHAR(100),
-  user_agent TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);`}
-                </pre>
-              </div>
-            </div>
-          )}
         </div>
       </main>
     </div>
   );
+}
+
+function brandGroupStyle() {
+  return styles.brandGroup;
 }
