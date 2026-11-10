@@ -11,6 +11,7 @@ import { BookingCTA } from "@/components/home/BookingCTA";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./about.module.css";
 import AboutImage from "../../../public/about/about.png"
+import AboutImageBg from "../../../public/about/about-bg.png"
 
 export const metadata: Metadata = {
   title: `About Us | ${salonConfig.name} - Best Salon in Vijay Nagar Indore`,
@@ -26,7 +27,7 @@ export default function AboutPage() {
           eyebrow="About Our Salon"
           title={`Welcome to ${salonConfig.name} Indore`}
           description="A friendly, modern unisex salon and bridal studio dedicated to honest advice, genuine brands, and great customer care."
-          backgroundImage="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=1600&auto=format&fit=crop"
+          backgroundImage="../../../public/about/about-bg.png"
         />
 
         <div className={styles.contentSection}>
