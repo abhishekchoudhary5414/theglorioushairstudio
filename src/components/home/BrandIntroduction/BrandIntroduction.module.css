@@ -13,25 +13,13 @@
 }
 
 .imageGrid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1.5rem;
+  display: block;
   position: relative;
 }
 
 .primaryImgWrapper {
   position: relative;
-  height: 480px;
-  border-radius: var(--radius-xs);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--color-border);
-}
-
-.secondaryImgWrapper {
-  position: relative;
-  height: 380px;
-  align-self: flex-end;
+  height: 520px;
   border-radius: var(--radius-xs);
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -114,16 +102,8 @@
   .section {
     padding: 4rem 1.25rem;
   }
-  .imageGrid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
   .primaryImgWrapper {
     height: 340px;
-  }
-  .secondaryImgWrapper {
-    height: 260px;
-    align-self: auto;
   }
   .lead {
     font-size: 1.2rem;
@@ -141,9 +121,6 @@
   }
   .primaryImgWrapper {
     height: 260px;
-  }
-  .secondaryImgWrapper {
-    display: none;
   }
 }
 

@@ -24,17 +24,17 @@
   min-width: 140px;
 }
 
-.bookBtn {
-  background: linear-gradient(135deg, var(--color-secondary) 0%, #f4d27a 100%);
-  color: var(--color-surface-dark);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 24px rgba(206, 170, 93, 0.35);
+.callBtn {
+  background-color: var(--color-surface-dark);
+  color: var(--color-text-inverse);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
-.bookBtn:hover {
+.callBtn:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 30px rgba(206, 170, 93, 0.45);
-  color: var(--color-surface-dark);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
 }
 
 .whatsappBtn {

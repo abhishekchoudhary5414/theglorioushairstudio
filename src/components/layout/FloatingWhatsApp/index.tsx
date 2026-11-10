@@ -2,6 +2,7 @@
 
 import React from "react";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import PhoneIcon from "@mui/icons-material/Phone";
 import { salonConfig } from "@/config/salon.config";
 import { trackInteraction } from "@/lib/utils/analytics";
 import styles from "./FloatingWhatsApp.module.css";
@@ -19,23 +20,24 @@ export const FloatingWhatsApp: React.FC = () => {
     });
   };
 
-  const handleBookingClick = () => {
+  const handleCallClick = () => {
     trackInteraction({
-      eventType: "booking_click",
+      eventType: "call_click",
       sourceLocation: "floating_bottom_right",
-      targetUrl: "/booking"
+      targetUrl: `tel:${salonConfig.contact.phone}`
     });
   };
 
   return (
     <div className={styles.floatingContainer}>
       <a
-        href="/booking"
-        onClick={handleBookingClick}
-        className={`${styles.floatBtn} ${styles.bookBtn}`}
-        aria-label="Book an appointment now"
+        href={`tel:${salonConfig.contact.phone}`}
+        onClick={handleCallClick}
+        className={`${styles.floatBtn} ${styles.callBtn}`}
+        aria-label={`Call Salon at ${salonConfig.contact.phoneDisplay}`}
       >
-        <span className={styles.label}>Book Now</span>
+        <PhoneIcon fontSize="medium" />
+        <span className={styles.label}>Call</span>
       </a>
 
       <a

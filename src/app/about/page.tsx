@@ -10,6 +10,7 @@ import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { BookingCTA } from "@/components/home/BookingCTA";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./about.module.css";
+import AboutImage from "../../../public/about/about.png"
 
 export const metadata: Metadata = {
   title: `About Us | ${salonConfig.name} - Best Salon in Vijay Nagar Indore`,
@@ -53,7 +54,7 @@ export default function AboutPage() {
 
             <div className={styles.storyImgWrapper}>
               <Image
-                src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=900&auto=format&fit=crop"
+                src={AboutImage}
                 alt="Hair Styling at Salon in Indore"
                 fill
                 sizes="(max-width: 960px) 100vw, 500px"
@@ -103,16 +104,6 @@ export default function AboutPage() {
 
           {/* Hygiene and Safety Standards */}
           <div className={styles.standardsSection}>
-            <div className={styles.standardsImgWrapper}>
-              <Image
-                src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=900&auto=format&fit=crop"
-                alt="Clean Tools and Equipment in Salon"
-                fill
-                sizes="(max-width: 960px) 100vw, 500px"
-                className={styles.storyImg}
-              />
-            </div>
-
             <div>
               <SectionHeading
                 align="left"

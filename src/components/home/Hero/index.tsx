@@ -55,11 +55,6 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          <p className={styles.description}>
-            Welcome to {salonConfig.name}. We provide professional haircuts, hair styling, hair treatments,
-            rejuvenating facials, and wedding bridal makeup in Indore with 100% genuine products and top-quality care.
-          </p>
-
           <div className={styles.locationBar}>
             <LocationOnIcon className={styles.locationIcon} fontSize="small" />
             <span className={styles.locationText}>

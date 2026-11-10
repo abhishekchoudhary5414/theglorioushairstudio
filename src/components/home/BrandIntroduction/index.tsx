@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/common/SectionHeading";
 import { SecondaryButton } from "@/components/common/SecondaryButton";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./BrandIntroduction.module.css";
+import AboutImage from "../../../../public/about/about.png"
 
 export const BrandIntroduction: React.FC = () => {
   return (
@@ -12,19 +13,10 @@ export const BrandIntroduction: React.FC = () => {
         <div className={styles.imageGrid}>
           <div className={styles.primaryImgWrapper}>
             <Image
-              src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=800&auto=format&fit=crop"
+              src={AboutImage}
               alt="Modern salon interior and styling chair in Indore"
               fill
-              sizes="(max-width: 960px) 100vw, 400px"
-              className={styles.img}
-            />
-          </div>
-          <div className={styles.secondaryImgWrapper}>
-            <Image
-              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=800&auto=format&fit=crop"
-              alt="Salon balayage and hair finishing treatment in our studio"
-              fill
-              sizes="(max-width: 960px) 100vw, 300px"
+              sizes="(max-width: 960px) 100vw, 520px"
               className={styles.img}
             />
           </div>
