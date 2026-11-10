@@ -22,6 +22,7 @@ export const WhyChooseUs: React.FC = () => {
           eyebrow="The Atelier Distinction"
           title="Why Connoisseurs Choose Our Sanctum"
           subtitle="A harmonious symphony of medical-grade hygiene protocols, master artisan credentials, and private sanctuary comfort."
+          titleColor="var(--color-text-inverse)"
         />
 
         <div className={styles.grid}>

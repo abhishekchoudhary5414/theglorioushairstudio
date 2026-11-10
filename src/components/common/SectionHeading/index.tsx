@@ -16,6 +16,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   subtitle,
   align = "center",
   className = "",
+  titleColor,
 }) => {
   return (
     <div className={`${styles.headingContainer} ${styles[align]} ${className}`}>
@@ -26,7 +27,9 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           {align === "center" && <span className={styles.eyebrowLine} />}
         </div>
       )}
-      <h2 className={styles.title}>{title}</h2>
+      <h2 className={styles.title} style={titleColor ? { color: titleColor } : undefined}>
+        {title}
+      </h2>
       {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
     </div>
   );
