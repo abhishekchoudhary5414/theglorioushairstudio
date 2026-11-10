@@ -276,6 +276,19 @@
   transform: translateY(-2px);
 }
 
+.bookNowButton {
+  box-shadow: 0 14px 30px rgba(179, 134, 43, 0.28);
+  border-width: 2px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 1.5rem;
+}
+
+.bookNowButton:hover {
+  box-shadow: 0 18px 34px rgba(179, 134, 43, 0.38);
+  transform: translateY(-3px);
+}
+
 .cardImgWrapper {
   position: relative;
   height: 280px;

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { SALON_SERVICES_CATEGORIES } from "@/data/services";
 import { ServicesHero } from "@/components/services/ServicesHero";
 import { ServiceCategoryNavigation } from "@/components/services/ServiceCategoryNavigation";
@@ -9,23 +8,36 @@ import { ServiceCategorySection } from "@/components/services/ServiceCategorySec
 import { ServicesFAQ } from "@/components/services/ServicesFAQ";
 import { ServicesBookingCTA } from "@/components/services/ServicesBookingCTA";
 
-export const CompleteServicesExperience: React.FC = () => {
-  const searchParams = useSearchParams();
-  const categoryFromQuery = searchParams.get("category");
-  const validQueryCategory =
-    categoryFromQuery && SALON_SERVICES_CATEGORIES.some((cat) => cat.id === categoryFromQuery)
-      ? categoryFromQuery
-      : null;
+interface CompleteServicesExperienceProps {
+  selectedCategorySlug?: string | null;
+}
+
+export const CompleteServicesExperience: React.FC<CompleteServicesExperienceProps> = ({
+  selectedCategorySlug,
+}) => {
+  const selectedCategory =
+    typeof selectedCategorySlug === "string" && selectedCategorySlug
+      ? SALON_SERVICES_CATEGORIES.find(
+          (category) =>
+            category.slug === selectedCategorySlug || category.id === selectedCategorySlug
+        )
+      : undefined;
+
+  const categoriesToRender = selectedCategory
+    ? [selectedCategory]
+    : SALON_SERVICES_CATEGORIES;
 
   const [scrollActiveCategory, setScrollActiveCategory] = useState<string>(
-    validQueryCategory || SALON_SERVICES_CATEGORIES[0].id
+    selectedCategory?.id || SALON_SERVICES_CATEGORIES[0].id
   );
 
-  const activeCategory = validQueryCategory || scrollActiveCategory;
+  const activeCategory = selectedCategory?.id || scrollActiveCategory;
 
   const handleSelectCategory = (categoryId: string) => {
+    const category = SALON_SERVICES_CATEGORIES.find((item) => item.id === categoryId);
+    const nextUrl = category ? `/services/${category.slug}` : "/services";
+
     setScrollActiveCategory(categoryId);
-    const nextUrl = categoryId === "all" ? "/services" : `/services?category=${categoryId}`;
     window.history.pushState({}, "", nextUrl);
 
     const element = document.getElementById(categoryId);
@@ -35,18 +47,19 @@ export const CompleteServicesExperience: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!validQueryCategory) return;
+    if (!selectedCategory) return;
 
-    const element = document.getElementById(validQueryCategory);
+    const element = document.getElementById(selectedCategory.id);
     if (element) {
       requestAnimationFrame(() => {
         element.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
-  }, [validQueryCategory]);
+  }, [selectedCategory]);
 
-  // Update active category on user scroll
   useEffect(() => {
+    if (selectedCategory) return;
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
 
@@ -62,26 +75,27 @@ export const CompleteServicesExperience: React.FC = () => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <>
-      {/* 1. Hero */}
       <ServicesHero
-        title="Our Services"
-        subtitle="Discover professional beauty, hair, makeup and academy services at The Glorious Hair Studio and Academy."
-        onExploreClick={() => handleSelectCategory(SALON_SERVICES_CATEGORIES[0].id)}
+        title={selectedCategory ? selectedCategory.title : "Our Services"}
+        subtitle={
+          selectedCategory
+            ? selectedCategory.description
+            : "Discover professional beauty, hair, makeup and academy services at The Glorious Hair Studio and Academy."
+        }
+        onExploreClick={() => handleSelectCategory(selectedCategory?.id || SALON_SERVICES_CATEGORIES[0].id)}
       />
 
-      {/* 2. Category Navigation */}
       <ServiceCategoryNavigation
         categories={SALON_SERVICES_CATEGORIES}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
       />
 
-      {/* 3. All 8 Service Categories */}
-      {SALON_SERVICES_CATEGORIES.map((cat, index) => (
+      {categoriesToRender.map((cat, index) => (
         <ServiceCategorySection
           key={cat.id}
           category={cat}
@@ -89,10 +103,7 @@ export const CompleteServicesExperience: React.FC = () => {
         />
       ))}
 
-      {/* 4. Common FAQs */}
       <ServicesFAQ />
-
-      {/* 5. Booking CTA */}
       <ServicesBookingCTA />
     </>
   );

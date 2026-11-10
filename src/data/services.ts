@@ -20,6 +20,7 @@ export interface ServiceSubGroup {
 
 export interface ServiceCategorySectionData {
   id: string; // for anchor navigation
+  slug: string; // route path, e.g. /services/academic-courses
   title: string;
   shortTitle: string; // for category navbar
   eyebrow: string;
@@ -36,6 +37,7 @@ export interface ServiceCategorySectionData {
 export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   {
     id: "academy-courses",
+    slug: "academic-courses",
     title: "Academy Courses",
     shortTitle: "Academy Courses",
     eyebrow: "Professional Career Training",
@@ -73,6 +75,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "makeup-hair-styling",
+    slug: "makeup-hair-styling",
     title: "Makeup & Hair Styling",
     shortTitle: "Makeup & Hair Styling",
     eyebrow: "Flawless Occasion Artistry",
@@ -103,6 +106,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "hair-treatments",
+    slug: "hair-treatments",
     title: "Professional Hair Treatments",
     shortTitle: "Hair Treatments",
     eyebrow: "Transformative Hair Architecture",
@@ -125,6 +129,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "haircuts-basic",
+    slug: "haircuts-basic",
     title: "Haircuts & Basic Services",
     shortTitle: "Haircuts & Basic",
     eyebrow: "Precision Cuts & Everyday Grooming",
@@ -148,6 +153,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "wax-body-care",
+    slug: "wax-body-care",
     title: "Wax & Body Care",
     shortTitle: "Wax & Body Care",
     eyebrow: "Silky Smooth & Polished Skin",
@@ -173,6 +179,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "facial-cleanup",
+    slug: "facial-cleanup",
     title: "Facial & Cleanup Services",
     shortTitle: "Facial & Cleanup",
     eyebrow: "Dermatological Radiance & Detox",
@@ -203,6 +210,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "hair-colour",
+    slug: "hair-colour",
     title: "Hair Colour Services",
     shortTitle: "Hair Colour",
     eyebrow: "Artisanal Shades & Low-Ammonia Gloss",
@@ -236,6 +244,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
   },
   {
     id: "hair-spa",
+    slug: "hair-spa",
     title: "Hair Spa Services",
     shortTitle: "Hair Spa",
     eyebrow: "Deep Nourishment & Scalp Therapy",

@@ -131,12 +131,12 @@ export const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
           ctaHref={category.ctaHref || "/booking"}
           ctaType={category.ctaType || "booking"}
           heading={
-            category.id === "academy-courses"
+            category.slug === "academic-courses"
               ? "Ready to join our next training batch?"
               : "Experience this service with our experts"
           }
           subtext={
-            category.id === "academy-courses"
+            category.slug === "academic-courses"
               ? "Call or visit our academy at Vijay Nagar, Indore for syllabus, fees & registration."
               : "Reserve your appointment online, call our desk, or message on WhatsApp."
           }

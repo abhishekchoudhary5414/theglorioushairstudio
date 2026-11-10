@@ -3,15 +3,10 @@ import Image from "next/image";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 import { PageHero } from "@/components/common/PageHero";
-import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { SecondaryButton } from "@/components/common/SecondaryButton";
 import { BookingCTA } from "@/components/home/BookingCTA";
 import { ServiceDetailActions } from "./ServiceDetailActions";
@@ -19,6 +14,8 @@ import { SalonDataService } from "@/services/salon.service";
 import { formatINR } from "@/lib/utils/format";
 import { salonConfig } from "@/config/salon.config";
 import { SERVICES_DATA } from "@/lib/constants/salon-data";
+import { SALON_SERVICES_CATEGORIES } from "@/data/services";
+import { CompleteServicesExperience } from "../CompleteServicesExperience";
 import styles from "./service-details.module.css";
 
 interface ServiceDetailsPageProps {
@@ -26,13 +23,25 @@ interface ServiceDetailsPageProps {
 }
 
 export async function generateStaticParams() {
-  return SERVICES_DATA.map((service) => ({
-    slug: service.slug,
-  }));
+  return [
+    ...SERVICES_DATA.map((service) => ({ slug: service.slug })),
+    ...SALON_SERVICES_CATEGORIES.map((category) => ({ slug: category.slug })),
+  ];
 }
 
 export async function generateMetadata({ params }: ServiceDetailsPageProps) {
   const { slug } = await params;
+  const category = SALON_SERVICES_CATEGORIES.find(
+    (item) => item.slug === slug || item.id === slug
+  );
+
+  if (category) {
+    return {
+      title: `${category.title} | ${salonConfig.name}`,
+      description: category.description,
+    };
+  }
+
   const service = await SalonDataService.getServiceBySlug(slug);
 
   if (!service) {
@@ -45,13 +54,30 @@ export async function generateMetadata({ params }: ServiceDetailsPageProps) {
     openGraph: {
       title: `${service.name} | ${salonConfig.name}`,
       description: service.shortDescription,
-      images: [{ url: service.image }]
-    }
+      images: [{ url: service.image }],
+    },
   };
 }
 
-export default async function ServiceDetailsPage({ params }: ServiceDetailsPageProps) {
+export default async function ServiceRoutePage({ params }: ServiceDetailsPageProps) {
   const { slug } = await params;
+  const category = SALON_SERVICES_CATEGORIES.find(
+    (item) => item.slug === slug || item.id === slug
+  );
+
+  if (category) {
+    return (
+      <>
+        <Header />
+        <main>
+          <CompleteServicesExperience selectedCategorySlug={category.slug} />
+        </main>
+        <Footer />
+        <FloatingWhatsApp />
+      </>
+    );
+  }
+
   const service = await SalonDataService.getServiceBySlug(slug);
 
   if (!service) {
@@ -75,14 +101,12 @@ export default async function ServiceDetailsPage({ params }: ServiceDetailsPageP
 
         <div className={styles.container}>
           <div className={styles.detailsGrid}>
-            {/* Main Content */}
             <div className={styles.mainInfo}>
               <span className={styles.categoryTag}>{service.categoryName}</span>
               <h1 className={styles.title}>{service.name}</h1>
               <p className={styles.tagline}>{service.tagline}</p>
               <p className={styles.fullDesc}>{service.fullDescription}</p>
 
-              {/* Benefits */}
               <div className={styles.sectionBlock}>
                 <h2 className={styles.blockTitle}>Key Benefits & Transformation</h2>
                 <ul className={styles.benefitsList}>
@@ -95,7 +119,6 @@ export default async function ServiceDetailsPage({ params }: ServiceDetailsPageP
                 </ul>
               </div>
 
-              {/* Step by step process */}
               <div className={styles.sectionBlock}>
                 <h2 className={styles.blockTitle}>The Ritual Architecture & Process</h2>
                 <div className={styles.processTimeline}>
@@ -111,7 +134,6 @@ export default async function ServiceDetailsPage({ params }: ServiceDetailsPageP
                 </div>
               </div>
 
-              {/* FAQs */}
               <div className={styles.sectionBlock}>
                 <h2 className={styles.blockTitle}>Frequently Asked Questions</h2>
                 <div className={styles.faqBlock}>
@@ -125,7 +147,6 @@ export default async function ServiceDetailsPage({ params }: ServiceDetailsPageP
               </div>
             </div>
 
-            {/* Sidebar Booking Card */}
             <aside className={styles.sidebar}>
               <div className={styles.bookingCard}>
                 <div className={styles.priceWrapper}>
@@ -146,7 +167,6 @@ export default async function ServiceDetailsPage({ params }: ServiceDetailsPageP
                   <span>Hospital-grade sterilization assured</span>
                 </div>
 
-                {/* WhatsApp, Call, and Enquiry Now Buttons with Click Tracking */}
                 <ServiceDetailActions
                   whatsappUrl={whatsappUrl}
                   phone={salonConfig.contact.phone}

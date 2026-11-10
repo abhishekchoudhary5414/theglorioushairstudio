@@ -63,6 +63,7 @@ export const ServiceDetailActions: React.FC<ServiceDetailActionsProps> = ({
         href={`/booking?serviceId=${serviceId}`}
         variant="gold"
         fullWidth
+        className={styles.bookNowButton}
         onClick={() =>
           trackInteraction({
             eventType: "enquiry_click",
@@ -73,7 +74,7 @@ export const ServiceDetailActions: React.FC<ServiceDetailActionsProps> = ({
         }
       >
         <EventAvailableIcon fontSize="small" />
-        <span>Enquire Now / Book Slot</span>
+        <span>Book Now</span>
       </PrimaryButton>
     </div>
   );
