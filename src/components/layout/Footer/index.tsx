@@ -103,7 +103,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Atelier Hours & Newsletter */}
+          {/* Atelier Hours */}
           <div>
             <h4 className={styles.columnTitle}>Atelier Hours</h4>
             <div className={styles.hoursBlock}>
@@ -115,27 +115,6 @@ export const Footer: React.FC = () => {
                 </div>
               ))}
             </div>
-
-            <p className={styles.newsletterText}>
-              Subscribe to receive private salon preview invitations and seasonal trousseau privileges.
-            </p>
-            <form
-              className={styles.newsletterForm}
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Thank you for joining our private guest book.");
-              }}
-            >
-              <input
-                type="email"
-                placeholder="Enter email address"
-                required
-                className={styles.input}
-              />
-              <button type="submit" className={styles.submitBtn}>
-                Join
-              </button>
-            </form>
           </div>
         </div>
 

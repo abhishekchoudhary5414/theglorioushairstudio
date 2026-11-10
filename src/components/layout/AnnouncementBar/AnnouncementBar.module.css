@@ -58,6 +58,39 @@
   color: var(--color-border);
 }
 
+.mobileMarquee {
+  display: none;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid rgba(210, 180, 111, 0.4);
+  margin-top: 0.4rem;
+}
+
+.mobileMarqueeTrack {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  min-width: max-content;
+  padding: 0.45rem 0;
+  animation: marqueeScroll 16s linear infinite;
+  color: var(--color-text-inverse);
+  font-weight: 600;
+}
+
+.mobileMarqueeTrack span {
+  display: inline-block;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (max-width: 960px) {
   .contactLinks {
     display: none;
@@ -80,6 +113,12 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.25rem;
+  }
+  .mobileMarquee {
+    display: block;
+  }
+  .inner {
+    display: none;
   }
 }
 

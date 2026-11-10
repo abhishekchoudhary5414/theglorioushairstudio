@@ -6,6 +6,9 @@ import { salonConfig } from "@/config/salon.config";
 import styles from "./AnnouncementBar.module.css";
 
 export const AnnouncementBar: React.FC = () => {
+  const marqueeText =
+    "Professional Hair & Beauty Salon • Quality service at best price • +91 79875 83445 • Scheme 78, Vijay Nagar, Indore";
+
   return (
     <aside className={styles.bar}>
       <div className={styles.inner}>
@@ -24,6 +27,13 @@ export const AnnouncementBar: React.FC = () => {
             <LocationOnIcon className={styles.icon} />
             <span>Scheme 78, Vijay Nagar, Indore</span>
           </span>
+        </div>
+      </div>
+
+      <div className={styles.mobileMarquee} aria-label="Salon announcement">
+        <div className={styles.mobileMarqueeTrack}>
+          <span>{marqueeText}</span>
+          <span aria-hidden="true">{marqueeText}</span>
         </div>
       </div>
     </aside>
