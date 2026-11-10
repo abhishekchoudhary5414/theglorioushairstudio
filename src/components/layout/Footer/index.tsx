@@ -94,12 +94,12 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className={styles.columnTitle}>Signature Rituals</h4>
             <ul className={styles.linkList}>
-              <li><Link href="/services/royal-keratin-gold-infusion">24K Gold Keratin Restructuring</Link></li>
-              <li><Link href="/services/balayage-caramel-cacao">French Balayage Contouring</Link></li>
-              <li><Link href="/services/mughal-regalia-bridal-couture">Mughal Regalia Bridal Glam</Link></li>
-              <li><Link href="/services/kashmiri-saffron-radiance-facial">Kashmiri Saffron Radiance</Link></li>
-              <li><Link href="/services/hydra-clarity-dermal-infusion">HydraClarity 7-in-1 Dermal</Link></li>
-              <li><Link href="/services/abhyanga-aroma-wellness-spa">Imperial Ayurvedic Abhyanga</Link></li>
+              <li><Link href="/services/hair-treatments">Professional Hair Treatments</Link></li>
+              <li><Link href="/services/hair-colour">Hair Colour Services</Link></li>
+              <li><Link href="/services/hair-spa">Hair Spa Rituals</Link></li>
+              <li><Link href="/services/facial-cleanup">Facial &amp; Cleanup Care</Link></li>
+              <li><Link href="/services/makeup-hair-styling">Makeup &amp; Hair Styling</Link></li>
+              <li><Link href="/services/academic-courses">Academy Courses</Link></li>
             </ul>
           </div>
 

@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { SERVICES_DATA } from "@/lib/constants/salon-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://theglorioushairstudio.com";
+  const baseUrl = "https://theglorioushairstudio.vercel.app";
 
   const staticRoutes = [
     "",

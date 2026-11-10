@@ -3,19 +3,22 @@ import "./globals.css";
 import { salonConfig } from "@/config/salon.config";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://theglorioushairstudio.com"),
+  metadataBase: new URL("https://theglorioushairstudio.vercel.app"),
   title: {
-    default: `${salonConfig.name} | Luxury Salon, Hair Studio & Bridal Makeup`,
+    default: `${salonConfig.name} | Salon in Indore`,
     template: `%s | ${salonConfig.name}`
   },
-  description: `${salonConfig.name} - ${salonConfig.tagline}. Located in ${salonConfig.address.city}, India.`,
+  description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
   openGraph: {
     siteName: salonConfig.name,
     locale: "en_IN",
     type: "website",
+    url: "https://theglorioushairstudio.vercel.app",
+    title: `${salonConfig.name} | Salon in Indore`,
+    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
     images: [
       {
-        url: "/images/og-image.png",
+        url: "https://theglorioushairstudio.vercel.app/images/og-image.png",
         width: 1200,
         height: 630,
         alt: `${salonConfig.name} | Hair Studio & Academy`
@@ -24,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${salonConfig.name} | Hair Studio & Academy`,
-    description: `${salonConfig.name} - ${salonConfig.tagline}. Located in ${salonConfig.address.city}, India.`,
-    images: ["/images/og-image.png"]
+    title: `${salonConfig.name} | Salon in Indore`,
+    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
+    images: ["https://theglorioushairstudio.vercel.app/images/og-image.png"]
   }
 };
 
@@ -39,9 +42,9 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": ["BeautySalon", "HairSalon"],
     "name": salonConfig.name,
-    "image": "https://theglorioushairstudio.com/images/og-image.png",
+    "image": "https://theglorioushairstudio.vercel.app/images/og-image.png",
     "description": salonConfig.description,
-    "url": "https://theglorioushairstudio.com",
+    "url": "https://theglorioushairstudio.vercel.app",
     "telephone": salonConfig.contact.phone,
     "address": {
       "@type": "PostalAddress",

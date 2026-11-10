@@ -19,8 +19,8 @@ import { SalonDataService } from "@/services/salon.service";
 import { salonConfig } from "@/config/salon.config";
 
 export const metadata: Metadata = {
-  title: `${salonConfig.name} | Professional Hair & Beauty Salon in Indore`,
-  description: `${salonConfig.description} Located at Scheme 78, Yashraj Complex, Sector C, Vijay Nagar, Indore. Book appointments for haircut, styling, keratin, facials, and bridal makeup.`,
+  title: `${salonConfig.name} | Best Salon in Indore`,
+  description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa treatments.",
   keywords: [
     "best salon in Indore",
     "unisex salon Vijay Nagar Indore",
@@ -32,16 +32,17 @@ export const metadata: Metadata = {
     salonConfig.name
   ],
   openGraph: {
-    title: `${salonConfig.name} | Best Unisex Salon in Indore`,
-    description: salonConfig.description,
-    images: [{ url: "/images/og-image.png", width: 1200, height: 630 }],
+    siteName: salonConfig.name,
+    title: `${salonConfig.name} | Best Salon in Indore`,
+    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa treatments.",
+    images: [{ url: "https://theglorioushairstudio.vercel.app/images/og-image.png", width: 1200, height: 630, alt: `${salonConfig.name} salon preview` }],
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: `${salonConfig.name} | Best Unisex Salon in Indore`,
-    description: salonConfig.description,
-    images: ["/images/og-image.png"]
+    title: `${salonConfig.name} | Best Salon in Indore`,
+    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa treatments.",
+    images: ["https://theglorioushairstudio.vercel.app/images/og-image.png"]
   }
 };
 
