@@ -42,8 +42,8 @@ export function escapeSvgText(str: string): string {
 /**
  * Splits a long single-line address into two balanced, clean lines
  */
-export function splitAddressToLines(address: string): [string, string] {
-  if (!address) return ["", ""];
+export function splitAddressToLines(address: string): string[] {
+  if (!address) return [""];
 
   const trimmed = address.trim();
   const parts = trimmed
@@ -51,18 +51,21 @@ export function splitAddressToLines(address: string): [string, string] {
     .map((part) => part.trim())
     .filter(Boolean);
 
-  if (parts.length === 0) return ["", ""];
-  if (parts.length === 1) return [parts[0], ""];
+  if (parts.length === 0) return [""];
+  if (parts.length === 1) return [parts[0]];
   if (parts.length === 2) return [parts[0], parts[1]];
+  if (parts.length === 3) return [parts[0], parts[1], parts[2]];
 
-  // Keep a structured address together instead of cutting it at a raw midpoint.
-  // For long salon addresses, Line 1 should usually keep the building/block details,
-  // and Line 2 should keep the locality/area details together.
-  const preferredMid = parts.length >= 6 ? 3 : Math.ceil(parts.length / 2);
-  const line1 = parts.slice(0, preferredMid).join(", ");
-  const line2 = parts.slice(preferredMid).join(", ");
+  // Break long addresses into 3 manageable parts so they stay inside the PDF width.
+  const lineCount = 3;
+  const chunkSize = Math.ceil(parts.length / lineCount);
+  const lines = Array.from({ length: lineCount }, (_, index) => {
+    const start = index * chunkSize;
+    const end = start + chunkSize;
+    return parts.slice(start, end).join(", ");
+  }).filter(Boolean);
 
-  return [line1, line2];
+  return lines.length ? lines : [trimmed];
 }
 
 /**
@@ -107,9 +110,10 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
   const safeDateIssued = escapeSvgText(data.issuedDate);
   const safeNotes = escapeSvgText(data.specialInstructions || "");
 
-  const [addrLine1, addrLine2] = splitAddressToLines(data.salonAddress);
-  const safeAddrLine1 = escapeSvgText(addrLine1);
-  const safeAddrLine2 = escapeSvgText(addrLine2);
+  const addrLines = splitAddressToLines(data.salonAddress);
+  const safeAddrLines = addrLines.map((line) => escapeSvgText(line));
+  const addressLineCount = safeAddrLines.filter(Boolean).length;
+  const contactRowY = addressLineCount === 1 ? 82 : addressLineCount === 2 ? 96 : 110;
 
   // Compute dynamic heights based on optional rows
   const emailRowHeight = safeEmail ? 48 : 0;
@@ -175,21 +179,28 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
         PROFESSIONAL HAIR &amp; BEAUTY SALON AND ACADEMY
       </text>
 
-      <!-- Address Line (Two-part layout) -->
+      <!-- Address Line (multi-part layout with dedicated spacing) -->
       <g transform="translate(0, 52) scale(0.65)">
         <path d="${MUI_SVG_PATHS.locationOn}" fill="#c5a059" />
       </g>
-      <text x="20" y="64" class="font-sans txt-muted" font-size="11">
-        ${safeAddrLine1}
+      ${safeAddrLines[0] ? `
+      <text x="20" y="64" class="font-sans txt-muted" font-size="10.5">
+        ${safeAddrLines[0]}
       </text>
-      ${safeAddrLine2 ? `
-      <text x="20" y="78" class="font-sans txt-muted" font-size="11">
-        ${safeAddrLine2}
+      ` : ""}
+      ${safeAddrLines[1] ? `
+      <text x="20" y="78" class="font-sans txt-muted" font-size="10.5">
+        ${safeAddrLines[1]}
+      </text>
+      ` : ""}
+      ${safeAddrLines[2] ? `
+      <text x="20" y="92" class="font-sans txt-muted" font-size="10.5">
+        ${safeAddrLines[2]}
       </text>
       ` : ""}
 
       <!-- Contact Line with Phone, WhatsApp & Email Icons -->
-      <g transform="translate(0, 74)">
+      <g transform="translate(0, ${contactRowY})">
         <!-- Phone -->
         <g transform="translate(0, 0) scale(0.65)">
           <path d="${MUI_SVG_PATHS.phone}" fill="#c5a059" />
@@ -221,7 +232,7 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
     </g>
 
     <!-- Header Divider Line -->
-    <line x1="0" y1="105" x2="670" y2="105" stroke="#e8e1d5" stroke-width="1" />
+    <line x1="0" y1="${contactRowY + 26}" x2="670" y2="${contactRowY + 26}" stroke="#e8e1d5" stroke-width="1" />
   </g>
 
   <!-- ==================== STATUS BANNER ==================== -->
@@ -329,25 +340,28 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
           : ""
       }
 
-      <!-- Row 9: Salon Venue (Multi-line protected with full address clarity) -->
+      <!-- Row 9: Salon Venue (split into readable multi-line blocks for PDF safety) -->
       <g transform="translate(0, ${210 + notesRowHeight})">
         <text x="15" y="20" class="font-sans txt-muted" font-size="12">Salon Venue:</text>
         <g transform="translate(220, 7) scale(0.68)">
           <path d="${MUI_SVG_PATHS.locationOn}" fill="#c5a059" />
         </g>
-        <text x="240" y="20" class="font-sans txt-dark" font-size="13" font-weight="bold">
-          ${safeAddrLine1}
+
+        <text x="240" y="20" class="font-sans txt-dark" font-size="12.5" font-weight="bold">
+          ${safeAddrLines[0] || ""}
         </text>
-        ${
-          safeAddrLine2
-            ? `
-          <text x="240" y="38" class="font-sans txt-muted" font-size="12">
-            ${safeAddrLine2}
+        ${safeAddrLines[1] ? `
+          <text x="240" y="38" class="font-sans txt-muted" font-size="11.5">
+            ${safeAddrLines[1]}
           </text>
-        `
-            : ""
-        }
-        <line x1="15" y1="${safeAddrLine2 ? 52 : 36}" x2="655" y2="${safeAddrLine2 ? 52 : 36}" stroke="#e8e1d5" stroke-dasharray="4 4" />
+        ` : ""}
+        ${safeAddrLines[2] ? `
+          <text x="240" y="56" class="font-sans txt-muted" font-size="11.5">
+            ${safeAddrLines[2]}
+          </text>
+        ` : ""}
+
+        <line x1="15" y1="${safeAddrLines[2] ? 70 : safeAddrLines[1] ? 52 : 36}" x2="655" y2="${safeAddrLines[2] ? 70 : safeAddrLines[1] ? 52 : 36}" stroke="#e8e1d5" stroke-dasharray="4 4" />
       </g>
     </g>
   </g>
