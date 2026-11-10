@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         );
       }
 
-      const token = generateToken({
+      const token = await generateToken({
         userId: user.id as string,
         email: user.email as string,
         name: user.name as string,

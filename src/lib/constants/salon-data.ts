@@ -1,22 +1,22 @@
 import { ServiceItem, StylistExpert, GalleryItem, Testimonial, OfferItem } from "@/types";
 
 export const SALON_IMAGE_SET = {
-  salonInterior: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=1200&auto=format&fit=crop",
-  hairColor: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200&auto=format&fit=crop",
-  bridal: "https://images.unsplash.com/photo-1595475207225-428b62bda831?q=80&w=1200&auto=format&fit=crop",
-  facial: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200&auto=format&fit=crop",
-  treatment: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=1200&auto=format&fit=crop",
-  hydra: "https://images.unsplash.com/photo-1512290900672-1f4a97491d90?q=80&w=1200&auto=format&fit=crop",
-  nailArt: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=1200&auto=format&fit=crop",
-  waxing: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop",
-  spa: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1200&auto=format&fit=crop",
-  stylistHair: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
-  stylistMakeup: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
-  stylistSkin: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop",
-  stylistPortrait: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
-  bridalPortrait: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1000&auto=format&fit=crop",
-  menHair: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
-  academy: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200&auto=format&fit=crop",
+  salonInterior: "/gallery/1.png",
+  hairColor: "/gallery/1.png",
+  bridal: "/gallery/2.png",
+  facial: "/gallery/3.png",
+  treatment: "/gallery/4.png",
+  hydra: "/gallery/4.png",
+  nailArt: "/gallery/1.png",
+  waxing: "/gallery/2.png",
+  spa: "/gallery/3.png",
+  stylistHair: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop",
+  stylistMakeup: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=900&auto=format&fit=crop",
+  stylistSkin: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop",
+  stylistPortrait: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop",
+  bridalPortrait: "/gallery/2.png",
+  menHair: "/gallery/1.png",
+  academy: "/gallery/3.png",
 };
 
 export const CATEGORIES_LIST = [
@@ -232,67 +232,67 @@ export const STYLISTS_DATA: StylistExpert[] = [
 export const GALLERY_DATA: GalleryItem[] = [
   {
     id: "gal-1",
-    title: "Caramel Balayage Hair Transformation",
+    title: "Signature Hair Sculpting",
     category: "hair-colouring",
     categoryLabel: "Hair Color",
-    image: SALON_IMAGE_SET.hairColor,
-    description: "Rich caramel and mocha highlights done on natural dark hair at our Vijay Nagar salon."
+    image: "/gallery/1.png",
+    description: "Dimensional styling and refined finishing tailored for a polished editorial look."
   },
   {
     id: "gal-2",
-    title: "Indori Hindu Wedding Bride",
+    title: "Bridal Glow Finish",
     category: "bridal-makeup",
     categoryLabel: "Bridal Makeup",
-    image: SALON_IMAGE_SET.bridal,
-    description: "Subtle golden eye makeup, glowing skin base, and red bridal lehenga draping."
+    image: "/gallery/2.png",
+    description: "Luxury bridal grooming designed to photograph beautifully from morning rituals to night celebrations."
   },
   {
     id: "gal-3",
-    title: "Keratin Smooth & Shiny Hair Reveal",
+    title: "Silk-Smooth Hair Reveal",
     category: "hair-transformations",
     categoryLabel: "Hair Smoothing",
-    image: SALON_IMAGE_SET.treatment,
-    description: "Before and after Brazilian Keratin treatment. Frizz completely gone."
+    image: "/gallery/3.png",
+    description: "Smooth, glossy results with a healthy finish and easy styling maintenance."
   },
   {
     id: "gal-4",
-    title: "HydraFacial Glow Result",
+    title: "Radiant Skin Refresh",
     category: "skin-treatments",
     categoryLabel: "Skin Facial",
-    image: SALON_IMAGE_SET.facial,
-    description: "Fresh, hydrated, clean skin right after our 7-step HydraFacial."
+    image: "/gallery/4.png",
+    description: "Hydrated, luminous skin finished with a fresh salon-grade glow."
   },
   {
     id: "gal-5",
-    title: "Sangeet Evening Party Look",
+    title: "Editorial Hair Styling",
     category: "party-makeup",
     categoryLabel: "Party Makeup",
-    image: SALON_IMAGE_SET.bridalPortrait,
-    description: "Glamorous party makeup with soft curls for a wedding reception in Indore."
+    image: "/gallery/1.png",
+    description: "Soft movement, premium texture, and a polished finish for special moments."
   },
   {
     id: "gal-6",
-    title: "Our Salon Interior in Vijay Nagar",
+    title: "Salon Experience",
     category: "salon-interiors",
     categoryLabel: "Salon Interior",
-    image: SALON_IMAGE_SET.salonInterior,
-    description: "Modern styling chairs, clean private rooms, and comfortable waiting lounge."
+    image: "/gallery/2.png",
+    description: "A premium, hygienic space designed for comfort, confidence, and beauty rituals."
   },
   {
     id: "gal-7",
-    title: "Glitter & French Tip Nail Extensions",
+    title: "Precision Styling Detail",
     category: "hair-transformations",
     categoryLabel: "Nail Extensions",
-    image: SALON_IMAGE_SET.nailArt,
-    description: "Almond-shaped gel extensions with silver glitter accents."
+    image: "/gallery/3.png",
+    description: "Clean lines and carefully styled finishes that bring out a high-fashion silhouette."
   },
   {
     id: "gal-8",
-    title: "Traditional Bridal Haldi Look",
+    title: "Signature Bridal Beauty",
     category: "bridal-makeup",
     categoryLabel: "Bridal Makeup",
-    image: SALON_IMAGE_SET.bridalPortrait,
-    description: "Light dewy makeup with fresh floral jewelry for morning Haldi function."
+    image: "/gallery/4.png",
+    description: "An elegant bridal look with a fresh, camera-ready finish that lasts all day."
   }
 ];
 

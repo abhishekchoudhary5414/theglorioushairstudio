@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         );
       }
 
-      const token = generateToken({
+      const token = await generateToken({
         userId: user.id as string,
         email: user.email as string,
         name: user.name as string,
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     }
 
     // Fallback simulation when DATABASE_URL is not set
-    const token = generateToken({
+    const token = await generateToken({
       userId: `user_demo`,
       email: email.toLowerCase().trim(),
       name: "Demo User",

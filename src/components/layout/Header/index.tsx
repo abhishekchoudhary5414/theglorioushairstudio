@@ -41,43 +41,16 @@ export const Header: React.FC = () => {
   const activeServiceCategory = pathname.startsWith("/services/") ? pathname.replace("/services/", "") : null;
 
   useEffect(() => {
-    const syncPathname = () => {
-      setPathname(window.location.pathname || "/");
-    };
-
-    syncPathname();
+    setPathname(window.location.pathname || "/");
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
     };
 
-    const handleLocationChange = () => {
-      syncPathname();
-    };
-
-    const originalPushState = window.history.pushState;
-    const originalReplaceState = window.history.replaceState;
-
-    window.history.pushState = function patchedPushState(...args) {
-      const result = originalPushState.apply(this, args);
-      handleLocationChange();
-      return result;
-    };
-
-    window.history.replaceState = function patchedReplaceState(...args) {
-      const result = originalReplaceState.apply(this, args);
-      handleLocationChange();
-      return result;
-    };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("popstate", handleLocationChange);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("popstate", handleLocationChange);
-      window.history.pushState = originalPushState;
-      window.history.replaceState = originalReplaceState;
     };
   }, []);
 

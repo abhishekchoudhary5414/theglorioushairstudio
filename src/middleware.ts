@@ -4,9 +4,16 @@ import { verifyToken, AUTH_COOKIE_NAME } from "@/lib/auth/jwt";
 
 // Protected routes requiring JWT authentication
 const PROTECTED_PREFIXES = ["/api/user", "/api/admin"];
+// Public endpoints within protected prefixes
+const PUBLIC_ENDPOINTS = ["/api/admin/login"];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Allow public endpoints like login without auth
+  if (PUBLIC_ENDPOINTS.some((pub) => pathname === pub || pathname.startsWith(`${pub}/`))) {
+    return NextResponse.next();
+  }
 
   const isProtected = PROTECTED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 
@@ -20,7 +27,7 @@ export function middleware(request: NextRequest) {
       );
     }
 
-    const payload = verifyToken(token);
+    const payload = await verifyToken(token);
     if (!payload) {
       return NextResponse.json(
         { success: false, message: "Invalid or expired session. Please sign in again." },

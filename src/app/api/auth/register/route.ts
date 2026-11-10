@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       `;
 
       const newUser = inserted[0];
-      const token = generateToken({
+      const authToken = await generateToken({
         userId: newUser.id as string,
         email: newUser.email as string,
         name: newUser.name as string,
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
         message: "Account registered successfully.",
       });
 
-      response.cookies.set(AUTH_COOKIE_NAME, token, {
+      response.cookies.set(AUTH_COOKIE_NAME, String(authToken), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
 
     // Fallback response if DATABASE_URL is not yet connected
     const fallbackId = `user_${Date.now()}`;
-    const token = generateToken({
+    const authToken = await generateToken({
       userId: fallbackId,
       email: email.toLowerCase().trim(),
       name: name.trim(),
@@ -92,7 +92,7 @@ export async function POST(req: Request) {
       message: "Account registered successfully (Database URL ready).",
     });
 
-    response.cookies.set(AUTH_COOKIE_NAME, token, {
+    response.cookies.set(AUTH_COOKIE_NAME, String(authToken), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
