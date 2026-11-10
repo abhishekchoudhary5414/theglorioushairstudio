@@ -5,7 +5,7 @@ import { salonConfig } from "@/config/salon.config";
 export const metadata: Metadata = {
   metadataBase: new URL("https://theglorioushairstudio.vercel.app"),
   title: {
-    default: `${salonConfig.name} | Salon in Indore`,
+    default: `${salonConfig.name} | Best Salon in Indore | Hair Studio & Academy`,
     template: `%s | ${salonConfig.name}`
   },
   description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     type: "website",
     url: "https://theglorioushairstudio.vercel.app",
-    title: `${salonConfig.name} | Salon in Indore`,
+    title: `${salonConfig.name} | Best Salon in Indore | Hair Studio & Academy`,
     description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
     images: [
       {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${salonConfig.name} | Salon in Indore`,
+    title: `${salonConfig.name} | Best Salon in Indore | Hair Studio & Academy`,
     description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
     images: ["https://theglorioushairstudio.vercel.app/images/og-image.png"]
   }
