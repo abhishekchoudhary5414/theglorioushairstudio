@@ -185,44 +185,6 @@
   flex-wrap: wrap;
 }
 
-.callDirectBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.4rem;
-  border-radius: var(--radius-full);
-  background-color: var(--color-call-gold-light);
-  border: 1px solid var(--color-call-gold-border);
-  color: var(--color-secondary);
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all var(--transition-fast);
-}
-
-.callDirectBtn:hover {
-  background-color: var(--color-secondary);
-  color: var(--color-primary);
-}
-
-.whatsappDirectBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.4rem;
-  border-radius: var(--radius-full);
-  background-color: var(--color-whatsapp-light);
-  border: 1px solid var(--color-whatsapp-border);
-  color: var(--color-whatsapp);
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all var(--transition-fast);
-}
-
-.whatsappDirectBtn:hover {
-  background-color: var(--color-whatsapp);
-  color: var(--color-surface);
-}
-
 .statsBar {
   margin-top: 3.5rem;
   padding-top: 2rem;
@@ -283,35 +245,6 @@
   transform: scale(1.05);
 }
 
-.floatingTag {
-  position: absolute;
-  bottom: 2rem;
-  left: -2rem;
-  background-color: var(--color-surface-floating);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border-gold);
-  padding: 1.15rem 1.6rem;
-  border-radius: var(--radius-xs);
-  box-shadow: 0 15px 35px var(--color-shadow-floating);
-  display: flex;
-  flex-direction: column;
-}
-
-.tagRating {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: var(--color-secondary);
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-.tagText {
-  font-size: 0.75rem;
-  color: var(--color-text-inverse);
-  margin-top: 0.25rem;
-}
-
 @media (max-width: 1024px) {
   .hero {
     padding-top: 8.5rem;
@@ -334,10 +267,6 @@
   }
   .statsBar {
     justify-content: center;
-  }
-  .floatingTag {
-    left: 1rem;
-    bottom: 1rem;
   }
 }
 
@@ -377,11 +306,6 @@
     width: 100%;
     justify-content: center;
   }
-  .callDirectBtn,
-  .whatsappDirectBtn {
-    width: 100%;
-    justify-content: center;
-  }
   .statsBar {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
@@ -391,12 +315,6 @@
   .mainCard {
     max-width: 340px;
     height: 440px;
-  }
-  .floatingTag {
-    position: static;
-    margin-top: 1rem;
-    width: 100%;
-    max-width: 340px;
   }
 }
 

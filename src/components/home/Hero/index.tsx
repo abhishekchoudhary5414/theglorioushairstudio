@@ -3,10 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import StarIcon from "@mui/icons-material/Star";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import PhoneIcon from "@mui/icons-material/Phone";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import Face3Icon from "@mui/icons-material/Face3";
@@ -14,14 +11,10 @@ import BrushIcon from "@mui/icons-material/Brush";
 import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { SecondaryButton } from "@/components/common/SecondaryButton";
 import { salonConfig } from "@/config/salon.config";
-import { trackInteraction } from "@/lib/utils/analytics";
 import styles from "./Hero.module.css";
-import HeroImage from "../../../../public/hero/hero-girl.png"
+import HeroImage from "../../../../public/hero/hero-girl.png";
 
 export const Hero: React.FC = () => {
-  const whatsappUrl = `https://wa.me/${salonConfig.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-    `Hello ${salonConfig.name}, I would like to book a salon appointment.`
-  )}`;
 
   return (
     <section className={styles.hero}>
@@ -79,10 +72,6 @@ export const Hero: React.FC = () => {
               <span>Book Appointment Now</span>
               <ArrowForwardIcon fontSize="small" />
             </PrimaryButton>
-
-          
-
-        
 
             <SecondaryButton href="/services" inverse>
               View Services &amp; Prices

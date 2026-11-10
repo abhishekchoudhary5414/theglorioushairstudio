@@ -3,8 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { SubServiceItem } from "@/data/services";
 import { salonConfig } from "@/config/salon.config";
@@ -39,7 +37,6 @@ export const ServicePricingCard: React.FC<ServicePricingCardProps> = ({
         <span className={styles.priceValue}>{item.priceDisplay}</span>
       </div>
 
-      {/* WhatsApp, Call, Enquiry Now Action Row */}
       <div className={styles.actionsGrid}>
         <a
           href={whatsappUrl}
@@ -60,42 +57,23 @@ export const ServicePricingCard: React.FC<ServicePricingCardProps> = ({
           <span>WhatsApp</span>
         </a>
 
-        <a
-          href={`tel:${salonConfig.contact.phone}`}
-          className={`${styles.actionBtn} ${styles.btnCall}`}
-          aria-label={`Call about ${item.name}`}
-          onClick={() =>
-            trackInteraction({
-              eventType: "call_click",
-              serviceName: item.name,
-              sourceLocation: "service_card",
-              targetUrl: `tel:${salonConfig.contact.phone}`
-            })
-          }
-        >
-          <PhoneIcon fontSize="inherit" />
-          <span>Call</span>
-        </a>
-
         <Link
           href={`/booking?serviceId=${encodeURIComponent(item.id)}`}
-          className={`${styles.actionBtn} ${styles.btnEnquire}`}
-          aria-label={`Enquire now for ${item.name}`}
+          className={`${styles.actionBtn} ${styles.btnBook}`}
+          aria-label={`Book now for ${item.name}`}
           onClick={() =>
             trackInteraction({
-              eventType: "enquiry_click",
+              eventType: "booking_click",
               serviceName: item.name,
               sourceLocation: "service_card",
               targetUrl: `/booking?serviceId=${encodeURIComponent(item.id)}`
             })
           }
         >
-          <EventAvailableIcon fontSize="inherit" />
-          <span>Enquire</span>
+          <span>Book Now</span>
         </Link>
       </div>
 
-      {/* Link to Service Detailing Page */}
       <Link href={`/services/${item.slug}`} className={styles.detailsLink}>
         <span>View Full Details &amp; Benefits</span>
         <ArrowForwardIcon fontSize="inherit" />
