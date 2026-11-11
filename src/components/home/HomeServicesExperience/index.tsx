@@ -86,6 +86,7 @@ export const HomeServicesExperience: React.FC = () => {
                       key={`${item.id}-${idx}`}
                       item={item}
                       featured={Boolean(item.badge)}
+                      defaultImage={category.image}
                     />
                   ))
                 )}

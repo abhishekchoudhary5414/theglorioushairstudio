@@ -84,7 +84,7 @@ export const CompleteServicesExperience: React.FC<CompleteServicesExperienceProp
         subtitle={
           selectedCategory
             ? selectedCategory.description
-            : "Discover professional beauty, hair, makeup and academy services at The Glorious Hair Studio and Academy."
+            : "All services in separate sections with instant WhatsApp, Call, and Online Booking. No hidden costs."
         }
         onExploreClick={() => handleSelectCategory(selectedCategory?.id || SALON_SERVICES_CATEGORIES[0].id)}
       />

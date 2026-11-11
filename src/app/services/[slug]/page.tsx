@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { Suspense } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
@@ -23,9 +24,18 @@ interface ServiceDetailsPageProps {
 }
 
 export async function generateStaticParams() {
+  const categoryItemSlugs = Array.from(
+    new Set(
+      SALON_SERVICES_CATEGORIES.flatMap((category) =>
+        category.subGroups.flatMap((group) => group.items.map((item) => item.slug))
+      )
+    )
+  );
+
   return [
     ...SERVICES_DATA.map((service) => ({ slug: service.slug })),
     ...SALON_SERVICES_CATEGORIES.map((category) => ({ slug: category.slug })),
+    ...categoryItemSlugs.map((slug) => ({ slug })),
   ];
 }
 
@@ -59,7 +69,7 @@ export async function generateMetadata({ params }: ServiceDetailsPageProps) {
   };
 }
 
-export default async function ServiceRoutePage({ params }: ServiceDetailsPageProps) {
+async function ServiceRouteContent({ params }: ServiceDetailsPageProps) {
   const { slug } = await params;
   const category = SALON_SERVICES_CATEGORIES.find(
     (item) => item.slug === slug || item.id === slug
@@ -200,5 +210,13 @@ export default async function ServiceRoutePage({ params }: ServiceDetailsPagePro
       <Footer />
       <FloatingWhatsApp />
     </>
+  );
+}
+
+export default function ServiceRoutePage(props: ServiceDetailsPageProps) {
+  return (
+    <Suspense fallback={<div style={{ minHeight: "60vh" }} />}>
+      <ServiceRouteContent {...props} />
+    </Suspense>
   );
 }

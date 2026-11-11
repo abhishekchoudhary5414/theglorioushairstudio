@@ -44,7 +44,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     priceINR: 15000,
     priceDisplay: "₹15,000",
     isPopular: false,
-    image: SALON_IMAGE_SET.facial,
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=900&auto=format&fit=crop",
     shortDescription: "Master deep skin analysis, electrical facial machines, HydraFacial protocols, chemical exfoliation, and targeted anti-acne care.",
     fullDescription: "Become a certified skin aesthetician with our structured training module. Learn proper diagnostic assessment of diverse Indian skin tones, treatment of acne and pigmentation, machine operation, and hygiene sanitation.",
     benefits: [
@@ -74,7 +74,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     priceINR: 15000,
     priceDisplay: "₹15,000",
     isPopular: false,
-    image: SALON_IMAGE_SET.nailArt,
+    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=900&auto=format&fit=crop",
     shortDescription: "Learn high-precision Russian dry manicures, acrylic building, builder gels, French ombre, chrome finishes, and crystal placement.",
     fullDescription: "Nail artistry is in massive demand across salons. This specialized academy course equips you with complete technical proficiency in e-file cuticle detailing, form extensions, apex architecture, and trending nail designs.",
     benefits: [

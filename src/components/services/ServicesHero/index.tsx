@@ -16,7 +16,7 @@ interface ServicesHeroProps {
 
 export const ServicesHero: React.FC<ServicesHeroProps> = ({
   title = "Our Services",
-  subtitle = "Discover professional beauty, hair, makeup and academy services at The Glorious Hair Studio and Academy.",
+  subtitle = "All services in separate sections with instant WhatsApp, Call, and Online Booking. No hidden costs.",
   onExploreClick,
 }) => {
   return (

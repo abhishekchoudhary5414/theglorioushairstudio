@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -12,12 +13,15 @@ import styles from "./ServicePricingCard.module.css";
 interface ServicePricingCardProps {
   item: SubServiceItem;
   featured?: boolean;
+  defaultImage?: string;
 }
 
 export const ServicePricingCard: React.FC<ServicePricingCardProps> = ({
   item,
   featured = false,
+  defaultImage,
 }) => {
+  const cardImage = item.image ?? defaultImage;
   const whatsappUrl = `https://wa.me/${salonConfig.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
     `Hello ${salonConfig.name}, I want to enquire about ${item.name} (${item.priceDisplay || ""}).`
   )}`;
@@ -25,6 +29,18 @@ export const ServicePricingCard: React.FC<ServicePricingCardProps> = ({
   return (
     <article className={`${styles.card} ${featured ? styles.cardFeatured : ""}`}>
       {item.badge && <span className={styles.badge}>{item.badge}</span>}
+
+      {cardImage && (
+        <div className={styles.imageWrap}>
+          <Image
+            src={cardImage}
+            alt={item.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 320px"
+            className={styles.image}
+          />
+        </div>
+      )}
 
       <div className={styles.header}>
         <h4 className={styles.title}>{item.name}</h4>
