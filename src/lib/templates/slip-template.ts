@@ -20,6 +20,13 @@ export interface BookingSlipModel {
   appointmentDate: string;
   timeSlot: string;
   priceDisplay: string;
+  baseAmount?: number;
+  pointsUsed?: number;
+  discountPercentage?: number;
+  discountAmount?: number;
+  finalPayable?: number;
+  paymentStatus?: "paid" | "pending" | "confirmed" | string;
+  paymentMethod?: string;
   salonName: string;
   salonAddress: string;
   salonPhone: string;
@@ -27,6 +34,7 @@ export interface BookingSlipModel {
   specialInstructions?: string;
   issuedDate: string;
   logoDataUri?: string;
+  instaReelsUrl?: string;
 }
 
 export function escapeSvgText(str: string): string {
@@ -94,7 +102,7 @@ export const MUI_SVG_PATHS = {
  * Builds the unified Confirmation Slip SVG template.
  * Designed with fixed left-aligned columns to prevent any text collisions or broken layouts.
  */
-export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800, height = 1180): string {
+export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800, height = 1260): string {
   const safeRef = escapeSvgText(data.bookingRef);
   const safeName = escapeSvgText(data.customerName);
   const safePhone = escapeSvgText(data.customerPhone);
@@ -109,6 +117,13 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
   const safeSalonEmail = escapeSvgText(data.salonEmail);
   const safeDateIssued = escapeSvgText(data.issuedDate);
   const safeNotes = escapeSvgText(data.specialInstructions || "");
+  const safeInsta = escapeSvgText(data.instaReelsUrl || "https://www.instagram.com/the.glorious_unisex_salon/reels/");
+
+  const isPaid = (data.paymentStatus || "").toLowerCase() === "paid" || (data.paymentStatus || "").toLowerCase() === "completed";
+  const statusTitle = isPaid ? "OFFICIAL PAYMENT RECEIPT (PAID)" : "OFFICIAL PAYMENT RECEIPT (PAY AT SALON)";
+  const statusColor = isPaid ? "#2e6b46" : "#c64516";
+  const statusBg = isPaid ? "#f0f7f3" : "#fdf4f0";
+  const statusBorder = isPaid ? "#2e6b46" : "#e05624";
 
   const addrLines = splitAddressToLines(data.salonAddress);
   const safeAddrLines = addrLines.map((line) => escapeSvgText(line));
@@ -176,7 +191,7 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
 
       <!-- Subtitle Tagline -->
       <text x="0" y="44" class="font-sans txt-gold" font-size="10.5" font-weight="bold" letter-spacing="1.5">
-        PROFESSIONAL HAIR &amp; BEAUTY SALON AND ACADEMY
+        OFFICIAL PAYMENT RECEIPT &amp; APPOINTMENT INVOICE
       </text>
 
       <!-- Address Line (multi-part layout with dedicated spacing) -->
@@ -237,17 +252,17 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
 
   <!-- ==================== STATUS BANNER ==================== -->
   <g transform="translate(65, 185)">
-    <rect width="670" height="60" rx="8" fill="#f7f1e5" stroke="#c5a059" stroke-width="1" />
+    <rect width="670" height="60" rx="8" fill="${statusBg}" stroke="${statusBorder}" stroke-width="1.5" />
 
     <!-- Left: Verified Status -->
     <g transform="translate(16, 17) scale(1.15)">
-      <path d="${MUI_SVG_PATHS.verified}" fill="#2e6b46" />
+      <path d="${MUI_SVG_PATHS.verified}" fill="${statusColor}" />
     </g>
-    <text x="52" y="32" class="font-sans txt-green" font-size="13.5" font-weight="bold" letter-spacing="1">
-      SLOT CONFIRMED
+    <text x="52" y="32" class="font-sans" fill="${statusColor}" font-size="13" font-weight="bold" letter-spacing="1">
+      ${statusTitle}
     </text>
     <text x="52" y="48" class="font-sans txt-muted" font-size="11">
-      Issued on: ${safeDateIssued}
+      Issued on: ${safeDateIssued} &bull; Official Salon Payment Slip
     </text>
 
     <!-- Right: Reference Code -->
@@ -311,27 +326,53 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
         <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
       </g>
 
-      <!-- Row 6: Price / Fees -->
+      <!-- Row 6: Base Service Price -->
       <g transform="translate(0, 112)">
-        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Price / Fees (Estimate):</text>
-        <text x="220" y="22" class="font-sans txt-gold" font-size="18" font-weight="bold">${safePrice}</text>
-        <line x1="15" y1="36" x2="655" y2="36" stroke="#e8e1d5" stroke-dasharray="4 4" />
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Service Base Price:</text>
+        <text x="220" y="20" class="font-sans txt-dark" font-size="14.5" font-weight="bold">${data.baseAmount !== undefined ? `₹${data.baseAmount.toLocaleString("en-IN")}` : safePrice}</text>
+        <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
       </g>
 
-      <!-- Row 7: Payment Terms -->
-      <g transform="translate(0, 162)">
-        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Payment Terms:</text>
-        <text x="220" y="20" class="font-sans txt-green" font-size="13" font-weight="bold">
-          Pay at Salon (Cash / UPI / Card / No Advance Needed)
+      <!-- Row 7: Discount & Loyalty Points Applied -->
+      <g transform="translate(0, 156)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Discount Applied:</text>
+        <text x="220" y="20" class="font-sans txt-green" font-size="13.5" font-weight="bold">
+          ${
+            data.discountAmount && data.discountAmount > 0
+              ? `-₹${data.discountAmount.toLocaleString("en-IN")}${data.discountPercentage ? ` (${data.discountPercentage}% Off)` : data.pointsUsed && data.pointsUsed > 0 ? ` (${data.pointsUsed} Pts)` : " (Discount)"}`
+              : data.discountPercentage && data.discountPercentage > 0
+              ? `${data.discountPercentage}% Special Discount`
+              : data.pointsUsed && data.pointsUsed > 0
+              ? `-₹${data.pointsUsed} (${data.pointsUsed} Loyalty Pts)`
+              : "₹0 (Standard Rate)"
+          }
         </text>
         <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
       </g>
 
-      <!-- Optional Row 8: Client Notes -->
+      <!-- Row 8: Final Payable & Payment Status -->
+      <g transform="translate(0, 200)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Final Payable / Status:</text>
+        <text x="220" y="22" class="font-sans" fill="${statusColor}" font-size="17" font-weight="bold">
+          ${data.finalPayable !== undefined ? `₹${Number(data.finalPayable).toLocaleString("en-IN")}` : safePrice} &bull; ${statusTitle}
+        </text>
+        <line x1="15" y1="36" x2="655" y2="36" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
+
+      <!-- Row 9: Payment Method -->
+      <g transform="translate(0, 248)">
+        <text x="15" y="20" class="font-sans txt-muted" font-size="12">Payment Mode:</text>
+        <text x="220" y="20" class="font-sans txt-dark" font-size="13" font-weight="600">
+          ${data.paymentMethod ? data.paymentMethod.replace(/_/g, " ").toUpperCase() : (isPaid ? "ONLINE VIA RAZORPAY" : "PAY AT SALON (CASH / UPI AT VENUE)")}
+        </text>
+        <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
+      </g>
+
+      <!-- Optional Row 10: Client Notes -->
       ${
         safeNotes
           ? `
-        <g transform="translate(0, 210)">
+        <g transform="translate(0, 296)">
           <text x="15" y="20" class="font-sans txt-muted" font-size="12">Client Notes / Length:</text>
           <text x="220" y="20" class="font-sans txt-dark" font-size="13">${safeNotes}</text>
           <line x1="15" y1="34" x2="655" y2="34" stroke="#e8e1d5" stroke-dasharray="4 4" />
@@ -340,8 +381,8 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
           : ""
       }
 
-      <!-- Row 9: Salon Venue (split into readable multi-line blocks for PDF safety) -->
-      <g transform="translate(0, ${210 + notesRowHeight})">
+      <!-- Row 11: Salon Venue (split into readable multi-line blocks for PDF safety) -->
+      <g transform="translate(0, ${296 + notesRowHeight})">
         <text x="15" y="20" class="font-sans txt-muted" font-size="12">Salon Venue:</text>
         <g transform="translate(220, 7) scale(0.68)">
           <path d="${MUI_SVG_PATHS.locationOn}" fill="#c5a059" />
@@ -383,7 +424,10 @@ export function buildUnifiedConfirmationSvg(data: BookingSlipModel, width = 800,
         • Need changes? Call or WhatsApp our concierge desk at ${safeSalonPhone}.
       </text>
       <text x="0" y="72" class="font-sans txt-muted" font-size="11">
-        • Please present this confirmation slip on your mobile phone upon arrival.
+        • Follow our latest hair &amp; bridal transformation reels on Instagram: ${safeInsta}
+      </text>
+      <text x="0" y="90" class="font-sans txt-muted" font-size="11">
+        • Please present this payment receipt slip on your mobile phone upon arrival.
       </text>
     </g>
 

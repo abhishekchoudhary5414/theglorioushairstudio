@@ -98,7 +98,17 @@ export const SalonDataService = {
     return OFFERS_DATA;
   },
 
-  async createBooking(booking: BookingSubmission & { serviceName?: string; stylistName?: string; branchName?: string; priceINR?: number }) {
+  async createBooking(booking: BookingSubmission & {
+    serviceName?: string;
+    stylistName?: string;
+    branchName?: string;
+    priceINR?: number;
+    customerId?: string;
+    paymentMethod?: string;
+    paymentStatus?: string;
+    payableAmount?: number;
+    totalAmount?: number;
+  }) {
     const bookingRef = `GG-${Math.floor(100000 + Math.random() * 900000)}`;
 
     if (process.env.DATABASE_URL) {
@@ -106,6 +116,7 @@ export const SalonDataService = {
         await sql`
           INSERT INTO bookings (
             booking_reference,
+            customer_id,
             service_id,
             service_name,
             stylist_id,
@@ -118,9 +129,14 @@ export const SalonDataService = {
             customer_phone,
             customer_email,
             price_inr,
+            total_amount,
+            payable_amount,
+            payment_method,
+            payment_status,
             special_instructions
           ) VALUES (
             ${bookingRef},
+            ${booking.customerId || null},
             ${booking.serviceId},
             ${booking.serviceName || "Salon Service"},
             ${booking.stylistId || null},
@@ -133,6 +149,10 @@ export const SalonDataService = {
             ${booking.customerPhone},
             ${booking.customerEmail || null},
             ${booking.priceINR || null},
+            ${booking.totalAmount || booking.priceINR || null},
+            ${booking.payableAmount || booking.priceINR || null},
+            ${booking.paymentMethod || "pay_at_salon"},
+            ${booking.paymentStatus || "pending"},
             ${booking.specialInstructions || null}
           );
         `;

@@ -1,0 +1,534 @@
+/* ==========================================================================
+   LUXURY EDITORIAL AUTHENTICATION STYLING
+   High-End Salon & Spa Aesthetics - Gold, Obsidian & Warm Alabaster
+   ========================================================================== */
+
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+}
+
+.authMain {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 1.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle Golden Ambient Backlight Auras */
+.ambientAuraTop {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambientAuraBottom {
+  position: absolute;
+  bottom: -20%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.12) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Master Floating Glass Frame */
+.luxuryCard {
+  width: 100%;
+  max-width: 980px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px -15px rgba(24, 20, 19, 0.12), 0 0 1px 1px rgba(197, 160, 89, 0.2);
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left Brand Showcase Column */
+.brandSide {
+  background: linear-gradient(145deg, #181413 0%, #26201e 50%, #151110 100%);
+  color: var(--color-surface);
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.brandSide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(197, 160, 89, 0.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.brandSide::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 1px solid rgba(197, 160, 89, 0.15);
+  pointer-events: none;
+}
+
+.brandTop {
+  position: relative;
+  z-index: 1;
+}
+
+.brandLogoBadge {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.brandTagline {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.brandHeading {
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+  font-size: 2.15rem;
+  line-height: 1.2;
+  color: #fdfbf7;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.brandHeading span {
+  color: var(--color-secondary);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.brandDesc {
+  color: #bfb5af;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Brand Perks List */
+.perksList {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  position: relative;
+  z-index: 1;
+}
+
+.perkItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.875rem;
+  color: #eae3dc;
+}
+
+.perkIconWrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brandFooterQuote {
+  position: relative;
+  z-index: 1;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+  color: #a39993;
+}
+
+.brandFooterQuote strong {
+  color: var(--color-secondary);
+}
+
+/* Right Interactive Form Column */
+.formSide {
+  padding: 3.5rem 3.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--color-surface);
+}
+
+.formHeader {
+  margin-bottom: 2rem;
+}
+
+.eyebrowText {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-secondary-hover);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.formTitle {
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+  font-size: 1.95rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.01em;
+}
+
+.formSubtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.925rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Tab Pill Switcher */
+.tabSwitchGroup {
+  display: flex;
+  background: var(--color-surface-subtle);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--color-border);
+}
+
+.tabSwitchBtn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tabSwitchBtnActive {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Feedback Alerts */
+.errorAlert {
+  background-color: #fdf2f2;
+  border: 1px solid #f8b4b4;
+  color: #9b1c1c;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.successAlert {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Form Controls */
+.formGroup {
+  margin-bottom: 1.35rem;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 0.825rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+}
+
+.forgotLink {
+  font-size: 0.8rem;
+  color: var(--color-secondary-hover);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.forgotLink:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.leadingIcon {
+  position: absolute;
+  left: 1.15rem;
+  color: #9ca3af;
+  font-size: 1.2rem;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.trailingIconButton {
+  position: absolute;
+  right: 1.1rem;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.trailingIconButton:hover {
+  color: var(--color-primary);
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.9rem 2.85rem 0.9rem 3rem;
+  background-color: #faf9f6;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.inputField:focus {
+  background-color: #ffffff;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 4px var(--color-secondary-glow);
+}
+
+.inputField:focus + .leadingIcon {
+  color: var(--color-secondary);
+}
+
+/* Submit Luxury CTA Button */
+.goldSubmitBtn {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  background: linear-gradient(135deg, #181413 0%, #2a2321 100%);
+  color: var(--color-secondary-light);
+  border: 1px solid var(--color-secondary);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(24, 20, 19, 0.12);
+  margin-top: 0.5rem;
+}
+
+.goldSubmitBtn:hover:not(:disabled) {
+  background: var(--color-secondary);
+  color: #181413;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--color-secondary-glow);
+}
+
+.goldSubmitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Elegant Divider */
+.orDivider {
+  display: flex;
+  align-items: center;
+  margin: 1.75rem 0;
+  color: #9ca3af;
+  font-size: 0.775rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+.orDivider::before,
+.orDivider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.orDivider span {
+  padding: 0 1rem;
+}
+
+/* Google OAuth Button */
+.socialGoogleBtn {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.socialGoogleBtn:hover {
+  background-color: var(--color-surface-subtle);
+  border-color: var(--color-secondary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Footer Switcher */
+.authFooter {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.authHighlightLink {
+  color: var(--color-secondary-hover);
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 0.35rem;
+  transition: color 0.2s;
+}
+
+.authHighlightLink:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.cooldownHint {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.resendActive {
+  color: var(--color-secondary-hover);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.resendActive:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 900px) {
+  .luxuryCard {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+  .brandSide {
+    display: none;
+  }
+  .formSide {
+    padding: 2.75rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .authMain {
+    padding: 7rem 1rem 3rem;
+  }
+  .formSide {
+    padding: 2.25rem 1.5rem;
+  }
+  .formTitle {
+    font-size: 1.65rem;
+  }
+}

@@ -39,7 +39,7 @@ export const BridalPromotion: React.FC = () => {
             </div>
             <div className={styles.featureItem}>
               <CheckCircleOutlineIcon className={styles.featureIcon} />
-              <span>Private air-conditioned bridal dressing suite in Vijay Nagar</span>
+              <span>Private air-conditioned bridal dressing suite in Scheme 94 Sector EC</span>
             </div>
             <div className={styles.featureItem}>
               <CheckCircleOutlineIcon className={styles.featureIcon} />

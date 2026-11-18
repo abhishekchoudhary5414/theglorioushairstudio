@@ -10,12 +10,12 @@ import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { BookingCTA } from "@/components/home/BookingCTA";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./about.module.css";
-import AboutImage from "../../../public/about/about.png"
+import AboutImage from "../../../public/about/about-girl.jpg";
 import AboutImageBg from "../../../public/about/about-bg.png"
 
 export const metadata: Metadata = {
-  title: `About Us | ${salonConfig.name} - Best Salon in Vijay Nagar Indore`,
-  description: `Learn about ${salonConfig.name}, Indore's favorite unisex salon and beauty studio. Operating in Scheme 78, Vijay Nagar, Indore since 2018.`
+  title: `About Us | ${salonConfig.name} - Best Salon & Academy in Indore`,
+  description: `Learn about ${salonConfig.name}, Indore's premier salon, beauty studio and training academy. Located at Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital Service Road, Indore.`
 };
 
 export default function AboutPage() {
@@ -24,9 +24,9 @@ export default function AboutPage() {
       <Header />
       <main className={styles.page}>
         <PageHero
-          eyebrow="About Our Salon"
+          eyebrow="About Our Salon & Academy"
           title={`Welcome to ${salonConfig.name} Indore`}
-          description="A friendly, modern unisex salon and bridal studio dedicated to honest advice, genuine brands, and great customer care."
+          description="A friendly, modern unisex salon, bridal studio and academy dedicated to honest advice, genuine brands, and great customer care."
           backgroundImage="../../../public/about/about-bg.png"
         />
 
@@ -40,8 +40,8 @@ export default function AboutPage() {
                 title="Serving Indore with Passion Since 2018"
               />
               <p className={styles.paragraph}>
-                We opened our salon in Scheme 78, Vijay Nagar, Indore with one clear goal:
-                to give local residents international salon quality with genuine branded products at reasonable prices.
+                We established our salon and academy in Indore opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC with one clear goal:
+                to give clients international salon quality, professional academy education, and genuine branded products at reasonable prices.
               </p>
               <p className={styles.paragraph}>
                 Over the last 8+ years, we have served more than 15,000 happy clients across Indore, Dewas,

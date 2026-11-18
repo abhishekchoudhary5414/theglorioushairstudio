@@ -68,7 +68,7 @@ export async function downloadSlipAsImage(data: BookingSlipModel): Promise<void>
         const fileUrl = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = fileUrl;
-        a.download = `The-Glorious-Hair-Studio-Slip-${data.bookingRef}.png`;
+        a.download = `Reflection-Salon-Slip-${data.bookingRef}.png`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -162,7 +162,7 @@ export async function downloadSlipAsPdf(data: BookingSlipModel): Promise<void> {
   const downloadUrl = URL.createObjectURL(pdfBlob);
   const a = document.createElement("a");
   a.href = downloadUrl;
-  a.download = `The-Glorious-Hair-Studio-Booking-${data.bookingRef}.pdf`;
+  a.download = `Reflection-Salon-Booking-${data.bookingRef}.pdf`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

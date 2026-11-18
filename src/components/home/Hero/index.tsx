@@ -4,10 +4,8 @@ import React from "react";
 import Image from "next/image";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ContentCutIcon from "@mui/icons-material/ContentCut";
-import Face3Icon from "@mui/icons-material/Face3";
-import BrushIcon from "@mui/icons-material/Brush";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { SecondaryButton } from "@/components/common/SecondaryButton";
 import { salonConfig } from "@/config/salon.config";
@@ -15,9 +13,9 @@ import styles from "./Hero.module.css";
 import HeroImage from "../../../../public/hero/hero-girl.png";
 
 export const Hero: React.FC = () => {
-
   return (
     <section className={styles.hero}>
+      {/* Background Atmosphere */}
       <div className={styles.bgContainer}>
         <div className={styles.bgImage} />
         <div className={styles.glowOrb1} />
@@ -26,53 +24,33 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className={styles.container}>
+        {/* Left Editorial Content */}
         <div className={styles.content}>
           <div className={styles.badge}>
             <AutoAwesomeIcon fontSize="inherit" />
-            <span>{salonConfig.tagline}</span>
+            <span>Indore's Premier Unisex Salon &amp; Academy</span>
           </div>
 
           <h1 className={styles.title}>
-            Look Your Best With <span className={styles.titleEm}>Expert Hair, Styling &amp; Makeup</span>
+            Master Your Look With <br />
+            <span className={styles.titleItalic}>Couture Hair,</span>{" "}
+            <span className={styles.titleGold}>Flawless Skin</span> <br />
+            &amp; Bridal Artistry
           </h1>
 
-          <div className={styles.serviceHighlights}>
-            <div className={styles.highlightPill}>
-              <ContentCutIcon fontSize="small" />
-              <span>Haircut</span>
-            </div>
-            <div className={styles.highlightPill}>
-              <Face3Icon fontSize="small" />
-              <span>Styling</span>
-            </div>
-            <div className={styles.highlightPill}>
-              <BrushIcon fontSize="small" />
-              <span>Makeup</span>
-            </div>
-            <div className={styles.highlightPill}>
-              <AutoAwesomeIcon fontSize="small" />
-              <span>Quality Service at Best Price</span>
-            </div>
-          </div>
-
-          <div className={styles.locationBar}>
-            <LocationOnIcon className={styles.locationIcon} fontSize="small" />
-            <span className={styles.locationText}>
-              <strong>Visit Us Today:</strong> {salonConfig.address.fullAddress || "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar, Indore"}
-            </span>
-          </div>
-
-          <div className={styles.actions}>
+          {/* Action CTAs */}
+          <div className={styles.actions} style={{ marginTop: "1rem" }}>
             <PrimaryButton href="/booking" variant="gold">
-              <span>Book Appointment Now</span>
+              <span>Book Instant Appointment</span>
               <ArrowForwardIcon fontSize="small" />
             </PrimaryButton>
 
             <SecondaryButton href="/services" inverse>
-              View Services &amp; Prices
+              Explore Full Menu &amp; Rates
             </SecondaryButton>
           </div>
 
+          {/* Key Authority Statistics */}
           <div className={styles.statsBar}>
             <div className={styles.statItem}>
               <span className={styles.statValue}>8+</span>
@@ -80,25 +58,53 @@ export const Hero: React.FC = () => {
             </div>
             <div className={styles.statItem}>
               <span className={styles.statValue}>1,000+</span>
-              <span className={styles.statLabel}>Happy Clients</span>
+              <span className={styles.statLabel}>Loyal Clients</span>
             </div>
             <div className={styles.statItem}>
               <span className={styles.statValue}>4.9★</span>
               <span className={styles.statLabel}>Google Rating</span>
             </div>
+            <div className={styles.statItem}>
+              <span className={styles.statValue}>10%</span>
+              <span className={styles.statLabel}>Points Back</span>
+            </div>
           </div>
         </div>
 
+        {/* Right Interactive Image Frame with Floating Cards */}
         <div className={styles.imageShowcase}>
+          {/* Floating Privilege Badge 1 */}
+          <div className={styles.floatingFloatingBadge1}>
+            <div className={styles.badgeIconCircle}>
+              <CardGiftcardIcon fontSize="small" />
+            </div>
+            <div>
+              <span className={styles.badgeTitle}>Loyalty Rewards</span>
+              <span className={styles.badgeSubtitle}>₹100 Spent = 10 Pts</span>
+            </div>
+          </div>
+
+          {/* Central Main Portrait Card */}
           <div className={styles.mainCard}>
             <Image
               src={HeroImage}
-              alt="Professional Hair Styling and Makeup Session at The Glorious Hair Studio Indore"
+              alt={`Haute Couture Salon Styling and Bridal Makeup at ${salonConfig.name} Indore`}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 420px"
+              sizes="(max-width: 1024px) 100vw, 440px"
               className={styles.showcaseImg}
             />
+          </div>
+
+          {/* Floating Privilege Badge 2 */}
+          <div className={styles.floatingFloatingBadge2}>
+            <div className={styles.badgeIconCircle}>
+              <VerifiedIcon fontSize="small" />
+            </div>
+            <div>
+              <span className={styles.badgeTitle}>Master Stylists</span>
+              <span className={styles.badgeSubtitle}>100% Satisfaction</span>
+            </div>
           </div>
         </div>
       </div>

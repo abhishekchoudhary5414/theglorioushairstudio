@@ -14,7 +14,7 @@ export const ServicesBookingCTA: React.FC = () => {
         <span className={styles.eyebrow}>Experience The Difference</span>
         <h2 className={styles.title}>Book Your Appointment or Academy Admission</h2>
         <p className={styles.desc}>
-          Visit {salonConfig.name} at Scheme 78, Vijay Nagar, Indore for unmatched hair treatments,
+          Visit {salonConfig.name} opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC, Indore for unmatched hair treatments,
           relaxing spa therapy, flawless bridal glam, and certified beauty academy courses.
         </p>
 

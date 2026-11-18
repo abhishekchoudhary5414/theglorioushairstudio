@@ -33,10 +33,12 @@ export interface SalonConfig {
   }[];
   socials: {
     instagram: string;
+    instagramReels?: string;
     facebook: string;
     youtube?: string;
     pinterest?: string;
   };
+  salonPhotos?: string[];
   branches: {
     id: string;
     name: string;

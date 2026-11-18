@@ -63,7 +63,7 @@ export const ContactClient: React.FC = () => {
             align="left"
             eyebrow="Get In Touch"
             title="We Are Always Happy to Help"
-            subtitle="Call or message our front desk at Scheme 78, Vijay Nagar, Indore for appointments and queries."
+            subtitle="Call or message our front desk opposite Bombay Hospital Service Road, Pushp Vihar Colony, Indore for appointments and queries."
           />
 
           <div className={styles.infoCard}>
@@ -72,9 +72,9 @@ export const ContactClient: React.FC = () => {
                 <LocationOnIcon fontSize="small" />
               </div>
               <div className={styles.infoDetails}>
-                <span className={styles.infoLabel}>Main Salon Address (Vijay Nagar)</span>
+                <span className={styles.infoLabel}>Main Salon &amp; Academy Address</span>
                 <span className={styles.infoValue}>
-                  {salonConfig.address.line1}, {salonConfig.address.line2}, {salonConfig.address.city}, {salonConfig.address.state} - {salonConfig.address.pincode}
+                  {salonConfig.address.fullAddress}
                 </span>
               </div>
             </div>
@@ -194,7 +194,7 @@ export const ContactClient: React.FC = () => {
                 <input
                   type="tel"
                   required
-                  placeholder="e.g. 79875 83445"
+                  placeholder="e.g. 78692 60666"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className={styles.input}

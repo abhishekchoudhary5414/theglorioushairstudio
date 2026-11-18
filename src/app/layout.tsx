@@ -1,24 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { salonConfig } from "@/config/salon.config";
+import { WelcomeRewardPopup } from "@/components/common/WelcomeRewardPopup";
+import { FixedBottomAuthBar } from "@/components/layout/FixedBottomAuthBar";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://theglorioushairstudio.vercel.app"),
+  metadataBase: new URL("https://reflectionsalonandacademy.vercel.app"),
   title: {
     default: `${salonConfig.name} | Best Salon in Indore | Hair Studio & Academy`,
     template: `%s | ${salonConfig.name}`
   },
-  description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
+  description: `${salonConfig.name} in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore for haircuts, facials, keratin, academy courses, and bridal makeup.`,
   openGraph: {
     siteName: salonConfig.name,
     locale: "en_IN",
     type: "website",
-    url: "https://theglorioushairstudio.vercel.app",
+    url: "https://reflectionsalonandacademy.vercel.app",
     title: `${salonConfig.name} | Best Salon in Indore | Hair Studio & Academy`,
-    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
+    description: `${salonConfig.name} in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore for haircuts, facials, keratin, academy courses, and bridal makeup.`,
     images: [
       {
-        url: "https://theglorioushairstudio.vercel.app/images/og-image.png",
+        url: "https://reflectionsalonandacademy.vercel.app/images/og-image.png",
         width: 1200,
         height: 630,
         alt: `${salonConfig.name} | Hair Studio & Academy`
@@ -28,8 +30,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${salonConfig.name} | Best Salon in Indore | Hair Studio & Academy`,
-    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa rituals.",
-    images: ["https://theglorioushairstudio.vercel.app/images/og-image.png"]
+    description: `${salonConfig.name} in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore for haircuts, facials, keratin, academy courses, and bridal makeup.`,
+    images: ["https://reflectionsalonandacademy.vercel.app/images/og-image.png"]
   }
 };
 
@@ -42,9 +44,9 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": ["BeautySalon", "HairSalon"],
     "name": salonConfig.name,
-    "image": "https://theglorioushairstudio.vercel.app/images/og-image.png",
+    "image": "https://reflectionsalonandacademy.vercel.app/images/og-image.png",
     "description": salonConfig.description,
-    "url": "https://theglorioushairstudio.vercel.app",
+    "url": "https://reflectionsalonandacademy.vercel.app",
     "telephone": salonConfig.contact.phone,
     "address": {
       "@type": "PostalAddress",
@@ -71,7 +73,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap"
           rel="stylesheet"
         />
         <script
@@ -79,7 +81,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <FixedBottomAuthBar />
+        <WelcomeRewardPopup />
+      </body>
     </html>
   );
 }

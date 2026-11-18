@@ -185,7 +185,7 @@ export const STYLISTS_DATA: StylistExpert[] = [
     designation: "Senior Hair Stylist & Colorist",
     experienceYears: 11,
     specialization: ["Balayage & Hair Color", "Keratin & Botox", "Men & Women Haircuts"],
-    bio: "With over 11 years of salon experience across Mumbai and Indore, Rohit is known for giving the most flattering haircuts and trendy caramel highlights in Vijay Nagar.",
+    bio: "With over 11 years of salon experience across Mumbai and Indore, Rohit is known for giving the most flattering haircuts and trendy caramel highlights in Scheme 94 Sector EC.",
     image: SALON_IMAGE_SET.stylistHair,
     instagram: "@rohit_hair_indore",
     rating: 4.9,
@@ -232,67 +232,67 @@ export const STYLISTS_DATA: StylistExpert[] = [
 export const GALLERY_DATA: GalleryItem[] = [
   {
     id: "gal-1",
-    title: "Signature Hair Sculpting",
+    title: "Burgundy Wine Balayage Curls",
     category: "hair-colouring",
     categoryLabel: "Hair Color",
-    image: "/gallery/1.png",
-    description: "Dimensional styling and refined finishing tailored for a polished editorial look."
+    image: "/gallery/gallery-1.jpg",
+    description: "Rich dimensional burgundy wine highlights blended seamlessly with cascading glam waves."
   },
   {
     id: "gal-2",
-    title: "Bridal Glow Finish",
+    title: "Royal Heritage Bridal Makeup",
     category: "bridal-makeup",
     categoryLabel: "Bridal Makeup",
-    image: "/gallery/2.png",
-    description: "Luxury bridal grooming designed to photograph beautifully from morning rituals to night celebrations."
+    image: "/gallery/gallery-2.jpg",
+    description: "Royal traditional bridal glam with defined eyes, flawless HD base, and intricate jewelry setting."
   },
   {
     id: "gal-3",
-    title: "Silk-Smooth Hair Reveal",
-    category: "hair-transformations",
-    categoryLabel: "Hair Smoothing",
-    image: "/gallery/3.png",
-    description: "Smooth, glossy results with a healthy finish and easy styling maintenance."
+    title: "Soft Glam & Voluminous Curls",
+    category: "party-makeup",
+    categoryLabel: "Party Makeup",
+    image: "/gallery/gallery-3.jpg",
+    description: "Dewy soft glam makeup paired with glossy bouncy party curls for special celebrations."
   },
   {
     id: "gal-4",
-    title: "Radiant Skin Refresh",
-    category: "skin-treatments",
-    categoryLabel: "Skin Facial",
-    image: "/gallery/4.png",
-    description: "Hydrated, luminous skin finished with a fresh salon-grade glow."
+    title: "Caramel Mocha Balayage Waves",
+    category: "hair-colouring",
+    categoryLabel: "Hair Color",
+    image: "/gallery/gallery-4.jpg",
+    description: "Multi-tonal warm caramel and mocha balayage with high-definition bounce and healthy shine."
   },
   {
     id: "gal-5",
-    title: "Editorial Hair Styling",
-    category: "party-makeup",
-    categoryLabel: "Party Makeup",
-    image: "/gallery/1.png",
-    description: "Soft movement, premium texture, and a polished finish for special moments."
+    title: "Mirror-Glass Gloss Hair Styling",
+    category: "hair-transformations",
+    categoryLabel: "Hair Smoothing",
+    image: "/gallery/gallery-5.jpg",
+    description: "High-shine mirror finish, deeply nourished hair with luxurious defined spiral waves."
   },
   {
     id: "gal-6",
-    title: "Salon Experience",
-    category: "salon-interiors",
-    categoryLabel: "Salon Interior",
-    image: "/gallery/2.png",
-    description: "A premium, hygienic space designed for comfort, confidence, and beauty rituals."
+    title: "Golden Bronde Layered Curls",
+    category: "hair-transformations",
+    categoryLabel: "Hair Styling",
+    image: "/gallery/gallery-6.jpg",
+    description: "Sun-kissed bronde highlights with voluminous feather-cut layers and polished barrel curls."
   },
   {
     id: "gal-7",
-    title: "Precision Styling Detail",
-    category: "hair-transformations",
-    categoryLabel: "Nail Extensions",
-    image: "/gallery/3.png",
-    description: "Clean lines and carefully styled finishes that bring out a high-fashion silhouette."
-  },
-  {
-    id: "gal-8",
     title: "Signature Bridal Beauty",
     category: "bridal-makeup",
     categoryLabel: "Bridal Makeup",
-    image: "/gallery/4.png",
-    description: "An elegant bridal look with a fresh, camera-ready finish that lasts all day."
+    image: "/gallery/gallery-2.jpg",
+    description: "An elegant, camera-ready bridal look designed to last 16+ hours with zero touch-up needed."
+  },
+  {
+    id: "gal-8",
+    title: "Dimensional Caramel Balayage",
+    category: "hair-colouring",
+    categoryLabel: "Hair Color",
+    image: "/gallery/gallery-1.jpg",
+    description: "Hand-painted balayage technique delivering effortless texture and luminous shine."
   }
 ];
 
@@ -302,7 +302,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     clientName: "Sakshi Agrawal",
     serviceReceived: "Bridal HD Makeup Package",
     rating: 5,
-    review: "I booked Pooja for my wedding at Sayaji Hotel Indore. Everyone loved my makeup! It looked so natural in photos and stayed intact till next morning. The best salon in Vijay Nagar without any doubt.",
+    review: "I booked Pooja for my wedding at Sayaji Hotel Indore. Everyone loved my makeup! It looked so natural in photos and stayed intact till next morning. The best salon in Scheme 94 without any doubt.",
     date: "November 2024",
     location: "Vijay Nagar, Indore"
   },
@@ -322,7 +322,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     rating: 5,
     review: "Super clean salon and very hygienic. Sunita did my facial and my skin was glowing for Diwali. Also the Rica wax was completely painless. Highly recommend to all Indore ladies!",
     date: "September 2024",
-    location: "Scheme 78, Indore"
+    location: "Scheme 94, Indore"
   }
 ];
 
@@ -354,7 +354,7 @@ export const OFFERS_DATA: OfferItem[] = [
     validTill: "Limited wedding bookings per month",
     terms: [
       "Booking confirmed with 20% advance token",
-      "Includes private bridal room at our Vijay Nagar salon",
+      "Includes private bridal room at our Scheme 94 salon",
       "Free mother-of-the-bride makeup included"
     ],
     includedServices: [

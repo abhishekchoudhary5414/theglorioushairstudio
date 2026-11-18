@@ -6,6 +6,7 @@ import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import PersonIcon from "@mui/icons-material/Person";
 import { PrimaryButton } from "@/components/common/PrimaryButton";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
@@ -23,12 +24,10 @@ const SERVICE_MENU_ITEMS = [
 
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "Services", href: "/services", children: SERVICE_MENU_ITEMS },
-  { label: "Experts", href: "/experts" },
-  { label: "Gallery", href: "/gallery" },
   { label: "Bridal", href: "/bridal" },
   { label: "Offers", href: "/offers" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -37,8 +36,20 @@ export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [pathname, setPathname] = useState("/");
+  const [userSession, setUserSession] = useState<{ name: string; role: string } | null>(null);
   const servicesMenuRef = useRef<HTMLDivElement | null>(null);
   const activeServiceCategory = pathname.startsWith("/services/") ? pathname.replace("/services/", "") : null;
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated && data.user) {
+          setUserSession({ name: data.user.name, role: data.user.role });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     setPathname(window.location.pathname || "/");
@@ -161,6 +172,24 @@ export const Header: React.FC = () => {
             </nav>
 
             <div className={styles.actions}>
+              {userSession ? (
+                <Link
+                  href="/dashboard"
+                  className={styles.headerUserPill}
+                >
+                  <PersonIcon fontSize="small" />
+                  <span>{userSession.name.split(" ")[0]}</span>
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className={styles.headerAuthLink}
+                >
+                  <PersonIcon fontSize="small" />
+                  <span>Sign In</span>
+                </Link>
+              )}
+
               <div className={styles.desktopAppointmentBtn}>
                 <PrimaryButton href="/booking" variant="gold">
                   <CalendarMonthIcon fontSize="small" />

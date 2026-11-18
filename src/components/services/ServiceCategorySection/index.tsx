@@ -137,7 +137,7 @@ export const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
           }
           subtext={
             category.slug === "academic-courses"
-              ? "Call or visit our academy at Vijay Nagar, Indore for syllabus, fees & registration."
+              ? "Call or visit our academy at Scheme 94 Sector EC, opposite Bombay Hospital, Indore for syllabus, fees & registration."
               : "Reserve your appointment online, call our desk, or message on WhatsApp."
           }
         />

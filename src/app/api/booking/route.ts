@@ -2,11 +2,24 @@ import { NextResponse } from "next/server";
 import { SalonDataService } from "@/services/salon.service";
 import { validateIndianPhone } from "@/lib/utils/format";
 import { salonConfig } from "@/config/salon.config";
+import { getCurrentUser } from "@/lib/auth/jwt";
 import nodemailer from "nodemailer";
 import { generateBookingSlipPdfBuffer } from "@/lib/server/pdf-generator";
 
 export async function POST(req: Request) {
   try {
+    const session = await getCurrentUser();
+    if (!session || !session.userId) {
+      return NextResponse.json(
+        {
+          success: false,
+          requiresAuth: true,
+          message: "Account required. Please sign in or register to book an appointment.",
+        },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const {
       serviceId,
@@ -36,8 +49,15 @@ export async function POST(req: Request) {
       );
     }
 
-    // Persist booking directly into Neon PostgreSQL
-    const bookingResult = await SalonDataService.createBooking(body);
+    // Persist booking directly into Neon PostgreSQL with authenticated customer ID
+    const bookingResult = await SalonDataService.createBooking({
+      ...body,
+      customerId: session.userId,
+      paymentMethod: "pay_at_salon",
+      paymentStatus: "pending",
+      payableAmount: priceINR || 0,
+      totalAmount: priceINR || 0
+    });
 
     // Optional Nodemailer notification with PDF attachment if SMTP is configured
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
@@ -66,7 +86,7 @@ export async function POST(req: Request) {
             salonName: salonConfig.name,
             salonAddress:
               salonConfig.address.fullAddress ||
-              "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar, Indore",
+              "201, EC 8, RP Avenue, near Uttam bhog, opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC, Indore, Madhya Pradesh 452010",
             salonPhone: salonConfig.contact.phoneDisplay,
             salonEmail: salonConfig.contact.email,
             issuedDate: new Date().toLocaleDateString("en-IN", {

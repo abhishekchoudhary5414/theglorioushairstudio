@@ -19,12 +19,13 @@ import { SalonDataService } from "@/services/salon.service";
 import { salonConfig } from "@/config/salon.config";
 
 export const metadata: Metadata = {
-  title: `${salonConfig.name} | Best Salon in Indore`,
-  description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa treatments.",
+  title: `${salonConfig.name} | Best Salon & Academy in Indore`,
+  description: "Premier salon and training academy in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore for haircuts, facials, keratin, academy courses, and bridal makeup.",
   keywords: [
     "best salon in Indore",
-    "unisex salon Vijay Nagar Indore",
-    "hair studio Scheme 78 Indore",
+    "salon and academy Indore",
+    "salon near Bombay Hospital Indore",
+    "unisex salon Scheme 94 Indore",
     "bridal makeup artist in Indore",
     "haircut and styling Indore",
     "keratin treatment price Indore",
@@ -33,16 +34,16 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     siteName: salonConfig.name,
-    title: `${salonConfig.name} | Best Salon in Indore`,
-    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa treatments.",
-    images: [{ url: "https://theglorioushairstudio.vercel.app/images/og-image.png", width: 1200, height: 630, alt: `${salonConfig.name} salon preview` }],
+    title: `${salonConfig.name} | Best Salon & Academy in Indore`,
+    description: "Premier salon and training academy in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore for haircuts, facials, keratin, academy courses, and bridal makeup.",
+    images: [{ url: "https://reflectionsalonandacademy.vercel.app/images/og-image.png", width: 1200, height: 630, alt: `${salonConfig.name} salon preview` }],
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: `${salonConfig.name} | Best Salon in Indore`,
-    description: "Luxury salon in Vijay Nagar, Indore for haircuts, facials, keratin, bridal makeup, and hair spa treatments.",
-    images: ["https://theglorioushairstudio.vercel.app/images/og-image.png"]
+    title: `${salonConfig.name} | Best Salon & Academy in Indore`,
+    description: "Premier salon and training academy in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore for haircuts, facials, keratin, academy courses, and bridal makeup.",
+    images: ["https://reflectionsalonandacademy.vercel.app/images/og-image.png"]
   }
 };
 

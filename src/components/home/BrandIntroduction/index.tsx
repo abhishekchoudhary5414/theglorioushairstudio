@@ -4,7 +4,7 @@ import { SectionHeading } from "@/components/common/SectionHeading";
 import { SecondaryButton } from "@/components/common/SecondaryButton";
 import { salonConfig } from "@/config/salon.config";
 import styles from "./BrandIntroduction.module.css";
-import AboutImage from "../../../../public/about/about.png"
+import AboutImage from "../../../../public/about/about-girl.jpg";
 
 export const BrandIntroduction: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ export const BrandIntroduction: React.FC = () => {
           <div className={styles.primaryImgWrapper}>
             <Image
               src={AboutImage}
-              alt="Modern salon interior and styling chair in Indore"
+              alt="Professional salon styling and beauty care in Indore"
               fill
               sizes="(max-width: 960px) 100vw, 520px"
               className={styles.img}
@@ -34,8 +34,8 @@ export const BrandIntroduction: React.FC = () => {
           </p>
 
           <p className={styles.bodyText}>
-            Started in 2018 in Scheme No 78, Vijay Nagar, {salonConfig.name} has grown to become one of
-            the most recommended unisex salons in Indore. Our mission is simple: provide top-notch hair and
+            Located in Scheme 94 Sector EC opposite Bombay Hospital, {salonConfig.name} has grown to become one of
+            the most recommended unisex salons and academies in Indore. Our mission is simple: provide top-notch hair and
             skin care using 100% genuine products in a clean, hygienic environment.
           </p>
 

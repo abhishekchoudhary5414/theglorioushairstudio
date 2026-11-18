@@ -1,28 +1,28 @@
 {
-  "name": "The Glorious Hair Studio",
+  "name": "Reflection Salon And Academy",
   "logo": "/images/logo.png",
-  "tagline": "Professional Hair & Beauty Salon",
-  "subTagline": "Haircut • Styling • Makeup • Quality Service at Best Price",
+  "tagline": "Professional Hair & Beauty Salon & Academy",
+  "subTagline": "Haircut • Styling • Makeup • Academy Courses • Quality Service at Best Price",
   "established": 2018,
-  "description": "The Glorious Hair Studio is a professional hair & beauty salon in Scheme 78, Vijay Nagar, Indore. We provide expert haircuts, styling, treatments, glowing facials, and wedding bridal makeup with top quality service at the best price.",
+  "description": "Reflection Salon And Academy is a premier hair, beauty studio and training academy in Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital Service Road, Indore. We provide expert haircuts, styling, treatments, glowing facials, academy courses, and wedding bridal makeup with top quality service at the best price.",
   "contact": {
-    "phone": "+917987583445",
-    "phoneDisplay": "+91 79875 83445",
-    "whatsapp": "+917987583445",
-    "whatsappDisplay": "+91 79875 83445",
-    "email": "hello@theglorioushairstudio.com",
-    "bookingEmail": "appointments@theglorioushairstudio.com"
+    "phone": "+917869260666",
+    "phoneDisplay": "+91 78692 60666",
+    "whatsapp": "+917869260666",
+    "whatsappDisplay": "+91 78692 60666",
+    "email": "contact@reflectionsalonandacademy.com",
+    "bookingEmail": "appointments@reflectionsalonandacademy.com"
   },
   "address": {
-    "line1": "Scheme No 78, Yashraj Complex, Sector C",
-    "line2": "Aranya Nagar, Scheme 78, Vijay Nagar",
+    "line1": "201, EC 8, RP Avenue, near Uttam bhog",
+    "line2": "opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC",
     "city": "Indore",
     "state": "Madhya Pradesh",
     "pincode": "452010",
     "country": "India",
-    "fullAddress": "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar, Aranya Nagar, Scheme 78, Vijay Nagar, Indore, Madhya Pradesh 452010, India",
-    "googleMapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.336696766461!2d75.8920197!3d22.7686524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39630325f0535e5d%3A0x7d6a5c102a0617ec!2sScheme%2078%2C%20Vijay%20Nagar%2C%20Indore%2C%20Madhya%20Pradesh%20452010!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin",
-    "directionsUrl": "https://maps.google.com/?q=Scheme+No+78+Yashraj+Complex+Sector+C+Vijay+Nagar+Indore"
+    "fullAddress": "201, EC 8, RP Avenue, near Uttam bhog, opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC, Indore, Madhya Pradesh 452010",
+    "googleMapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.444778153495!2d75.898651!3d22.76632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396303036e7a2b9d%3A0x6b7593c66f97ef91!2sBombay%20Hospital%20Indore!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin",
+    "directionsUrl": "https://maps.google.com/?q=201+EC+8+RP+Avenue+near+Uttam+bhog+opposite+Bombay+Hospital+Service+Road+Pushp+Vihar+Colony+Scheme+94+Sector+EC+Indore+Madhya+Pradesh+452010"
   },
   "hours": [
     { "days": "Monday – Sunday", "time": "10:00 AM – 09:00 PM", "note": "Open all 7 days" },
@@ -30,17 +30,27 @@
   ],
   "socials": {
     "instagram": "https://www.instagram.com/the.glorious_unisex_salon/",
+    "instagramReels": "https://www.instagram.com/the.glorious_unisex_salon/reels/",
     "facebook": "",
     "youtube": "",
     "pinterest": ""
   },
+  "salonPhotos": [
+    "/images/salon-interior.jpg",
+    "/gallery/gallery-1.jpg",
+    "/gallery/gallery-2.jpg",
+    "/gallery/gallery-3.jpg",
+    "/gallery/gallery-4.jpg",
+    "/gallery/gallery-5.jpg",
+    "/gallery/gallery-6.jpg"
+  ],
   "branches": [
     {
-      "id": "branch-scheme-78",
-      "name": "The Glorious Hair Studio – Scheme 78",
-      "area": "Scheme No 78, Yashraj Complex, Sector C, Vijay Nagar",
-      "address": "Scheme No 78, Yashraj Complex, Sector C, Aranya Nagar, Scheme 78, Vijay Nagar, Indore, MP 452010",
-      "phone": "+91 79875 83445",
+      "id": "branch-bombay-hospital",
+      "name": "Reflection Salon And Academy – Scheme 94",
+      "area": "RP Avenue, Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital",
+      "address": "201, EC 8, RP Avenue, near Uttam bhog, opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC, Indore, Madhya Pradesh 452010",
+      "phone": "+91 78692 60666",
       "timing": "10:00 AM – 9:00 PM"
     }
   ],

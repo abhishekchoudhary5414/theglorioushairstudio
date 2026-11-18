@@ -118,7 +118,7 @@ export const SALON_SERVICES_CATEGORIES: ServiceCategorySectionData[] = [
     image: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=1200&auto=format&fit=crop",
     highlightedNote: "Exact pricing depends on hair length and volume. Please share your hair length and a hair photograph for an accurate quotation.",
     ctaText: "Get Your Hair Treatment Quote",
-    ctaHref: "https://wa.me/917987583445?text=Hello%20The%20Glorious%20Hair%20Studio,%20I%20would%20like%20to%20get%20a%20quotation%20for%20Hair%20Treatments.%20Sharing%20my%20hair%20length%20details.",
+    ctaHref: "https://wa.me/917869260666?text=Hello%20Reflection%20Salon%20And%20Academy,%20I%20would%20like%20to%20get%20a%20quotation%20for%20Hair%20Treatments.%20Sharing%20my%20hair%20length%20details.",
     ctaType: "whatsapp",
     subGroups: [
       {

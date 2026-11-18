@@ -15,8 +15,8 @@ import { salonConfig } from "@/config/salon.config";
 import styles from "./bridal.module.css";
 
 export const metadata: Metadata = {
-  title: `Best Bridal Makeup in Indore | ${salonConfig.name} - Vijay Nagar`,
-  description: `Looking for top bridal makeup artists in Indore? Book 16-hour waterproof HD and Airbrush bridal makeup, saree draping, and pre-bridal packages in Vijay Nagar.`
+  title: `Best Bridal Makeup in Indore | ${salonConfig.name} - Scheme 94`,
+  description: `Looking for top bridal makeup artists in Indore? Book 16-hour waterproof HD and Airbrush bridal makeup, saree draping, and pre-bridal packages at Scheme 94 Sector EC near Bombay Hospital.`
 };
 
 const BRIDAL_PACKAGES = [
@@ -46,7 +46,7 @@ const BRIDAL_PACKAGES = [
       "Traditional or modern double-dupatta draping",
       "Bridal floral hair bun with fresh roses or artificial flower accessories",
       "Free touch-up kit with lipstick mini and powder puff",
-      "Private bridal dressing suite in Vijay Nagar"
+      "Private bridal dressing suite in Scheme 94 Sector EC"
     ]
   },
   {
@@ -77,7 +77,7 @@ export default function BridalPage() {
         <PageHero
           eyebrow="Bridal Studio Indore"
           title="Bridal Makeup & Wedding Packages in Indore"
-          description="Experienced bridal makeup artists in Vijay Nagar. 100% waterproof HD makeup, modern hairstyling, and traditional saree draping."
+          description="Experienced bridal makeup artists in Scheme 94 Sector EC. 100% waterproof HD makeup, modern hairstyling, and traditional saree draping."
           backgroundImage="https://images.unsplash.com/photo-1595475207225-428b62bda831?q=80&w=1600&auto=format&fit=crop"
         />
 
@@ -100,7 +100,7 @@ export default function BridalPage() {
                 radiant, and photograph beautifully without turning oily or cakey.
               </p>
               <p className={styles.bodyText}>
-                Our Vijay Nagar salon features a dedicated, private bridal room where you can relax, change
+                Our Scheme 94 salon features a dedicated, private bridal room where you can relax, change
                 comfortably, and get ready without any rush or crowd.
               </p>
             </div>
@@ -159,7 +159,7 @@ export default function BridalPage() {
             <div>
               <h3 className={styles.bannerTitle}>Visit Us for a Free Bridal Consultation</h3>
               <p className={styles.bannerDesc}>
-                Not sure which makeup look will suit your lehenga? Visit our Vijay Nagar studio, meet our senior
+                Not sure which makeup look will suit your lehenga? Visit our Scheme 94 studio, meet our senior
                 makeup artist Pooja Verma, and discuss your wedding outfits over a warm cup of coffee.
               </p>
             </div>

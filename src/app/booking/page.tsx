@@ -9,7 +9,7 @@ import { salonConfig } from "@/config/salon.config";
 
 export const metadata: Metadata = {
   title: `Book Online Appointment | ${salonConfig.name} - Instant Slot`,
-  description: `Book your haircut, styling, keratin botox treatment, facial or bridal makeup appointment at ${salonConfig.name} in Scheme 78, Vijay Nagar, Indore. Simple 1-minute booking.`
+  description: `Book your haircut, styling, keratin botox treatment, facial, academy course or bridal makeup appointment at ${salonConfig.name} opposite Bombay Hospital, Scheme 94, Indore. Simple 1-minute booking.`
 };
 
 interface BookingPageProps {

@@ -14,7 +14,7 @@ export const BookingCTA: React.FC = () => {
         <span className={styles.eyebrow}>Ready to Look Your Best?</span>
         <h2 className={styles.title}>Book Your Salon Appointment in Indore Today</h2>
         <p className={styles.desc}>
-          Visit our modern salon at Scheme 78, Vijay Nagar, Indore. Enjoy relaxing hair, skin, and nail treatments
+          Visit our modern salon and academy opposite Bombay Hospital Service Road, Pushp Vihar Colony, Scheme 94 Sector EC, Indore. Enjoy relaxing hair, skin, and bridal treatments
           done by certified professionals with 100% genuine products.
         </p>
 

@@ -7,14 +7,14 @@ import styles from "./AnnouncementBar.module.css";
 
 export const AnnouncementBar: React.FC = () => {
   const marqueeText =
-    "Professional Hair & Beauty Salon • Quality service at best price • +91 79875 83445 • Scheme 78, Vijay Nagar, Indore";
+    `Professional Hair & Beauty Salon & Academy • Quality service at best price • ${salonConfig.contact.phoneDisplay} • Pushp Vihar Colony, Scheme 94 Sector EC, opposite Bombay Hospital, Indore`;
 
   return (
     <aside className={styles.bar}>
       <div className={styles.inner}>
         <div className={styles.message}>
           <AutoAwesomeIcon className={styles.sparkleIcon} fontSize="inherit" />
-          <span>Professional Hair &amp; Beauty Salon</span>
+          <span>Professional Hair &amp; Beauty Salon &amp; Academy</span>
           <span className={styles.bullet}>•</span>
           <span className={styles.highlight}>Quality service at best price</span>
         </div>
@@ -25,7 +25,7 @@ export const AnnouncementBar: React.FC = () => {
           </a>
           <span className={styles.link}>
             <LocationOnIcon className={styles.icon} />
-            <span>Scheme 78, Vijay Nagar, Indore</span>
+            <span>Scheme 94, opposite Bombay Hospital, Indore</span>
           </span>
         </div>
       </div>

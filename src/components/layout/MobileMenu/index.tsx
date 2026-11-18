@@ -97,6 +97,44 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, navItem
         </nav>
 
         <div className={styles.footer}>
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+            <Link
+              href="/dashboard"
+              onClick={onClose}
+              style={{
+                flex: 1,
+                padding: "0.75rem",
+                textAlign: "center",
+                background: "var(--color-surface)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "8px",
+                color: "var(--color-primary)",
+                fontWeight: 600,
+                textDecoration: "none",
+                fontSize: "0.9rem"
+              }}
+            >
+              My Dashboard
+            </Link>
+            <Link
+              href="/login"
+              onClick={onClose}
+              style={{
+                flex: 1,
+                padding: "0.75rem",
+                textAlign: "center",
+                background: "var(--color-surface)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "8px",
+                color: "var(--color-primary)",
+                fontWeight: 600,
+                textDecoration: "none",
+                fontSize: "0.9rem"
+              }}
+            >
+              Client Sign In
+            </Link>
+          </div>
           <PrimaryButton href="/booking" variant="gold" fullWidth onClick={onClose}>
             Book Appointment
           </PrimaryButton>
