@@ -19,9 +19,12 @@ export interface MetaTokenResponse {
 export interface InstagramAccountInfo {
   instagramBusinessAccountId: string;
   instagramUsername: string;
+  accountName?: string;
+  accountType?: string;
   profilePictureUrl?: string;
-  facebookPageId: string;
-  facebookPageName: string;
+  facebookPageId?: string;
+  facebookPageName?: string;
+  permissions?: string;
 }
 
 export interface InstagramHashtagInfo {
@@ -49,7 +52,10 @@ export interface InstagramHashtagMediaItem {
 }
 
 export class InstagramGraphService {
-  private static readonly GRAPH_API_BASE = "https://graph.facebook.com/v21.0";
+  private static get GRAPH_API_BASE(): string {
+    const version = process.env.META_GRAPH_API_VERSION || "v21.0";
+    return `https://graph.facebook.com/${version}`;
+  }
 
   /**
    * Exchanges authorization code for short-lived user access token
@@ -109,32 +115,60 @@ export class InstagramGraphService {
 
   /**
    * Discovers the user's Facebook Pages and linked Instagram Professional Account
+   * Supports both direct Instagram API profile query and Facebook Pages linkage.
    */
   static async getConnectedInstagramAccount(userAccessToken: string): Promise<InstagramAccountInfo | null> {
-    const url = new URL(`${this.GRAPH_API_BASE}/me/accounts`);
-    url.searchParams.set("fields", "id,name,instagram_business_account{id,username,profile_picture_url}");
-    url.searchParams.set("access_token", userAccessToken);
+    // 1. First attempt: Direct Instagram User profile query (Unified Login)
+    try {
+      const meUrl = new URL(`${this.GRAPH_API_BASE}/me`);
+      meUrl.searchParams.set("fields", "id,username,name,account_type,profile_picture_url");
+      meUrl.searchParams.set("access_token", userAccessToken);
 
-    const res = await fetch(url.toString(), { method: "GET" });
-    const data = await res.json();
+      const meRes = await fetch(meUrl.toString(), { method: "GET" });
+      const meData = await meRes.json();
 
-    if (!res.ok || data.error) {
-      const errMsg = data.error?.message || "Failed to retrieve Facebook Pages";
-      console.error("[InstagramGraphService] Accounts error:", data.error);
-      throw new Error(errMsg);
-    }
-
-    const pages = data.data || [];
-    for (const page of pages) {
-      if (page.instagram_business_account && page.instagram_business_account.id) {
+      if (meRes.ok && meData.id && meData.username) {
         return {
-          instagramBusinessAccountId: page.instagram_business_account.id,
-          instagramUsername: page.instagram_business_account.username || "",
-          profilePictureUrl: page.instagram_business_account.profile_picture_url || "",
-          facebookPageId: page.id,
-          facebookPageName: page.name || "",
+          instagramBusinessAccountId: meData.id,
+          instagramUsername: meData.username,
+          accountName: meData.name || meData.username,
+          accountType: meData.account_type || "BUSINESS",
+          profilePictureUrl: meData.profile_picture_url || "",
+          facebookPageId: "",
+          facebookPageName: "",
         };
       }
+    } catch (e: unknown) {
+      console.warn("[InstagramGraphService] Direct /me profile check failed, trying /me/accounts:", (e as Error).message);
+    }
+
+    // 2. Second attempt: Check /me/accounts for Page linked Instagram Business Account
+    try {
+      const url = new URL(`${this.GRAPH_API_BASE}/me/accounts`);
+      url.searchParams.set("fields", "id,name,instagram_business_account{id,username,name,profile_picture_url}");
+      url.searchParams.set("access_token", userAccessToken);
+
+      const res = await fetch(url.toString(), { method: "GET" });
+      const data = await res.json();
+
+      if (res.ok && data.data) {
+        for (const page of data.data) {
+          if (page.instagram_business_account && page.instagram_business_account.id) {
+            const ig = page.instagram_business_account;
+            return {
+              instagramBusinessAccountId: ig.id,
+              instagramUsername: ig.username || "",
+              accountName: ig.name || page.name || ig.username || "",
+              accountType: "BUSINESS",
+              profilePictureUrl: ig.profile_picture_url || "",
+              facebookPageId: page.id,
+              facebookPageName: page.name || "",
+            };
+          }
+        }
+      }
+    } catch (err: unknown) {
+      console.error("[InstagramGraphService] Accounts error:", err);
     }
 
     return null;

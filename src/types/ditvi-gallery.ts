@@ -12,15 +12,22 @@ export type ConnectionStatus = "connected" | "disconnected" | "expired" | "error
 export interface InstagramConnection {
   id: string;
   business_id: string;
+  user_id?: string | null;
   instagram_user_id: string;
+  instagram_account_id?: string | null;
   instagram_username: string | null;
+  username?: string | null;
+  account_name?: string | null;
+  account_type?: string | null;
   facebook_page_id: string | null;
   facebook_page_name: string | null;
   profile_picture_url: string | null;
   token_expires_at: string | null;
   token_type: string;
+  permissions?: string | null;
   connection_status: ConnectionStatus;
   error_message?: string | null;
+  connected_at?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -38,6 +45,17 @@ export interface GallerySettings {
   updated_at: string;
 }
 
+export interface InstagramHashtag {
+  id: string;
+  business_id: string;
+  hashtag: string;
+  hashtag_id: string | null;
+  is_active: boolean;
+  last_synced_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export type ModerationStatus = "PENDING" | "APPROVED" | "REJECTED" | "HIDDEN";
 
 export type InstagramMediaType = "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
@@ -46,6 +64,7 @@ export interface InstagramPost {
   id: string;
   business_id: string;
   instagram_media_id: string;
+  hashtag_id?: string | null;
   media_type: InstagramMediaType;
   media_url: string | null;
   thumbnail_url: string | null;
@@ -54,6 +73,8 @@ export interface InstagramPost {
   username: string | null;
   published_at: string | null;
   moderation_status: ModerationStatus;
+  is_approved?: boolean;
+  is_visible?: boolean;
   is_featured: boolean;
   like_count?: number;
   comments_count?: number;

@@ -297,12 +297,30 @@ export async function initDbSchema() {
   await client`CREATE INDEX IF NOT EXISTS idx_gallery_settings_business ON gallery_settings(business_id);`;
   await client`CREATE INDEX IF NOT EXISTS idx_gallery_settings_hashtag ON gallery_settings(hashtag);`;
 
+  // 5c-2. Instagram Hashtags Table (Multi-hashtag management)
+  await client`
+    CREATE TABLE IF NOT EXISTS instagram_hashtags (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      business_id UUID NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+      hashtag VARCHAR(100) NOT NULL,
+      hashtag_id VARCHAR(100),
+      is_active BOOLEAN DEFAULT TRUE,
+      last_synced_at TIMESTAMP WITH TIME ZONE,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      CONSTRAINT uq_business_hashtag UNIQUE(business_id, hashtag)
+    );
+  `;
+  await client`CREATE INDEX IF NOT EXISTS idx_ig_hashtags_business ON instagram_hashtags(business_id);`;
+  await client`CREATE INDEX IF NOT EXISTS idx_ig_hashtags_active ON instagram_hashtags(business_id, is_active);`;
+
   // 5d. Instagram Posts Table
   await client`
     CREATE TABLE IF NOT EXISTS instagram_posts (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
       business_id UUID NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
       instagram_media_id VARCHAR(100) NOT NULL,
+      hashtag_id VARCHAR(100),
       media_type VARCHAR(50) NOT NULL,
       media_url TEXT,
       thumbnail_url TEXT,
@@ -311,6 +329,8 @@ export async function initDbSchema() {
       username VARCHAR(100),
       published_at TIMESTAMP WITH TIME ZONE,
       moderation_status VARCHAR(50) DEFAULT 'PENDING',
+      is_approved BOOLEAN DEFAULT FALSE,
+      is_visible BOOLEAN DEFAULT TRUE,
       is_featured BOOLEAN DEFAULT FALSE,
       like_count INTEGER DEFAULT 0,
       comments_count INTEGER DEFAULT 0,

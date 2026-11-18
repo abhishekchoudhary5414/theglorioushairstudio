@@ -7,23 +7,38 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AddIcon from "@mui/icons-material/Add";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LinkIcon from "@mui/icons-material/Link";
 import LinkOffIcon from "@mui/icons-material/LinkOff";
+import TagIcon from "@mui/icons-material/Tag";
 import styles from "./DitviInstagramManager.module.css";
 
 interface ConnectionData {
   id: string;
   instagram_user_id: string;
+  instagram_account_id?: string | null;
   instagram_username: string | null;
+  username?: string | null;
+  account_name?: string | null;
+  account_type?: string | null;
   facebook_page_name: string | null;
   profile_picture_url: string | null;
   connection_status: "connected" | "disconnected" | "expired" | "error";
   token_expires_at: string | null;
+  connected_at?: string | null;
+  permissions?: string | null;
   error_message?: string | null;
+}
+
+interface HashtagItem {
+  id: string;
+  hashtag: string;
+  hashtag_id: string | null;
+  is_active: boolean;
+  last_synced_at: string | null;
 }
 
 interface SettingsData {
@@ -63,6 +78,8 @@ interface PostRecord {
   username: string | null;
   published_at: string | null;
   moderation_status: "PENDING" | "APPROVED" | "REJECTED" | "HIDDEN";
+  is_approved?: boolean;
+  is_visible?: boolean;
   is_featured: boolean;
   like_count?: number;
   comments_count?: number;
@@ -70,6 +87,7 @@ interface PostRecord {
 
 export const DitviInstagramManager: React.FC = () => {
   const [connection, setConnection] = useState<ConnectionData | null>(null);
+  const [hashtags, setHashtags] = useState<HashtagItem[]>([]);
   const [settings, setSettings] = useState<SettingsData | null>(null);
   const [stats, setStats] = useState<StatsData | null>(null);
   const [syncLogs, setSyncLogs] = useState<SyncLogData[]>([]);
@@ -78,29 +96,29 @@ export const DitviInstagramManager: React.FC = () => {
   const [posts, setPosts] = useState<PostRecord[]>([]);
   const [activeTab, setActiveTab] = useState<"ALL" | "PENDING" | "APPROVED" | "REJECTED" | "HIDDEN">("ALL");
 
-  const [hashtagInput, setHashtagInput] = useState("");
+  const [newHashtagInput, setNewHashtagInput] = useState("");
   const [autoSync, setAutoSync] = useState(true);
   const [autoPublish, setAutoPublish] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [isSavingSettings, setIsSavingSettings] = useState(false);
+  const [isAddingTag, setIsAddingTag] = useState(false);
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
-  // 1. Fetch connection status & stats
+  // 1. Fetch status & hashtags
   const fetchStatus = useCallback(async () => {
     try {
-      const res = await fetch("/api/meta/status");
+      const res = await fetch("/api/instagram/status");
       const data = await res.json();
       if (data.success) {
         setBusinessName(data.business?.name || "My Business");
         setConnection(data.connection);
+        setHashtags(data.hashtags || []);
         setSettings(data.settings);
         setStats(data.stats);
         setSyncLogs(data.recentLogs || []);
 
         if (data.settings) {
-          setHashtagInput(data.settings.hashtag || "");
           setAutoSync(Boolean(data.settings.auto_sync_enabled));
           setAutoPublish(Boolean(data.settings.auto_publish_enabled));
         }
@@ -110,10 +128,10 @@ export const DitviInstagramManager: React.FC = () => {
     }
   }, []);
 
-  // 2. Fetch posts based on active filter
+  // 2. Fetch posts
   const fetchPosts = useCallback(async () => {
     try {
-      const url = new URL("/api/meta/posts", window.location.origin);
+      const url = new URL("/api/instagram/posts", window.location.origin);
       url.searchParams.set("status", activeTab);
       url.searchParams.set("limit", "50");
 
@@ -143,39 +161,93 @@ export const DitviInstagramManager: React.FC = () => {
     }
   }, [fetchStatus, fetchPosts]);
 
-  // 3. Save hashtag and publishing rules
+  // 3. Add a new hashtag
+  const handleAddHashtag = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newHashtagInput.trim()) return;
+    setIsAddingTag(true);
+    try {
+      const res = await fetch("/api/instagram/hashtags", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ hashtag: newHashtagInput.trim() }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setNotification({ type: "success", message: data.message });
+        setNewHashtagInput("");
+        fetchStatus();
+      } else {
+        setNotification({ type: "error", message: data.message || "Failed to add hashtag" });
+      }
+    } catch (err: unknown) {
+      setNotification({ type: "error", message: (err as Error).message });
+    } finally {
+      setIsAddingTag(false);
+    }
+  };
+
+  // 4. Remove hashtag
+  const handleRemoveHashtag = async (id: string, tag: string) => {
+    if (!window.confirm(`Are you sure you want to remove #${tag}?`)) return;
+    try {
+      const res = await fetch(`/api/instagram/hashtags/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setNotification({ type: "success", message: data.message });
+        fetchStatus();
+      }
+    } catch (err: unknown) {
+      setNotification({ type: "error", message: (err as Error).message });
+    }
+  };
+
+  // 5. Toggle hashtag active status
+  const handleToggleHashtag = async (id: string, currentState: boolean) => {
+    try {
+      const res = await fetch(`/api/instagram/hashtags/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isActive: !currentState }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setHashtags((prev) =>
+          prev.map((h) => (h.id === id ? { ...h, is_active: !currentState } : h))
+        );
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  };
+
+  // 6. Save publishing rules
   const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSavingSettings(true);
     try {
       const res = await fetch("/api/meta/settings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          hashtag: hashtagInput,
           autoSyncEnabled: autoSync,
           autoPublishEnabled: autoPublish,
         }),
       });
       const data = await res.json();
       if (data.success) {
-        setNotification({ type: "success", message: "Gallery settings updated successfully!" });
+        setNotification({ type: "success", message: "Publishing rules updated successfully!" });
         fetchStatus();
-      } else {
-        setNotification({ type: "error", message: data.message || "Failed to save settings" });
       }
     } catch (err: unknown) {
       setNotification({ type: "error", message: (err as Error).message });
-    } finally {
-      setIsSavingSettings(false);
     }
   };
 
-  // 4. Trigger manual synchronization
+  // 7. Trigger manual synchronization
   const handleManualSync = async () => {
     setIsSyncing(true);
     try {
-      const res = await fetch("/api/meta/sync", { method: "POST" });
+      const res = await fetch("/api/instagram/sync", { method: "POST" });
       const data = await res.json();
       if (data.success) {
         setNotification({ type: "success", message: data.message || "Sync finished successfully!" });
@@ -191,7 +263,7 @@ export const DitviInstagramManager: React.FC = () => {
     }
   };
 
-  // 5. Disconnect Instagram
+  // 8. Disconnect Instagram
   const handleDisconnect = async () => {
     if (!window.confirm("Are you sure you want to disconnect this Instagram account?")) return;
     try {
@@ -206,13 +278,13 @@ export const DitviInstagramManager: React.FC = () => {
     }
   };
 
-  // 6. Update moderation status
+  // 9. Update moderation status
   const handleUpdateStatus = async (postId: string, newStatus: string) => {
     try {
-      const res = await fetch("/api/meta/posts", {
+      const res = await fetch(`/api/instagram/posts/${postId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ postId, moderationStatus: newStatus }),
+        body: JSON.stringify({ moderationStatus: newStatus }),
       });
       const data = await res.json();
       if (data.success) {
@@ -226,19 +298,34 @@ export const DitviInstagramManager: React.FC = () => {
     }
   };
 
-  // 7. Toggle featured status
+  // 10. Toggle featured status
   const handleToggleFeatured = async (postId: string, current: boolean) => {
     try {
-      const res = await fetch("/api/meta/posts", {
+      const res = await fetch(`/api/instagram/posts/${postId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ postId, isFeatured: !current }),
+        body: JSON.stringify({ isFeatured: !current }),
       });
       const data = await res.json();
       if (data.success) {
         setPosts((prev) =>
           prev.map((p) => (p.id === postId ? { ...p, is_featured: !current } : p))
         );
+        fetchStatus();
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  };
+
+  // 11. Delete post
+  const handleDeletePost = async (postId: string) => {
+    if (!window.confirm("Delete this post permanently from your database?")) return;
+    try {
+      const res = await fetch(`/api/instagram/posts/${postId}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setPosts((prev) => prev.filter((p) => p.id !== postId));
         fetchStatus();
       }
     } catch (err: unknown) {
@@ -257,7 +344,7 @@ export const DitviInstagramManager: React.FC = () => {
         </div>
       )}
 
-      {/* Top 2-Column: Connection Status & Hashtag Settings */}
+      {/* Top 2-Column: Connection Status & Hashtag Management */}
       <div className={styles.grid2}>
         {/* Card 1: Instagram Account Connection */}
         <div className={styles.card}>
@@ -302,16 +389,24 @@ export const DitviInstagramManager: React.FC = () => {
                 </div>
                 <div>
                   <div className={styles.username}>
-                    @{connection?.instagram_username || "Instagram User"}
+                    @{connection?.instagram_username || connection?.username || "Instagram User"}
+                  </div>
+                  {connection?.account_name && (
+                    <div style={{ fontSize: "0.85rem", color: "#e4e4e7" }}>
+                      {connection.account_name} &bull; <span style={{ color: "var(--color-gold, #c8a05a)" }}>{connection.account_type || "PROFESSIONAL"}</span>
+                    </div>
+                  )}
+                  <div className={styles.metaSubtext}>
+                    Account ID: {connection?.instagram_account_id || connection?.instagram_user_id} {connection?.facebook_page_name ? `• Page: ${connection.facebook_page_name}` : ""}
                   </div>
                   <div className={styles.metaSubtext}>
-                    IG ID: {connection?.instagram_user_id} &bull; Page: {connection?.facebook_page_name || "Linked Page"}
+                    Connected: {connection?.connected_at ? new Date(connection.connected_at).toLocaleDateString() : "Active"} &bull; Token Expiry: {connection?.token_expires_at ? new Date(connection.token_expires_at).toLocaleDateString() : "60 Days"}
                   </div>
                   <div className={styles.metaSubtext}>
-                    Token Expiry:{" "}
-                    {connection?.token_expires_at
-                      ? new Date(connection.token_expires_at).toLocaleDateString()
-                      : "60-Day Long-Lived Token"}
+                    Last Synced:{" "}
+                    {settings?.last_synced_at
+                      ? new Date(settings.last_synced_at).toLocaleString()
+                      : "Never"}
                   </div>
                 </div>
               </div>
@@ -324,7 +419,7 @@ export const DitviInstagramManager: React.FC = () => {
                   className={styles.btnPrimary}
                 >
                   <RefreshIcon fontSize="small" className={isSyncing ? "rotating" : ""} />
-                  {isSyncing ? "Syncing..." : "Sync Hashtag Now"}
+                  {isSyncing ? "Syncing..." : "Sync Hashtags Now"}
                 </button>
 
                 <button
@@ -340,9 +435,9 @@ export const DitviInstagramManager: React.FC = () => {
           ) : (
             <div>
               <p style={{ color: "#a1a1aa", fontSize: "0.9rem", lineHeight: 1.5, marginBottom: "1.25rem" }}>
-                Connect your salon&apos;s Instagram Professional (Business or Creator) account via Meta to automatically discover customer posts with your business hashtag.
+                Connect your salon&apos;s Instagram Professional account via Meta to discover customer posts containing your hashtags.
               </p>
-              <a href="/api/meta/connect" className={styles.btnPrimary}>
+              <a href="/api/instagram/connect" className={styles.btnPrimary}>
                 <LinkIcon fontSize="small" />
                 Connect Instagram Account
               </a>
@@ -350,45 +445,108 @@ export const DitviInstagramManager: React.FC = () => {
           )}
         </div>
 
-        {/* Card 2: Business Hashtag Settings */}
+        {/* Card 2: Multi-Hashtag Management */}
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <div>
               <h3 className={styles.cardTitle}>
-                <SettingsIcon style={{ color: "var(--color-gold, #c8a05a)" }} />
-                Hashtag &amp; Auto-Publish Rules
+                <TagIcon style={{ color: "var(--color-gold, #c8a05a)" }} />
+                Hashtag Discovery Settings
               </h3>
-              <p className={styles.cardSubtitle}>Configure discovery hashtag &amp; moderation policy</p>
+              <p className={styles.cardSubtitle}>
+                Add hashtags e.g. #salon, #xyzsalon, #salonindore (Meta max: 30/week)
+              </p>
             </div>
           </div>
 
-          <form onSubmit={handleSaveSettings}>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Business Hashtag (without #)</label>
-              <input
-                type="text"
-                value={hashtagInput}
-                onChange={(e) => setHashtagInput(e.target.value)}
-                placeholder="e.g. reflectionsalon"
-                className={styles.inputField}
-                required
-              />
-              <span style={{ fontSize: "0.75rem", color: "#888888", display: "block", marginTop: "0.25rem" }}>
-                Target: #{hashtagInput.replace(/^#+/, "").toLowerCase()}
-              </span>
-            </div>
+          {/* Add Hashtag Form */}
+          <form onSubmit={handleAddHashtag} style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem" }}>
+            <input
+              type="text"
+              value={newHashtagInput}
+              onChange={(e) => setNewHashtagInput(e.target.value)}
+              placeholder="e.g. reflectionsalon or #salonindore"
+              className={styles.inputField}
+              style={{ flex: 1 }}
+              required
+            />
+            <button
+              type="submit"
+              disabled={isAddingTag}
+              className={styles.btnPrimary}
+              style={{ whiteSpace: "nowrap" }}
+            >
+              <AddIcon fontSize="small" />
+              {isAddingTag ? "Adding..." : "Add Hashtag"}
+            </button>
+          </form>
 
-            <div className={styles.formGroup}>
-              <label className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  checked={autoSync}
-                  onChange={(e) => setAutoSync(e.target.checked)}
-                />
-                <span>Enable periodic automatic synchronization</span>
-              </label>
-            </div>
+          {/* Hashtags List */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", maxHeight: "160px", overflowY: "auto" }}>
+            {hashtags.length === 0 ? (
+              <p style={{ color: "#888888", fontSize: "0.85rem", fontStyle: "italic" }}>
+                No hashtags configured yet. Add your first hashtag above.
+              </p>
+            ) : (
+              hashtags.map((h) => (
+                <div
+                  key={h.id}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0.5rem 0.75rem",
+                    background: "rgba(255, 255, 255, 0.04)",
+                    borderRadius: "6px",
+                    fontSize: "0.85rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <span style={{ fontWeight: 600, color: h.is_active ? "var(--color-gold, #c8a05a)" : "#888888" }}>
+                      #{h.hashtag}
+                    </span>
+                    <span style={{ fontSize: "0.75rem", color: "#666" }}>
+                      {h.hashtag_id ? `(ID: ${h.hashtag_id.slice(0, 8)}...)` : "(pending lookup)"}
+                    </span>
+                  </div>
 
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <button
+                      type="button"
+                      onClick={() => handleToggleHashtag(h.id, h.is_active)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: h.is_active ? "#4ade80" : "#a1a1aa",
+                        cursor: "pointer",
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {h.is_active ? "Enabled" : "Disabled"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveHashtag(h.id, h.hashtag)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#f87171",
+                        cursor: "pointer",
+                        padding: "2px",
+                      }}
+                      title="Remove hashtag"
+                    >
+                      <DeleteOutlineIcon fontSize="small" />
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Quick Publishing Rules */}
+          <form onSubmit={handleSaveSettings} style={{ marginTop: "1.25rem", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1rem" }}>
             <div className={styles.formGroup}>
               <label className={styles.checkboxLabel}>
                 <input
@@ -396,17 +554,11 @@ export const DitviInstagramManager: React.FC = () => {
                   checked={autoPublish}
                   onChange={(e) => setAutoPublish(e.target.checked)}
                 />
-                <span>Auto-publish discovered posts (otherwise kept PENDING for review)</span>
+                <span>Auto-publish discovered posts directly to website</span>
               </label>
             </div>
-
-            <button
-              type="submit"
-              disabled={isSavingSettings}
-              className={styles.btnPrimary}
-              style={{ marginTop: "0.5rem" }}
-            >
-              {isSavingSettings ? "Saving..." : "Save Gallery Settings"}
+            <button type="submit" className={styles.btnSecondary} style={{ fontSize: "0.8rem", padding: "0.35rem 0.8rem" }}>
+              Save Publishing Policy
             </button>
           </form>
         </div>
@@ -460,10 +612,9 @@ export const DitviInstagramManager: React.FC = () => {
           <div className={styles.postsGrid}>
             {posts.map((post) => {
               const displayUrl = post.media_url || post.thumbnail_url || "/gallery/gallery-1.jpg";
-              const isPending = post.moderation_status === "PENDING";
-              const isApproved = post.moderation_status === "APPROVED";
+              const isApproved = post.moderation_status === "APPROVED" || post.is_approved === true;
               const isRejected = post.moderation_status === "REJECTED";
-              const isHidden = post.moderation_status === "HIDDEN";
+              const isHidden = post.moderation_status === "HIDDEN" || post.is_visible === false;
 
               return (
                 <div key={post.id} className={styles.postCard}>
@@ -538,6 +689,15 @@ export const DitviInstagramManager: React.FC = () => {
                         title={post.is_featured ? "Remove featured badge" : "Mark as featured"}
                       >
                         {post.is_featured ? "★ Featured" : "☆ Feature"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeletePost(post.id)}
+                        className={styles.actionBtn}
+                        style={{ background: "rgba(255,255,255,0.06)", color: "#f87171", flex: "0 0 auto", padding: "0.35rem" }}
+                        title="Delete permanently"
+                      >
+                        <DeleteOutlineIcon fontSize="inherit" />
                       </button>
                     </div>
                   </div>

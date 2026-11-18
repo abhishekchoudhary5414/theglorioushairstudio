@@ -27,14 +27,21 @@ export async function GET(req: Request) {
       SELECT
         id,
         business_id,
+        user_id,
         instagram_user_id,
+        instagram_account_id,
         instagram_username,
+        username,
+        account_name,
+        account_type,
         facebook_page_id,
         facebook_page_name,
         profile_picture_url,
         token_expires_at,
         connection_status,
+        permissions,
         error_message,
+        connected_at,
         created_at,
         updated_at
       FROM instagram_connections
